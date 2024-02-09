@@ -25,3 +25,18 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Dev Environment Setup
+```
+ng new demo-app --style=scss --ssr=false
+ng add @angular/material --skip-confirmation --defaults
+ng add @angular-eslint/schematics --skip-confirmation
+npm install prettier prettier-eslint eslint-config-prettier eslint-plugin-prettier --save-dev
+```
+
+# Resources
+[Angular Material Theming System: Complete Guide](https://angular-material.dev/articles/angular-material-theming-system-complete-guide)
+
+[Install Schematics](https://material.angular.io/guide/schematics)
+
+[NG Add Schematic](https://brianflove.com/posts/2018-12-15-ng-add-schematic/)

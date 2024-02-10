@@ -34,6 +34,11 @@ ng add @angular-eslint/schematics --skip-confirmation
 npm install prettier prettier-eslint eslint-config-prettier eslint-plugin-prettier --save-dev
 ```
 
+## Dev Notes
+
+### File that require restart of IDE (VSCode)
+1. .prettierrc
+
 # Resources
 [Angular Material Theming System: Complete Guide](https://angular-material.dev/articles/angular-material-theming-system-complete-guide)
 

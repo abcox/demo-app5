@@ -1,13 +1,32 @@
 <ng-container *ngIf="vm() as vm">
-  <ng-container [ngSwitch]="vm.user.token">
+  <ng-container [ngSwitch]="token()">
     <ng-container *ngSwitchCase="undefined">
-      <button
+      <div class="m-5">
+        <h1 class="m-2">App Machine</h1>
+        <button
+          (click)="fakeRegisterLogin()"
+          class="m-2"
+          mat-raised-button
+          color="primary"
+          [routerLink]="'start'">
+          Register
+        </button>
+        <button
+          (click)="fakeRegisterLogin()"
+          class="m-2"
+          mat-raised-button
+          [routerLink]="'start'"
+          color="primary">
+          Sign In
+        </button>
+        <!-- <button
         class="m-2"
         mat-raised-button
         color="primary"
         [routerLink]="'login'">
         Login
-      </button>
+      </button> -->
+      </div>
     </ng-container>
     <app-nav *ngSwitchDefault></app-nav>
   </ng-container>

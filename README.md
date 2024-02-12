@@ -48,14 +48,23 @@ npx tailwindcss init
 
 1. .prettierrc
 
+### Angular CLI Commands
+
+1. Create a page
+
+   ```
+   ng g c page/error-page
+   ```
+
 # Resources
 
-[Angular Material Theming System: Complete Guide](https://angular-material.dev/articles/angular-material-theming-system-complete-guide)
+1. [Angular Material Theming System: Complete Guide](https://angular-material.dev/articles/angular-material-theming-system-complete-guide)
 
-[Install Schematics](https://material.angular.io/guide/schematics)
+2. [Install Schematics](https://material.angular.io/guide/schematics)
 
-[NG Add Schematic](https://brianflove.com/posts/2018-12-15-ng-add-schematic/)
+3. [NG Add Schematic](https://brianflove.com/posts/2018-12-15-ng-add-schematic/)
 
-```
+# References
 
-```
+1. [Keeping state with a Service using Signals (May 18, 2023)](https://medium.com/ngconf/keeping-state-with-a-service-using-signals-bee652158ecf)
+2. [Signalstory](https://www.npmjs.com/package/signalstory)

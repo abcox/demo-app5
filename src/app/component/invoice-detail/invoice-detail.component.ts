@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, effect, input } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
 import { MatCardModule } from '@angular/material/card';
-import { BehaviorSubject, Subject } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
 import { InvoiceModel } from '../../service/invoice/invoice.service';
 
@@ -13,14 +13,16 @@ import { InvoiceModel } from '../../service/invoice/invoice.service';
   styleUrl: './invoice-detail.component.scss',
 })
 export class InvoiceDetailComponent implements OnInit {
-  invoice$ = new BehaviorSubject<InvoiceModel | undefined>(undefined);
-  @Input() set invoice(invoice: InvoiceModel | null | undefined) {
-    if (!invoice) return;
-    this.invoice$.next(invoice);
+  invoice = input.required<InvoiceModel | undefined>();
+  constructor() {
+    /* toObservable(this.invoice).subscribe(invoice => {
+      console.log('invoice', invoice);
+    }); */
+    effect(() => {
+      console.log('invoice', this.invoice());
+    });
   }
   ngOnInit(): void {
-    this.invoice$.subscribe(invoice => {
-      console.log('invoice', invoice);
-    });
+    console.log('InvoiceDetailComponent init');
   }
 }

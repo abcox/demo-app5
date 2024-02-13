@@ -1,4 +1,4 @@
-import { Component, Input, numberAttribute, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { InvoiceModel } from '../../service/invoice/invoice.service';
@@ -12,14 +12,6 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './invoice-list.component.scss',
 })
 export class InvoiceListComponent {
-  dataSource$ = signal<InvoiceModel[]>([]);
-  displayColumns$ = signal<string[]>([]);
-  @Input() set dataSource(dataSource: InvoiceModel[]) {
-    if (!dataSource) return;
-    this.dataSource$.set(dataSource);
-  }
-  @Input() set displayColumns(displayColumns: string[]) {
-    if (!displayColumns) return;
-    this.displayColumns$.set(displayColumns);
-  }
+  dataSource = input.required<InvoiceModel[]>();
+  displayColumns = input.required<string[]>();
 }

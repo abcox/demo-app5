@@ -1,4 +1,4 @@
-<ng-container *ngIf="invoice$ | async as invoice">
+<ng-container *ngIf="invoice() as invoice">
   <mat-card>
     <mat-card-header>
       <!-- <mat-card-title>Invoice {{ id }}</mat-card-title>

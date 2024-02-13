@@ -1,42 +1,22 @@
+<!--- NOTES:
+  1. These columns can be defined in any order.
+     The actual rendered columns are set as a property on the row definition" -->
 <div class="container mat-elevation-z2">
-  <mat-table #table [dataSource]="dataSource$()">
-    <!--- Note that these columns can be defined in any order.
-          The actual rendered columns are set as a property on the row definition" -->
-
-    <!-- Date Column -->
+  <mat-table #table [dataSource]="dataSource()">
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{ item.date }} </mat-cell>
     </ng-container>
-
-    <!-- Description Column -->
     <ng-container matColumnDef="description">
       <mat-header-cell *matHeaderCellDef> Detail </mat-header-cell>
       <mat-cell *matCellDef="let item">
         {{ item.description }}
       </mat-cell>
     </ng-container>
-
-    <!-- Amount Column -->
     <ng-container matColumnDef="amount">
       <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
       <mat-cell *matCellDef="let item"> {{ item.amount }} </mat-cell>
     </ng-container>
-
-    <!-- Status Column
-      <ng-container matColumnDef="status">
-        <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
-        <mat-cell *matCellDef="let item"
-          ><button
-            mat-button
-            color="primary"
-            routerLink="/invoice/{{ item.id }}">
-            {{ item.status }}
-          </button></mat-cell
-        >
-      </ng-container> -->
-
-    <!-- Status Column -->
     <ng-container matColumnDef="paymentDate">
       <mat-header-cell *matHeaderCellDef> Payment </mat-header-cell>
       <mat-cell *matCellDef="let item">
@@ -45,8 +25,7 @@
         </button>
       </mat-cell>
     </ng-container>
-
-    <mat-header-row *matHeaderRowDef="displayColumns$()"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayColumns$()"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayColumns()"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayColumns()"></mat-row>
   </mat-table>
 </div>

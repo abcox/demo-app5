@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
-import { InvoiceModel } from '../../page/invoice-page/invoice-page.component';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { MatButtonModule } from '@angular/material/button';
+import { InvoiceModel } from '../../service/invoice/invoice.service';
 
 @Component({
   selector: 'app-invoice-detail',

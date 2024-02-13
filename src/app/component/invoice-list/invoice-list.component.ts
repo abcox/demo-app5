@@ -1,7 +1,7 @@
 import { Component, Input, numberAttribute, signal } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
-import { InvoiceModel } from '../../page/invoice-page/invoice-page.component';
+import { InvoiceModel } from '../../service/invoice/invoice.service';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({

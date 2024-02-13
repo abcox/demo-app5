@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { menuItems } from '../../config';
 import { RouterModule } from '@angular/router';
-import { UserStateService } from '../../services/user-state/user-state.service';
+import { UserStateService } from '../../service/user-state/user-state.service';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({

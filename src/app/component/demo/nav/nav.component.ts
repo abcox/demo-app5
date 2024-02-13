@@ -9,7 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { UserStateService } from '../../../services/user-state/user-state.service';
+import { UserStateService } from '../../../service/user-state/user-state.service';
 import { menuItems } from '../../../config';
 
 export interface MenuItem {

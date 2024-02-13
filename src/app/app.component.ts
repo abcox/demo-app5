@@ -6,7 +6,7 @@ import { MatButton } from '@angular/material/button';
 import {
   UserStateService,
   UserState,
-} from './services/user-state/user-state.service';
+} from './service/user-state/user-state.service';
 
 interface ViewModel {
   //user: UserState | undefined;

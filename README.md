@@ -68,3 +68,4 @@ npx tailwindcss init
 
 1. [Keeping state with a Service using Signals (May 18, 2023)](https://medium.com/ngconf/keeping-state-with-a-service-using-signals-bee652158ecf)
 2. [Signalstory](https://www.npmjs.com/package/signalstory)
+3. [InDepth Guide for Customizing Angular Material Button](https://dev.to/shhdharmen/indepth-guide-for-customizing-angular-material-button-58do)

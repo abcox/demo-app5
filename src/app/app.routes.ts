@@ -1,9 +1,8 @@
 import { Routes } from '@angular/router';
-import { NavComponent } from './component/demo/nav/nav.component';
-import { StartPageComponent } from './page/start-page/start-page.component';
-import { DemoPageComponent } from './page/demo-page/demo-page.component';
 import { ErrorPageComponent } from './page/error-page/error-page.component';
 import { menuItems } from './config';
+import { HomePageComponent } from './page/home-page/home-page.component';
+import { InvoicePageComponent } from './page/invoice-page/invoice-page.component';
 
 export const routes: Routes = [
   //{ path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -14,5 +13,7 @@ export const routes: Routes = [
   ...menuItems.map(item => {
     return { path: item.routePath, component: item.component };
   }),
+  { path: '', component: HomePageComponent },
+  { path: 'invoice/:id', component: InvoicePageComponent },
   { path: '**', component: ErrorPageComponent },
 ];

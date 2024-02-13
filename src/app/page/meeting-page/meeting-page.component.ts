@@ -12,17 +12,17 @@ import { RouterModule } from '@angular/router';
   styleUrl: './meeting-page.component.scss',
 })
 export class MeetingPageComponent {
-  meeting = {
-    name: 'Meeting 1',
-    date: '6/15/2023',
-    time: '12:00 PM',
-    location: '123 Main St.',
-  };
-  vm = signal({ meeting: this.meeting });
+  meetings = [
+    {
+      date: '6/15/2024',
+      time: '12:00 PM',
+      location: '123 Main St.',
+    },
+  ];
+  vm = signal({ meetings: { past: this.meetings, next: this.meetings } });
 }
 
 export interface MeetingModel {
-  name: string;
   date: string;
   time: string;
   location: string;

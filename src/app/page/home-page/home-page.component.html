@@ -1,16 +1,14 @@
-<div class="m-3">
-  <mat-nav-list>
-    @for (item of menuItems; track $index) {
-      @if (item.visible === undefined || item.visible === true) {
-        <mat-list-item>
-          <button mat-button color="primary" routerLink="/{{ item.routePath }}">
-            {{ item.title }}
-          </button>
-        </mat-list-item>
-      }
+<mat-nav-list>
+  @for (item of menuItems; track $index) {
+    @if (item.visible === undefined || item.visible === true) {
+      <mat-list-item>
+        <button mat-button color="primary" routerLink="/{{ item.routePath }}">
+          {{ item.title }}
+        </button>
+      </mat-list-item>
     }
-    <mat-list-item>
-      <button mat-button color="primary" (click)="signOut()">Sign Out</button>
-    </mat-list-item>
-  </mat-nav-list>
-</div>
+  }
+  <mat-list-item>
+    <button mat-button color="primary" (click)="signOut()">Sign Out</button>
+  </mat-list-item>
+</mat-nav-list>

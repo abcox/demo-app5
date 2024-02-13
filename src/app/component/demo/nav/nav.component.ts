@@ -10,12 +10,13 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { UserStateService } from '../../../services/user-state/user-state.service';
+import { menuItems } from '../../../config';
 
-interface MenuItem {
+export interface MenuItem {
   href: string;
-  onClick: (item: MenuItem) => void;
+  onClick?: (item: MenuItem) => void;
   opened: boolean;
-  routePath?: string;
+  routePath: string | undefined;
   title: string;
 }
 
@@ -46,39 +47,7 @@ export class NavComponent {
   private user = inject(UserStateService);
 
   vm = signal<ViewModel>({
-    menuItems: [
-      {
-        href: '#',
-        onClick: (item: MenuItem) => this.nav(item),
-        opened: false,
-        routePath: 'start',
-        title: 'Start',
-      },
-      {
-        href: '#',
-        //onClick: () => {
-        //  this.drawer.close();
-        //},
-        onClick: (item: MenuItem) => this.nav(item),
-        opened: false,
-        routePath: 'demo',
-        title: 'Demo',
-      },
-      {
-        href: '#',
-        onClick: (item: MenuItem) => this.nav(item),
-        opened: false,
-        routePath: undefined,
-        title: 'Test',
-      },
-      {
-        href: '#',
-        onClick: (item: MenuItem) => this.signOut(item),
-        opened: false,
-        routePath: undefined,
-        title: 'Sign Out',
-      },
-    ],
+    menuItems,
   });
 
   isHandset$: Observable<boolean> = this.breakpointObserver
@@ -101,9 +70,7 @@ export class NavComponent {
     this.router.navigate([item.routePath]);
     console.log('vm', this.vm().menuItems);
   }
-  signOut(item: MenuItem) {
-    console.log('sign out', item);
+  signOut() {
     this.user.set('token', undefined);
-    this.router.navigate(['start']);
   }
 }

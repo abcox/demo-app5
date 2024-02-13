@@ -1,0 +1,21 @@
+<ng-container *ngIf="invoice$ | async as invoice">
+  <mat-card>
+    <mat-card-header>
+      <!-- <mat-card-title>Invoice {{ id }}</mat-card-title>
+          <mat-card-subtitle>Invoice details</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+      <p>Issue Date: {{ invoice?.date }}</p>
+      <p>Description: {{ invoice?.description }}</p>
+      <p>Amount: {{ invoice?.amount }}</p>
+      <ng-container *ngIf="invoice?.paymentDate; else payButtonTemplate">
+        <span class="badge badge-success"
+          >Paid on {{ invoice?.paymentDate }}</span
+        >
+      </ng-container>
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+<ng-template #payButtonTemplate>
+  <button mat-button color="primary">Pay</button>
+</ng-template>

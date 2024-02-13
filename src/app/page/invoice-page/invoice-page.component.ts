@@ -11,16 +11,17 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { BehaviorSubject, map } from 'rxjs';
 import { InvoiceListComponent } from '../../component/invoice-list/invoice-list.component';
+import { InvoiceDetailComponent } from '../../component/invoice-detail/invoice-detail.component';
 
 @Component({
   selector: 'app-invoice-page',
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule,
     RouterModule,
     MatButtonModule,
     InvoiceListComponent,
+    InvoiceDetailComponent,
   ],
   templateUrl: './invoice-page.component.html',
   styleUrl: './invoice-page.component.scss',

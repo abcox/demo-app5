@@ -2,7 +2,7 @@
   <mat-nav-list>
     @for (item of menuItems; track $index) {
       @if (item.visible === undefined || item.visible === true) {
-        <a [routerLink]="item.routePath" mat-list-item>{{ item.title }}</a>
+        <a routerLink="/{{ item.routePath }}" mat-list-item>{{ item.title }}</a>
       }
     }
     <a (click)="signOut()" mat-list-item>Sign Out</a>

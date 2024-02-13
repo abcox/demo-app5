@@ -9,7 +9,9 @@
 </div>
 <ng-template #invoiceListTemplate>
   <h1>Invoices</h1>
-  <app-invoice-list [dataSource]="dataSource"></app-invoice-list>
+  <app-invoice-list
+    [dataSource]="dataSource"
+    [displayColumns]="displayColumns"></app-invoice-list>
   <div class="mt-3">
     <button mat-button color="primary" routerLink="/home">Home</button>
   </div>

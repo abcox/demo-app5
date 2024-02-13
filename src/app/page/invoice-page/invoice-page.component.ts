@@ -29,6 +29,12 @@ import { InvoiceDetailComponent } from '../../component/invoice-detail/invoice-d
 export class InvoicePageComponent implements OnInit {
   route = inject(ActivatedRoute);
   dataSource = MOCK_DATA;
+  displayColumns = [
+    'date',
+    'description',
+    'amount' /* , 'status' */,
+    'paymentDate',
+  ];
   @Input({ transform: numberAttribute }) id = 0;
   invoice$ = new BehaviorSubject<InvoiceModel | undefined>(undefined);
   ngOnInit(): void {

@@ -2,9 +2,15 @@
   <mat-nav-list>
     @for (item of menuItems; track $index) {
       @if (item.visible === undefined || item.visible === true) {
-        <a routerLink="/{{ item.routePath }}" mat-list-item>{{ item.title }}</a>
+        <mat-list-item>
+          <button mat-button color="primary" routerLink="/{{ item.routePath }}">
+            {{ item.title }}
+          </button>
+        </mat-list-item>
       }
     }
-    <a (click)="signOut()" mat-list-item>Sign Out</a>
+    <mat-list-item>
+      <button mat-button color="primary" (click)="signOut()">Sign Out</button>
+    </mat-list-item>
   </mat-nav-list>
 </div>

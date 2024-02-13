@@ -18,6 +18,7 @@ export interface MenuItem {
   opened: boolean;
   routePath: string | undefined;
   title: string;
+  visible?: boolean;
 }
 
 interface ViewModel {

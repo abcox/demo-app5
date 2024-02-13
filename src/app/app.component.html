@@ -8,24 +8,17 @@
           class="m-2"
           mat-raised-button
           color="primary"
-          [routerLink]="'start'">
+          [routerLink]="'home'">
           Register
         </button>
         <button
           (click)="fakeRegisterLogin()"
           class="m-2"
           mat-raised-button
-          [routerLink]="'start'"
+          [routerLink]="'home'"
           color="primary">
           Sign In
         </button>
-        <!-- <button
-        class="m-2"
-        mat-raised-button
-        color="primary"
-        [routerLink]="'login'">
-        Login
-      </button> -->
       </div>
     </ng-container>
     <app-nav *ngSwitchDefault></app-nav>

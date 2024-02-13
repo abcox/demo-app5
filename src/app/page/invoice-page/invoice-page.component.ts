@@ -7,32 +7,26 @@ import {
   numberAttribute,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { BehaviorSubject, map } from 'rxjs';
+import { InvoiceListComponent } from '../../component/invoice-list/invoice-list.component';
 
 @Component({
   selector: 'app-invoice-page',
   standalone: true,
   imports: [
     CommonModule,
-    MatTableModule,
     MatCardModule,
     RouterModule,
     MatButtonModule,
+    InvoiceListComponent,
   ],
   templateUrl: './invoice-page.component.html',
   styleUrl: './invoice-page.component.scss',
 })
 export class InvoicePageComponent implements OnInit {
   route = inject(ActivatedRoute);
-  displayedColumns = [
-    'date',
-    'description',
-    'amount' /* , 'status' */,
-    'paymentDate',
-  ];
   dataSource = MOCK_DATA;
   @Input({ transform: numberAttribute }) id = 0;
   invoice$ = new BehaviorSubject<InvoiceModel | undefined>(undefined);

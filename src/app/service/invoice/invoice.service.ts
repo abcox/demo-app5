@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class InvoiceService {
   invoices = signal(MOCK_DATA);
+  displayColumns = signal(['date', 'description', 'amount', 'paymentDate']);
   constructor() {}
 }
 

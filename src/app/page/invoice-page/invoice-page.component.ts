@@ -31,16 +31,11 @@ import { InvoiceService } from '../../service/invoice/invoice.service';
 export class InvoicePageComponent implements OnInit {
   invoiceService = inject(InvoiceService);
   invoices = this.invoiceService.invoices.asReadonly();
+  displayColumns = this.invoiceService.displayColumns.asReadonly();
   invoice = computed(() =>
     this.invoices().find(invoice => invoice.id === String(this.id))
   );
   route = inject(ActivatedRoute);
-  displayColumns = [
-    'date',
-    'description',
-    'amount' /* , 'status' */,
-    'paymentDate',
-  ];
   @Input({ transform: numberAttribute }) id = 0;
   ngOnInit(): void {
     const id$ = this.route.paramMap.pipe(map(params => params.get('id')));

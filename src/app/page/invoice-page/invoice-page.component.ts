@@ -6,6 +6,9 @@ import {
   OnInit,
   numberAttribute,
   computed,
+  input,
+  ChangeDetectionStrategy,
+  signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -27,20 +30,26 @@ import { InvoiceService } from '../../service/invoice/invoice.service';
   ],
   templateUrl: './invoice-page.component.html',
   styleUrl: './invoice-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class InvoicePageComponent implements OnInit {
+export class InvoicePageComponent /*  implements OnInit */ {
   invoiceService = inject(InvoiceService);
   invoices = this.invoiceService.invoices.asReadonly();
   displayColumns = this.invoiceService.displayColumns.asReadonly();
   invoice = computed(() =>
-    this.invoices().find(invoice => invoice.id === String(this.id))
+    this.invoices().find(invoice => invoice.id === String(this.invoiceId()))
   );
   route = inject(ActivatedRoute);
-  @Input({ transform: numberAttribute }) id = 0;
-  ngOnInit(): void {
+  //@Input({ transform: numberAttribute }) set id(value: number) {
+  //  this.invoiceId.set(String(value));
+  //}
+  @Input() id = 0;
+  //id = input();
+  invoiceId = computed(() => String(this.id ?? 0)); // signal<string | undefined>(undefined);
+  /* ngOnInit(): void {
     const id$ = this.route.paramMap.pipe(map(params => params.get('id')));
     id$.subscribe(id => {
       console.log('id', id);
     });
-  }
+  } */
 }

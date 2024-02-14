@@ -10,11 +10,10 @@ export const routes: Routes = [
   //{ path: 'about', loadChildren: './about/about.module#AboutModule' }
   //{ path: 'start', component: StartPageComponent },
   //{ path: 'demo', component: DemoPageComponent },
-  ...menuItems.map(item => {
-    return { path: item.routePath, component: item.component };
-  }),
   { path: 'home', component: HomePageComponent },
-  { path: 'invoice/:id', component: InvoicePageComponent },
+  ...menuItems.map(item => {
+    return { path: `${item.routePath}`, component: item.component };
+  }),
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: ErrorPageComponent },
 ];

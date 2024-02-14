@@ -13,7 +13,7 @@
           @if (item.visible === undefined || item.visible === true) {
             <a
               (click)="drawer.toggle()"
-              [routerLink]="item.routePath"
+              routerLink="{{ item.routePath }}"
               mat-list-item
               >{{ item.title }}</a
             >

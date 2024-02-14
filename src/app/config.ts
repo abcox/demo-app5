@@ -23,8 +23,17 @@ export const menuItems = [
     component: InvoicePageComponent,
     href: '#',
     opened: false,
-    routePath: 'invoice',
+    routePath: 'invoices',
+    param: 'id',
     title: 'Invoices',
+  },
+  {
+    component: InvoicePageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'invoice/:id',
+    title: 'Invoice',
+    visible: false,
   },
   {
     component: ProfilePageComponent,

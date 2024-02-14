@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
-import { NavComponent } from './component/demo/nav/nav.component';
+import { NavComponent } from './component/nav/nav.component';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import {

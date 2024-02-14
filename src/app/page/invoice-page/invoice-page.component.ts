@@ -3,17 +3,12 @@ import {
   Component,
   inject,
   Input,
-  OnInit,
-  numberAttribute,
   computed,
-  input,
   ChangeDetectionStrategy,
-  signal,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { MatCardModule } from '@angular/material/card';
-import { BehaviorSubject, map } from 'rxjs';
 import { InvoiceListComponent } from '../../component/invoice-list/invoice-list.component';
 import { InvoiceDetailComponent } from '../../component/invoice-detail/invoice-detail.component';
 import { InvoiceService } from '../../service/invoice/invoice.service';
@@ -25,6 +20,7 @@ import { InvoiceService } from '../../service/invoice/invoice.service';
     CommonModule,
     RouterModule,
     MatButtonModule,
+    MatTabsModule,
     InvoiceListComponent,
     InvoiceDetailComponent,
   ],
@@ -35,6 +31,12 @@ import { InvoiceService } from '../../service/invoice/invoice.service';
 export class InvoicePageComponent /*  implements OnInit */ {
   invoiceService = inject(InvoiceService);
   invoices = this.invoiceService.invoices.asReadonly();
+  invoicesUnpaid = computed(() => {
+    return this.invoices().filter(invoice => !invoice.paymentDate);
+  });
+  invoicesPaid = computed(() => {
+    return this.invoices().filter(invoice => invoice.paymentDate !== undefined);
+  });
   displayColumns = this.invoiceService.displayColumns.asReadonly();
   invoice = computed(() =>
     this.invoices().find(invoice => invoice.id === String(this.invoiceId()))

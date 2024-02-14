@@ -2,12 +2,19 @@ import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-meeting-page',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatCardModule, RouterModule],
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatCardModule,
+    MatTabsModule,
+    RouterModule,
+  ],
   templateUrl: './meeting-page.component.html',
   styleUrl: './meeting-page.component.scss',
 })

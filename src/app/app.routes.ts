@@ -13,7 +13,8 @@ export const routes: Routes = [
   ...menuItems.map(item => {
     return { path: item.routePath, component: item.component };
   }),
-  { path: '', component: HomePageComponent },
+  { path: 'home', component: HomePageComponent },
   { path: 'invoice/:id', component: InvoicePageComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: '**', component: ErrorPageComponent },
 ];

@@ -11,7 +11,20 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint --fix"
+    "lint": "ng lint --fix",
+    "az-login": "az login",
+    "az-upgrade": "az upgrade",
+    "az-logout": "az logout",
+    "az-account-list": "az account list",
+    "az-account-set": "az account set --subscription",
+    "az-install-containerapp": "az extension add --name containerapp --upgrade",
+    "az-register-stuff": "az provider register --namespace Microsoft.App && az provider register --namespace Microsoft.OperationalInsights",
+    "az-create-rg": "az group create --name $RESOURCE_GROUP --location $LOCATION",
+    "az-create-acr": "az acr create --resource-group $RESOURCE_GROUP --name $ACR_NAME --sku Basic --admin-enabled true",
+    "az-acr-build": "az acr build --registry $ACR_NAME --image $UI_NAME .",
+    "az-containerapp-env-create": "az containerapp env create --name $ENVIRONMENT --resource-group $RESOURCE_GROUP --location $LOCATION",
+    "az-deploy-ui": "az containerapp create --name $UI_NAME --resource-group $RESOURCE_GROUP --environment $ENVIRONMENT --image $ACR_NAME.azurecr.io/demo5-ui --target-port 3000 --env-vars API_BASE_URL=https://$API_BASE_URL --ingress external --registry-server $ACR_NAME.azurecr.io --query properties.configuration.ingress.fqdn",
+    "az-create-aks": "az acr create --resource-group $RESOURCE_GROUP --name $CLUSTER_NAME --node-count 1 --enable-addons monitoring --generate-ssh-keys"
   },
   "private": true,
   "dependencies": {

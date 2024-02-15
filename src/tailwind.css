@@ -4,3 +4,8 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+/*  https://coryrylan.com/blog/theming-angular-apps-with-css-custom-properties
+    https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Angular_styling
+
+    */

@@ -1,48 +1,121 @@
-<ng-container *ngIf="vm() as vm">
-  <h1>Meetings</h1>
-  <mat-tab-group>
-    <mat-tab label="Future">
-      <div class="mt-3">
-        @for (meeting of vm.meetings.next; track $index) {
-          <mat-card>
-            <mat-card-header
-              ><!--
+<ng-container *ngIf="vm() as vm"
+  ><div class="container">
+    <h1>Meetings</h1>
+    <mat-tab-group>
+      <mat-tab label="Future"
+        ><div class="m-1">
+          @for (meeting of vm.meetings.next; track $index) {
+            <mat-card>
+              <mat-card-header>
+                <div
+                  *ngIf="meeting.organizer.photoUrl"
+                  mat-card-avatar
+                  style="
+                    background-image: url('{{ meeting.organizer.photoUrl }}');
+                    background-size: cover;
+                  "></div>
+                <mat-card-title>{{ meeting.organizer.name }}</mat-card-title>
+                <mat-card-subtitle>{{
+                  meeting.organizer.title ?? 'Organizer'
+                }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="pt-2 flex flex-wrap">
+                  <div>
+                    {{ meeting.beginTime | date: 'EEE, MMM d, yyyy' }}&nbsp;
+                  </div>
+                  <div>at&nbsp;</div>
+                  <div>{{ meeting.beginTime | date: 'h:mm a z' }}&nbsp;</div>
+                  <mat-icon
+                    *ngIf="meeting?.occurrence"
+                    aria-hidden="false"
+                    aria-label="Repeats every week"
+                    fontIcon="history"></mat-icon>
+                </div>
+                <div
+                  *ngIf="meeting.location.type === 'physical'"
+                  class="pt-2 flex flex-wrap">
+                  <div>
+                    {{ toAddress(meeting.location.value).street }}&nbsp;
+                  </div>
+                  <div>{{ toAddress(meeting.location.value).city }}&nbsp;</div>
+                  <div>
+                    {{ toAddress(meeting.location.value).region }}&nbsp;
+                  </div>
+                  <div>
+                    {{ toAddress(meeting.location.value).zip }}
+                  </div>
+                </div>
+              </mat-card-content>
+              <mat-card-actions>
+                <div>
+                  <button
+                    mat-button
+                    color="primary"
+                    routerLink="/meeting/edit/{{ meeting.id }}">
+                    Edit
+                    <mat-icon
+                      iconPositionEnd
+                      *ngIf="meeting?.occurrence"
+                      aria-hidden="false"
+                      aria-label="Edit meeting"
+                      fontIcon="edit"></mat-icon>
+                  </button>
+                  <button
+                    *ngIf="meeting.location.type === 'virtual'"
+                    mat-button
+                    color="primary"
+                    routerLink="/meeting/{{ meeting.location.value }}">
+                    Start
+                    <mat-icon
+                      iconPositionEnd
+                      *ngIf="meeting?.occurrence"
+                      aria-hidden="false"
+                      aria-label="Start meeting"
+                      fontIcon="launch"></mat-icon>
+                  </button>
+                </div>
+              </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      </mat-tab>
+      <mat-tab label="Past">
+        <div class="m-1">
+          @for (meeting of vm.meetings.past; track $index) {
+            <mat-card class="mt-3">
+              <mat-card-header
+                ><!--
             <mat-card-title>Meetings</mat-card-title> -->
-            </mat-card-header>
-            <mat-card-content>
-              <p>{{ meeting.date }}</p>
-            </mat-card-content>
-            <!-- <mat-card-actions>
+              </mat-card-header>
+              <mat-card-content class="space">
+                <div>{{ meeting.beginTime | date: 'MMM d' }}</div>
+                &nbsp;
+                <!-- TODO: research 'clamping' (i.e. elipses) -->
+                <div>{{ meeting.organizer.name }}</div>
+                &nbsp;
+                <div *ngIf="meeting.invoiceId">
+                  <!-- IDEA: this could be a Detail when there are notes, invoice, or other resultant artefacts -->
+                  <button
+                    mat-button
+                    color="primary"
+                    routerLink="/invoice/{{ meeting.invoiceId }}">
+                    Invoice
+                  </button>
+                </div>
+              </mat-card-content>
+              <!-- <mat-card-actions>
             <button mat-button color="primary" routerLink="/meeting/edit">
               Edit
             </button>
           </mat-card-actions> -->
-          </mat-card>
-        }
-      </div>
-    </mat-tab>
-    <mat-tab label="Past">
-      <div class="mt-3">
-        @for (meeting of vm.meetings.past; track $index) {
-          <mat-card>
-            <mat-card-header
-              ><!--
-            <mat-card-title>Meetings</mat-card-title> -->
-            </mat-card-header>
-            <mat-card-content>
-              <p>{{ meeting.date }}</p>
-            </mat-card-content>
-            <!-- <mat-card-actions>
-            <button mat-button color="primary" routerLink="/meeting/edit">
-              Edit
-            </button>
-          </mat-card-actions> -->
-          </mat-card>
-        }
-      </div>
-    </mat-tab>
-  </mat-tab-group>
-  <div class="mt-3">
-    <button mat-button color="primary" routerLink="/home">Home</button>
+            </mat-card>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+    <div class="mt-3">
+      <button mat-button color="primary" routerLink="/home">Home</button>
+    </div>
   </div>
 </ng-container>

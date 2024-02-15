@@ -1,0 +1,72 @@
+@use '@angular/material' as mat;
+@import '../../../theme.scss';
+
+/* mat-card {
+  max-height: 52px;
+} */
+
+/* .container {
+  display: flex;
+  flex-direction: column;
+  flex-flow: row wrap;
+  align-items: center;
+  //justify-content: center;
+  justify-content: space-between;
+  height: 100%;
+} */
+
+/* .date {
+  display: flex;
+  flex-direction: row; // fxLayout
+  flex-wrap: wrap; //fxLayout
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+} */
+
+/* TODO: review & research CSS best practices */
+
+mat-card {
+  mat-card-content {
+    mat-icon {
+      color: $primary;
+      //color: mat.get-color-from-palette($pp, 'darker');
+    }
+    /*
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: center;
+    line-height: 150%; */
+
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-column-gap: 0.5rem; // optional
+    grid-row-gap: 0.5rem; // optional */
+
+    /* grid-template-columns: 30% 30% 30%;
+    grid-gap: 10px;
+    place-items: center; */
+
+    //display: flex;
+    //flex-direction: row; // fxLayout
+    //flex-wrap: wrap; //fxLayout
+    //box-sizing: border-box;
+    //align-content: stretch; // fxLayoutAlign
+    //align-items: stretch; // fxLayoutAlign
+    //justify-content: flex-start; // fxLayoutAlign
+  }
+}
+
+.space {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* .example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+} */

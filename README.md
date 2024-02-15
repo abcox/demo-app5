@@ -2,6 +2,8 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.3.
 
+[Project Document](https://docs.google.com/document/d/1fwAtLKBLx6W1JoTdzPLjsB1wo1t0tuqfREb73-mKaXU/edit?usp=sharing)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
@@ -59,13 +61,74 @@ npx tailwindcss init
 # Resources
 
 1. [Angular Material Theming System: Complete Guide](https://angular-material.dev/articles/angular-material-theming-system-complete-guide)
-
 2. [Install Schematics](https://material.angular.io/guide/schematics)
-
 3. [NG Add Schematic](https://brianflove.com/posts/2018-12-15-ng-add-schematic/)
+4. [Tutorial: Build and deploy your app to Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/tutorial-code-to-cloud?tabs=bash%2Ccsharp&pivots=acr-remote)
+5. [Tutorial: Communication between microservices in Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/communicate-between-microservices?tabs=bash&pivots=acr-remote)
+6. [How to Setup ESLint and Prettier in an Angular Project](https://dev.to/seanbh/how-to-setup-eslint-and-prettier-in-an-angular-project-30bd)
+7. [Visual Studio Code Keyboard Shortcuts for Windows](https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf)
+
+## Angular
+
+[Migrating to MDC-based Angular Material Components](https://material.angular.io/guide/mdc-migration)
+[Using Angular Flex-Layout to achieve Responsive Web Design](https://medium.com/@HonoraryMarleyans/using-angular-flex-layout-to-achieve-responsive-web-design-3b73c8424bc2)
+
+### Style
+
+[Modern CSS in Angular: Layouts](https://blog.angular.io/modern-css-in-angular-layouts-4a259dca9127)
+
+### State
+
+[Keeping state with a Service using Signals](https://medium.com/ngconf/keeping-state-with-a-service-using-signals-bee652158ecf)
 
 # References
 
 1. [Keeping state with a Service using Signals (May 18, 2023)](https://medium.com/ngconf/keeping-state-with-a-service-using-signals-bee652158ecf)
 2. [Signalstory](https://www.npmjs.com/package/signalstory)
 3. [InDepth Guide for Customizing Angular Material Button](https://dev.to/shhdharmen/indepth-guide-for-customizing-angular-material-button-58do)
+
+# Deploy
+
+## Azure App Container (Docker)
+
+See git history for additions to the package.json script area related to the attempts while following articles:
+
+1.  [Tutorial: Build and deploy your app to Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/tutorial-code-to-cloud?tabs=bash%2Ccsharp&pivots=acr-remote)
+
+2.  [Tutorial: Communication between microservices in Azure Container Apps](https://learn.microsoft.com/en-us/azure/container-apps/communicate-between-microservices?tabs=bash&pivots=acr-remote)
+
+These attempts were not successful. More research is required in to dockerfile configurations, and Azure App Container service.
+
+Deployed resources in Azure Resource Group named [demo-apps](https://portal.azure.com/#@Vorba.onmicrosoft.com/resource/subscriptions/236217f7-0ad4-4dd6-8553-dc4b574fd2c5/resourceGroups/demo-apps/overview)
+
+## Azure App Service (Linux)
+
+### Prerequisites
+
+1. Azure Account
+2. VSCode
+3. Azure App Service Extension for VSCode
+
+### Procedures
+
+1. Create App Service for Linux (i.e. [app-demo5b](https://portal.azure.com/#@Vorba.onmicrosoft.com/resource/subscriptions/236217f7-0ad4-4dd6-8553-dc4b574fd2c5/resourceGroups/demo-apps/providers/Microsoft.Web/sites/demo-app5b/appServices))
+2. Build app
+
+   ```
+   ng build
+   ```
+
+3. Deploy app from App Service Extension, and select folder ./dist/<app_folder>
+4. Configure App Service
+
+   a. Application Settings / SCM_DO_BUILD_DURING_DEPLOYMENT
+
+   ```
+   SCM_DO_BUILD_DURING_DEPLOYMENT = false
+   ```
+
+   b. General Settings / Startup Command
+
+   ```
+   pm2 serve /home/site/wwwroot/browser --no-daemon --spa
+   ```

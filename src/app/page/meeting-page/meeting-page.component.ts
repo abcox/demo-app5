@@ -1,9 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { RouterModule } from '@angular/router';
+import {
+  AddressModel,
+  MeetingService,
+} from '../../service/meeting/meeting.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-meeting-page',
@@ -12,6 +17,7 @@ import { RouterModule } from '@angular/router';
     CommonModule,
     MatButtonModule,
     MatCardModule,
+    MatIconModule,
     MatTabsModule,
     RouterModule,
   ],
@@ -19,18 +25,17 @@ import { RouterModule } from '@angular/router';
   styleUrl: './meeting-page.component.scss',
 })
 export class MeetingPageComponent {
-  meetings = [
-    {
-      date: '6/15/2024',
-      time: '12:00 PM',
-      location: '123 Main St.',
-    },
-  ];
-  vm = signal({ meetings: { past: this.meetings, next: this.meetings } });
-}
-
-export interface MeetingModel {
-  date: string;
-  time: string;
-  location: string;
+  meetings = inject(MeetingService).meetings;
+  meetingsFuture = computed(() =>
+    this.meetings().filter(m => new Date(m.beginTime) >= new Date())
+  );
+  meetingsPast = computed(() =>
+    this.meetings().filter(m => new Date(m.beginTime) < new Date())
+  );
+  vm = signal({
+    meetings: { past: this.meetingsFuture(), next: this.meetingsPast() },
+  });
+  toAddress(value: any): AddressModel {
+    return value;
+  }
 }

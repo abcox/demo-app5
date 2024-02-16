@@ -34,9 +34,3 @@ export class ProfilePageComponent {
     this.user.set('token', undefined);
   }
 }
-
-export interface ProfileModel {
-  name: string;
-  email: string;
-  registerDate: string;
-}

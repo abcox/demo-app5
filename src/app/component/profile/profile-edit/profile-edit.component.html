@@ -1,0 +1,74 @@
+<div class="flex">
+  <div>
+    <h1>Edit Profile</h1>
+  </div>
+  <div class="grow"></div>
+  <div class="relative">
+    <img
+      alt="Profile Image"
+      class="h-12 rounded-full w-12"
+      src="../../../../assets/AdamCox.jpeg" />
+    <button
+      matTooltip="Upload"
+      routerLink="profile/photo/upload"
+      class="absolute top-0 bg-transparent text-transparent p-1 rounded hover:text-white/75 m-2">
+      <mat-icon fontIcon="upload"> </mat-icon>
+    </button>
+  </div>
+</div>
+<!-- <app-profile-form [user]="user()"></app-profile-form> -->
+<!-- <mat-card class="p-3"> -->
+<form>
+  <mat-form-field
+    appearance="outline"
+    class="mt-2 mb-5"
+    subscriptSizing="dynamic">
+    <mat-label>Name</mat-label>
+    <input
+      [formControl]="nameControl"
+      matInput
+      placeholder="Name"
+      type="text" />
+  </mat-form-field>
+  <mat-form-field appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Email</mat-label>
+    <mat-hint>Effective after validated</mat-hint>
+    <input
+      [formControl]="emailControl"
+      matInput
+      placeholder="Email"
+      type="text" />
+  </mat-form-field>
+  <div class="outline outline-1 outline-slate-400 rounded mat-elevation-z0">
+    <mat-card class="mt-2">
+      <mat-card-header>
+        <div>Profile Photo</div>
+        <!-- <button
+          mat-raised-button
+          routerLink="profile/photo/upload"
+          color="primary">
+          Upload
+          <mat-icon iconPositionEnd fontIcon="upload"></mat-icon>
+        </button> -->
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          <img
+            alt="Profile Image"
+            class="h-12 mt-3 rounded-full w-12"
+            src="../../../../assets/AdamCox.jpeg" />
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button routerLink="profile/photo/upload" color="primary">
+          Upload
+          <mat-icon iconPositionEnd fontIcon="upload"></mat-icon>
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</form>
+<!-- </mat-card> -->
+<div class="mt-3">
+  <button mat-button color="primary" routerLink="/home">Home</button>
+</div>

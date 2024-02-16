@@ -21,3 +21,10 @@ $theme: mat.define-light-theme(
 );
 
 @include mat.all-component-themes($theme);
+
+// Style to fix the weird border with angular material
+// https://stackoverflow.com/questions/75535246/angular-mat-form-field-not-working-properly-a-border-line-appears-inside-the-f
+// https://github.com/tailwindlabs/tailwindcss/discussions/9993
+.mdc-notched-outline__notch {
+  border-right: none !important;
+}

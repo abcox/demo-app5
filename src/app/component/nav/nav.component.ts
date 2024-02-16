@@ -8,9 +8,11 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UserStateService } from '../../service/user-state/user-state.service';
 import { menuItems } from '../../config';
+import { MatCardModule } from '@angular/material/card';
+import { OverlayModule } from '@angular/cdk/overlay';
 
 export interface MenuItem {
   href: string;
@@ -28,10 +30,12 @@ interface ViewModel {
 
 @Component({
   imports: [
+    OverlayModule,
     CommonModule,
     RouterModule,
     MatToolbarModule,
     MatButtonModule,
+    MatCardModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
@@ -44,6 +48,7 @@ interface ViewModel {
 })
 export class NavComponent {
   @ViewChild('drawer') public drawer!: MatSidenav;
+  protected isOpen = false;
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
   private user = inject(UserStateService);

@@ -1,3 +1,4 @@
+import { MeetingInviteComponent } from './component/meeting-invite/meeting-invite.component';
 import { ProfileEditComponent } from './component/profile/profile-edit/profile-edit.component';
 import { HomePageComponent } from './page/home-page/home-page.component';
 import { InvoicePageComponent } from './page/invoice-page/invoice-page.component';
@@ -49,6 +50,14 @@ export const menuItems = [
     opened: false,
     routePath: 'profile/edit',
     title: 'Profile',
+    visible: false,
+  },
+  {
+    component: MeetingInviteComponent,
+    href: '#',
+    opened: false,
+    routePath: 'meeting/invite',
+    title: 'Meeting Invite',
     visible: false,
   },
 ];

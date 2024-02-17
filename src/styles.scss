@@ -4,6 +4,10 @@
 @import './theme.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
 
+// primeNG
+@import 'primeng/resources/themes/lara-light-blue/theme.css';
+@import 'primeng/resources/primeng.css';
+
 html,
 body {
   height: 100%;

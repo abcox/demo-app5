@@ -35,6 +35,6 @@ export class AppComponent {
     this.userState.set('token', '1234'); // for testing
     this.userState.set('name', 'Jessie'); // for testing
     this.userState.set('email', 'jdoe@gmail.com'); // for testing
-    this.router.navigate(['profile/edit']); // for testing
+    this.router.navigate(['meeting/invite']); // for testing
   }
 }

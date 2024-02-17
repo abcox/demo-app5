@@ -1,5 +1,6 @@
 import { MeetingInviteComponent } from './component/meeting-invite/meeting-invite.component';
 import { ProfileEditComponent } from './component/profile/profile-edit/profile-edit.component';
+import { ThankyouComponent } from './component/thankyou/thankyou.component';
 import { HomePageComponent } from './page/home-page/home-page.component';
 import { InvoicePageComponent } from './page/invoice-page/invoice-page.component';
 import { MeetingPageComponent } from './page/meeting-page/meeting-page.component';
@@ -58,6 +59,14 @@ export const menuItems = [
     opened: false,
     routePath: 'meeting/invite',
     title: 'Meeting Invite',
+    visible: false,
+  },
+  {
+    component: ThankyouComponent,
+    href: '#',
+    opened: false,
+    routePath: 'thanks',
+    title: 'Thank You!',
     visible: false,
   },
 ];

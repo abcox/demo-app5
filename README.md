@@ -88,6 +88,7 @@ npx tailwindcss init
 2. [Signalstory](https://www.npmjs.com/package/signalstory)
 3. [InDepth Guide for Customizing Angular Material Button](https://dev.to/shhdharmen/indepth-guide-for-customizing-angular-material-button-58do)
 4. [How to Build a Scheduling App like Calendly](https://www.devteam.space/blog/how-to-build-a-scheduling-app-like-calendly/)
+5. [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 
 # Deploy
 

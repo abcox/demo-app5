@@ -11,3 +11,13 @@ mat-card {
 ::ng-deep p-calendar > span {
   width: calc(100% - 2.357em);
 }
+
+mat-icon /* .btn-icon */ {
+  /* &:hover { */
+  /* path {
+      fill: rgba(#00ffff, 1);
+    } */
+  height: 20px;
+  width: 20px;
+  //}
+}

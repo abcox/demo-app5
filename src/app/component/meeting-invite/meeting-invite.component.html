@@ -3,16 +3,20 @@
     <h1>{{ vm.title }}</h1>
     <ul>
       <li class="mb-1 flex flex-row justify-stretch">
-        <!-- circled_check -->
-        <!-- <svg
-          class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2"
-          stroke-linecap="round"
-          stroke-linejoin="round">
-          <circle cx="12" cy="12" r="11" />
-          <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
-        </svg> -->
         <div>
-          <svg
+          <!-- <svg
+            class="h-6 w-6 flex-none fill-sky-100 stroke-sky-500 stroke-2"
+            stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="11" />
+            <path d="m8 13 2.165 2.165a1 1 0 0 0 1.521-.126L16 9" fill="none" />
+          </svg> --><!--
+          <app-svg-icon name="check_outlined"></app-svg-icon> -->
+          <!-- <img
+            alt="Check Outlined"
+            class="fill-sky-100 stroke-sky-500 justify-self-auto"
+            src="assets/icons/check_outlined.svg" /> -->
+          <!-- <svg
             class="fill-sky-100 stroke-sky-500 justify-self-auto"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -25,7 +29,13 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"></path>
-          </svg>
+          </svg> -->
+          <!-- <app-svg-icon
+            name="clock-outline"
+            class="fill-sky-100 stroke-sky-500"></app-svg-icon> -->
+          <mat-icon
+            class="fill-sky-100 stroke-sky-500"
+            svgIcon="clock-outline"></mat-icon>
         </div>
         <div class="ml-2">
           <p>
@@ -47,7 +57,7 @@
       </li>
       <li class="flex mb-1">
         <div>
-          <svg
+          <!-- <svg
             class="fill-sky-100 stroke-sky-500 justify-self-stretch"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
@@ -60,7 +70,10 @@
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"></path>
-          </svg>
+          </svg> -->
+          <mat-icon
+            class="fill-sky-100 stroke-sky-500"
+            svgIcon="world-outline"></mat-icon>
         </div>
         <div class="ml-2 justify-self-stretch">
           <p>
@@ -70,7 +83,7 @@
       </li>
       <li class="flex">
         <div>
-          <svg
+          <!-- <svg
             class="fill-sky-100 stroke-sky-500 justify-self-stretch"
             xmlns="http://www.w3.org/2000/svg"
             width="18"
@@ -83,7 +96,10 @@
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"></path>
-          </svg>
+          </svg> -->
+          <mat-icon
+            class="fill-sky-100 stroke-sky-500"
+            svgIcon="note-outline"></mat-icon>
         </div>
         <div class="ml-2 justify-self-stretch">
           <p>
@@ -106,18 +122,6 @@
               [maxDate]="vm.meeting?.latestDate ?? getDate()"
               [minDate]="vm.meeting?.earliestDate ?? getDate()"></p-calendar>
           </div>
-          <!-- <div>Timezone</div>
-    <mat-form-field
-      appearance="outline"
-      class="mt-2 mb-5"
-      subscriptSizing="dynamic">
-      <mat-label>Meeting Date</mat-label>
-      <input
-        [formControl]="dayFormControl"
-        matInput
-        placeholder="Name"
-        type="text" />
-    </mat-form-field> -->
         </mat-tab>
         <mat-tab label="Time" [disabled]="!formGroup.controls['date'].value">
           <div class="mt-3">
@@ -131,7 +135,6 @@
               </li>
               @for (time of availableTimesOfSelectedDay; track $index) {
                 <li class="flex m-1 overflow-clip p-1">
-                  <!-- <pre>time.selected: {{ time.selected }}</pre> -->
                   <button
                     [@childAnimation]="
                       time.selected ? 'selectedHalf' : 'unselectedFull'
@@ -175,19 +178,6 @@
         </mat-tab>
       </mat-tab-group>
     </div>
-    <!--
-    <div class="flex justify-center mt-3 mx-3"> -->
-    <!-- <button
-        [disabled]="!formGroup.controls['time'].value"
-        style="width: 100%"
-        type="button"
-        mat-raised-button
-        color="primary"
-        (click)="sendRequest()">
-        Send</button
-      > --><!--
-      [disabled]="!formGroup.valid" --><!--
-    </div> -->
   </form>
 </ng-container>
 <!-- TODO: optionally request email address so that we can send invitation and process reminder notification -->

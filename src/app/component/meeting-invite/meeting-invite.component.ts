@@ -29,6 +29,7 @@ import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CalendarModule } from 'primeng/calendar';
+import { SvgIconComponent } from '../shared/icon/icon.component';
 
 @Component({
   selector: 'app-meeting-invite',
@@ -45,6 +46,7 @@ import { CalendarModule } from 'primeng/calendar';
     MatIconModule,
     MatTabsModule,
     MatSelectModule,
+    SvgIconComponent,
   ],
   templateUrl: './meeting-invite.component.html',
   styleUrl: './meeting-invite.component.scss',

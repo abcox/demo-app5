@@ -30,6 +30,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CalendarModule } from 'primeng/calendar';
 import { SvgIconComponent } from '../shared/icon/icon.component';
+import { MatInputModule } from '@angular/material/input';
+import { distinct, distinctUntilChanged, pairwise, startWith, tap } from 'rxjs';
 
 @Component({
   selector: 'app-meeting-invite',
@@ -40,12 +42,13 @@ import { SvgIconComponent } from '../shared/icon/icon.component';
     FormsModule,
     MatButtonModule,
     MatCardModule,
-    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatIconModule,
+    MatInputModule,
     MatTabsModule,
     MatSelectModule,
+    ReactiveFormsModule,
     SvgIconComponent,
   ],
   templateUrl: './meeting-invite.component.html',
@@ -114,7 +117,7 @@ export class MeetingInviteComponent implements OnInit {
   });
   vmr = this.vm.asReadonly();
 
-  zoneFormControl = new FormControl('');
+  /* zoneFormControl = new FormControl('');
   dayFormControl = new FormControl('');
 
   meetingInviteForm = new FormGroup<MeetingInviteForm>({
@@ -124,7 +127,10 @@ export class MeetingInviteComponent implements OnInit {
     timezone: new FormControl(this.vmr().meeting?.timezone, {
       nonNullable: true,
     }),
-  });
+    name: new FormControl('', {
+      nonNullable: true,
+    }),
+  }); */
 
   date1 = new Date();
   date2 = new Date();
@@ -148,14 +154,23 @@ export class MeetingInviteComponent implements OnInit {
       date: new FormControl<Date | null>(null),
       time: new FormControl<string | null>(null),
       zone: new FormControl<string | null>(this.timezoneOptions[0]),
+      name: new FormControl<string | null>(''),
+      email: new FormControl<string | null>(''),
+      phone: new FormControl<string | null>(''),
     });
-    this.formGroup.valueChanges.subscribe(value => {
-      console.log('value', value);
-      this.tabGroup.selectedIndex = 1;
-      // TODO: bring luxon in to handle timezones, date calcs, etc.
-      // TODO: bring in date-fns to handle date formatting?
-      // TODO: this needs to be a signal (and data from backend that is related to available times - not already scheduled or blocked times)
-      /* if (value.date > new Date(Date.now() + 1000 * 60 * 60 * 24 * 2)) {
+    this.formGroup.valueChanges
+      .pipe(
+        startWith(this.formGroup.value),
+        pairwise(),
+        tap(([prev, curr]) => {
+          console.log('[prev, curr]', [prev, curr]);
+          if (prev.date !== curr.date) {
+            this.tabGroup.selectedIndex = 1;
+          }
+          // TODO: bring luxon in to handle timezones, date calcs, etc.
+          // TODO: bring in date-fns to handle date formatting?
+          // TODO: this needs to be a signal (and data from backend that is related to available times - not already scheduled or blocked times)
+          /* if (value.date > new Date(Date.now() + 1000 * 60 * 60 * 24 * 2)) {
         this.availableTimesOfSelectedDay = [
           { selected: true, value: '9:00 AM' },
           { selected: false, value: '10:00 AM' },
@@ -168,7 +183,9 @@ export class MeetingInviteComponent implements OnInit {
           { selected: false, value: '3:00 PM' },
         ];
       } */
-    });
+        })
+      )
+      .subscribe();
   }
   availableTimesOfSelectedDay: TimeSelectionModel[] = [
     { selected: false, value: '9:00 AM' },
@@ -208,6 +225,14 @@ export class MeetingInviteComponent implements OnInit {
     //this.meetingInviteForm.patchValue({ timezone });
     this.formGroup.patchValue({ zone: timezone });
   }
+  confirmTime() {
+    console.log('confirmTime');
+    this.tabGroup.selectedIndex = 2;
+  }
+  submit() {
+    console.log('submit');
+    this.sendRequest();
+  }
   sendRequest() {
     console.log('sendRequest', this.formGroup.value);
     const date = this.formGroup.value?.date.toLocaleDateString('en-US', {
@@ -220,12 +245,19 @@ export class MeetingInviteComponent implements OnInit {
     this.router.navigate([
       'thanks',
       {
+        name: this.formGroup.value.name,
         message: `I am looking forward to our time on ${date} at ${time} ${zone}!`,
       },
     ]);
   }
   getDate() {
     return new Date();
+  }
+  onDateSelect(event: any) {
+    console.log('onDateSelect', event);
+    this.formGroup.patchValue({ date: event });
+
+    this.tabGroup.selectedIndex = 1;
   }
 }
 
@@ -251,6 +283,8 @@ interface MeetingDurationModel {
 interface MeetingInviteForm {
   dayDate?: FormControl<Date | undefined>;
   timezone: FormControl<string | undefined>;
+  name: FormControl<string | undefined>;
+  email: FormControl<string | undefined>;
 }
 
 interface TimeSelectionModel {

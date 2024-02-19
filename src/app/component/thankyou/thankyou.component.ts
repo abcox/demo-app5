@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, computed, input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 
@@ -12,4 +12,6 @@ import { RouterModule } from '@angular/router';
 })
 export class ThankyouComponent {
   @Input() message? = 'Thank you for your time!';
+  name = input<string>('Thank you!');
+  title = computed(() => `Thank you, ${this.name()}!`);
 }

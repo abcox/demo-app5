@@ -77,6 +77,7 @@ npx tailwindcss init
 
 [Modern CSS in Angular: Layouts](https://blog.angular.io/modern-css-in-angular-layouts-4a259dca9127)
 [Button Over Image](https://play.tailwindcss.com/1DAQLmtEgC)
+[The Tailwind CSS Components Library For Coding 10x Faster](https://www.material-tailwind.com/)
 
 ### State
 

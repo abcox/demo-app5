@@ -1,0 +1,124 @@
+<ng-container *ngIf="vm() as vm">
+  {{ vm.survey.description }}
+  <ng-container *ngIf="vm.survey as survey">
+    <p>{{ survey.title }}</p>
+    <!-- <button mat-raised-button (click)="toggleLinear(survey)" id="toggle-linear">
+    Enable linear mode
+  </button> -->
+    @for (question of survey.forms; track $index) {
+      <ng-container
+        *ngTemplateOutlet="
+          questionTemplate;
+          context: { question, survey, index: $index }
+        " />
+    }
+  </ng-container>
+</ng-container>
+<ng-template
+  #questionTemplate
+  let-question="question"
+  let-survey="survey"
+  let-index="index">
+  <form *ngIf="selectedQuestion === index" [formGroup]="question.formGroup">
+    <ng-container
+      *ngTemplateOutlet="
+        actionsTemplate;
+        context: { question, survey, index }
+      " />
+    <mat-label class="flex my-2">{{ question.text }}</mat-label>
+    <ng-container [ngSwitch]="question.type">
+      <ng-container *ngSwitchCase="'checkbox'">
+        <ul>
+          <li *ngFor="let option of question.options">
+            <mat-checkbox
+              [formControlName]="question.fields[option?.id].label ?? ''"
+              ><!--
+            [value]="option.value" -->
+              {{ option.text }}
+            </mat-checkbox>
+          </li>
+        </ul>
+      </ng-container>
+      <ng-container *ngSwitchCase="'radio'">
+        <mat-radio-group [formControlName]="question.fields[0].label ?? ''">
+          <ul>
+            @for (item of question.options; track item; let i = $index) {
+              <li>
+                <mat-radio-button [value]="i">
+                  {{ item.text }}
+                </mat-radio-button>
+              </li>
+            }
+          </ul>
+        </mat-radio-group>
+      </ng-container>
+      <ng-container *ngSwitchCase="'select'">
+        <mat-form-field>
+          <mat-select [formControlName]="question.fields[0].label ?? ''">
+            <mat-option
+              *ngFor="let option of question.options"
+              [value]="option.value">
+              {{ option.text }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+      <ng-container *ngSwitchCase="'text'">
+        <mat-form-field>
+          <input
+            matInput
+            placeholder=""
+            [formControlName]="question.fields[0].label ?? ''"
+            required
+            type="text" />
+        </mat-form-field>
+      </ng-container>
+      <ng-template *ngSwitchDefault="let questionType"
+        >Undefined type
+      </ng-template></ng-container
+    >
+    <ng-container
+      *ngTemplateOutlet="
+        actionsTemplate;
+        context: { question, survey, index }
+      " />
+    <!-- <pre>type: {{ question.type }}</pre>
+    <pre>index: {{ index }}</pre>
+    <pre>total: {{ survey.questions.length }}</pre> -->
+  </form>
+</ng-template>
+<ng-template
+  #actionsTemplate
+  let-question="question"
+  let-survey="survey"
+  let-index="index">
+  <div>
+    <button
+      [disabled]="!(question.id !== 1)"
+      mat-button
+      (click)="reset($event)">
+      Reset
+      <mat-icon>close</mat-icon>
+    </button>
+    <button
+      [disabled]="!(question.id > 1)"
+      mat-button
+      (click)="previous($event)">
+      Previous
+      <mat-icon>skip_previous</mat-icon>
+    </button>
+    <button
+      [disabled]="!(index !== survey.questions.length - 1)"
+      mat-button
+      (click)="next($event)">
+      Next
+      <mat-icon iconPositionEnd>skip_next</mat-icon>
+    </button>
+    <button mat-button (click)="submit($event)">
+      <!--
+      [disabled]="!(index === survey.questions.length - 1)" -->
+      Submit
+      <mat-icon iconPositionEnd>upload</mat-icon>
+    </button>
+  </div></ng-template
+>

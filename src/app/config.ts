@@ -5,6 +5,7 @@ import { HomePageComponent } from './page/home-page/home-page.component';
 import { InvoicePageComponent } from './page/invoice-page/invoice-page.component';
 import { MeetingPageComponent } from './page/meeting-page/meeting-page.component';
 import { ProfilePageComponent } from './page/profile-page/profile-page.component';
+import { SurveyPageComponent } from './page/survey-page/survey-page.component';
 
 export const menuItems = [
   {
@@ -68,5 +69,13 @@ export const menuItems = [
     routePath: 'thanks',
     title: 'Thank You!',
     visible: false,
+  },
+  {
+    component: SurveyPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'survey',
+    title: 'Survey',
+    visible: true,
   },
 ];

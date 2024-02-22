@@ -82,6 +82,7 @@ npx tailwindcss init
 ### State
 
 [Keeping state with a Service using Signals](https://medium.com/ngconf/keeping-state-with-a-service-using-signals-bee652158ecf)
+[Angular and IndexedDB: A Perfect Pair for Progressive Web Apps](https://medium.com/@zeeshankhan8838/angular-and-indexeddb-a-perfect-pair-for-progressive-web-apps-315a39f49)
 
 # References
 

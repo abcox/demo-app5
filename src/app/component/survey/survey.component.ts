@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import {
   Component,
+  Inject,
   OnChanges,
   OnInit,
   Signal,
@@ -15,6 +16,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  FormsModule,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
@@ -28,6 +30,13 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRippleModule } from '@angular/material/core';
 import { tap } from 'rxjs/internal/operators/tap';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+  MatDialogRef,
+} from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-survey',
@@ -35,6 +44,7 @@ import { tap } from 'rxjs/internal/operators/tap';
   imports: [
     CommonModule,
     MatButtonModule,
+    MatDialogModule,
     MatIconModule,
     MatStepperModule,
     MatFormFieldModule,
@@ -49,6 +59,7 @@ import { tap } from 'rxjs/internal/operators/tap';
   styleUrl: './survey.component.scss',
 })
 export class SurveyComponent implements OnInit, OnChanges {
+  dialog = inject(MatDialog);
   fb = inject(FormBuilder);
   survey = input.required<Survey>();
   vm!: WritableSignal<ViewModel>;
@@ -196,8 +207,62 @@ export class SurveyComponent implements OnInit, OnChanges {
   reset(event: any) {
     event.preventDefault();
     console.log('reset');
-    this.selectedQuestion = 0;
-    this.initViewModel();
+    this.openDialog().subscribe(response => {
+      console.log('response', response);
+      if (response?.ans === 'yes') {
+        this.selectedQuestion = 0;
+        this.initViewModel();
+      }
+    });
+  }
+  openDialog(): Observable<any> {
+    let dialogRef = this.dialog.open(DialogContentComponent, {
+      width: '250px',
+      //data: { name: this.name, animal: this.animal },
+    });
+    return dialogRef.afterClosed(); /* .subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    }); */
+  }
+}
+
+// todo: refactor this to a re-usable component/service
+@Component({
+  selector: 'app-dialog-content',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule, // required by ngModel
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
+  ],
+  template: `<!-- <h1 mat-dialog-title>Hi {{ data.name }}</h1> -->
+    <h1 mat-dialog-title>Reset</h1>
+    <div mat-dialog-content>
+      <p>Do you want to start again?</p>
+      <p>This action cannot be undone.</p>
+      <!-- <mat-form-field>
+        <input matInput [(ngModel)]="data.animal" />
+      </mat-form-field> -->
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button (click)="onNoClick()">No</button>
+      <button mat-button [mat-dialog-close]="{ ans: 'yes' }" cdkFocusInitial>
+        Yes
+      </button>
+    </div>`,
+})
+export class DialogContentComponent {
+  constructor(
+    public dialogRef: MatDialogRef<DialogContentComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
 

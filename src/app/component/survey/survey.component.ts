@@ -100,11 +100,19 @@ export class SurveyComponent implements OnInit, OnChanges {
           tap((value: any) => {
             //console.log('value, question', {value, question});
             let response: any = {};
-            const responses = Object.keys(value)
+            let responses = Object.keys(value)
               .map((key, index) => {
                 const optionIndex =
                   question.type === 'checkbox' ? index : value[key] ?? -1;
-                const optionText = question.options[optionIndex].text;
+                const optionText = question.options[optionIndex]?.text;
+                if (optionIndex === -1 || !optionText) {
+                  return undefined; // skip invalid values / todo: review this because we need the response to be undefined to disabled the 'Next >' button
+                }
+                console.log('{ optionIndex, optionText, options }', {
+                  optionIndex: optionIndex,
+                  optionText: optionText,
+                  options: question.options,
+                });
                 /* console.log('key, index, optionText', {
                   key,
                   index,
@@ -126,6 +134,9 @@ export class SurveyComponent implements OnInit, OnChanges {
               question,
             };
             //console.log('response', response);
+            if (response[questionIndex]?.responses?.length === 0) {
+              response[questionIndex] = null; // if no responses, disable the 'Next >' button with a null response
+            }
             this.responses = { ...this.responses, ...response };
             //console.log('survey responses', this.responses);
             if (
@@ -295,6 +306,7 @@ export interface Question {
   type?: 'checkbox' | 'select' | 'radio' | 'text';
   field?: QuestionField;
   defaultOptionIndex?: number | undefined;
+  required?: boolean;
 }
 
 export interface QuestionField {

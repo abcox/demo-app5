@@ -100,6 +100,8 @@
   let-survey="survey"
   let-index="index">
   <div>
+    <!-- <pre>{{ question.fields[0].label }}</pre>
+    <pre>{{ responses?.[index]?.responses | json }}</pre> -->
     <button
       [disabled]="responses === undefined"
       mat-button
@@ -115,7 +117,15 @@
       <mat-icon>skip_previous</mat-icon>
     </button>
     <button
-      [disabled]="!(index !== survey.questions.length - 1)"
+      [disabled]="
+        !(index !== survey.questions.length - 1) ||
+        (responses?.[index]?.responses === null && question.type === 'radio') ||
+        (responses?.[index]?.responses === null &&
+          question.type === 'select') ||
+        ((responses?.[index]?.responses === null ||
+          responses?.[index]?.responses?.length === 0) &&
+          question.required)
+      "
       mat-button
       (click)="next($event)">
       Next

@@ -37,6 +37,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'radio',
+        required: true,
       },
       {
         id: 2,
@@ -437,6 +438,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'checkbox',
+        required: true,
       },
       {
         id: 10,
@@ -582,6 +584,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'checkbox',
+        required: true,
       },
       {
         id: 11,
@@ -749,6 +752,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'checkbox',
+        required: true,
       },
       {
         id: 19,
@@ -841,6 +845,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'checkbox',
+        required: true,
       },
       {
         id: 21,
@@ -1105,6 +1110,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'checkbox',
+        required: true,
       },
 
       // Information

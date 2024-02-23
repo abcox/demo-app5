@@ -55,11 +55,14 @@
       <ng-container *ngSwitchCase="'select'">
         <mat-form-field>
           <mat-select [formControlName]="question.fields[0].label ?? ''">
-            <mat-option
-              *ngFor="let option of question.options"
-              [value]="option.value">
-              {{ option.text }}
-            </mat-option>
+            @if (question.defaultOptionIndex === undefined) {
+              <mat-option [value]="-1"> Select an option </mat-option>
+            }
+            @for (item of question.options; track item; let i = $index) {
+              <mat-option [value]="i">
+                {{ item.text }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
       </ng-container>
@@ -94,7 +97,7 @@
   let-index="index">
   <div>
     <button
-      [disabled]="!(question.id !== 1)"
+      [disabled]="responses === undefined"
       mat-button
       (click)="reset($event)">
       Reset

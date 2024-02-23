@@ -966,6 +966,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'select',
+        //defaultOptionIndex: -1,
       },
       {
         id: 23,
@@ -989,6 +990,7 @@ export class SurveyPageComponent {
           },
         ],
         type: 'select',
+        defaultOptionIndex: 0,
       },
       {
         id: 24,

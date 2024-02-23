@@ -53,10 +53,15 @@ export class SurveyComponent implements OnInit, OnChanges {
   survey = input.required<Survey>();
   vm!: WritableSignal<ViewModel>;
   selectedQuestion = 0;
-  responses: any = {};
+  responses: any;
   getSurveyWithFormGroups(survey: Survey): QuestionForm[] {
     const results = survey.questions.map((question, questionIndex) => {
       const formId = `f${questionIndex}`;
+      const defaultOptionIndex = question.defaultOptionIndex;
+      const formValue =
+        question.type === 'select' && defaultOptionIndex !== undefined
+          ? defaultOptionIndex
+          : -1;
       const fields =
         question.type === 'checkbox'
           ? question.options.map((option, index) => {
@@ -69,9 +74,11 @@ export class SurveyComponent implements OnInit, OnChanges {
           : [
               {
                 label: `${formId}_c0`,
-                control: new FormControl(''),
+                control: new FormControl(formValue),
               },
             ];
+      // todo: add support for text input
+      // todo: init responses with defaults
       const formFields: any = {};
       fields.forEach(field => {
         formFields[field.label] = field.control;
@@ -92,18 +99,16 @@ export class SurveyComponent implements OnInit, OnChanges {
                   index,
                   optionText,
                 }); */
-                const result =
-                  (question.type === 'checkbox' && value[key]) ||
-                  question.type === 'radio'
-                    ? {
-                        controlId: key,
-                        text: optionText,
-                        questionOptionIndex: optionIndex,
-                      }
-                    : null;
-                return result;
+                if (question.type === 'checkbox' && !value[key]) {
+                  return null; // skip false values on checkboxes
+                }
+                return {
+                  controlId: key,
+                  text: optionText,
+                  questionOptionIndex: optionIndex,
+                };
               })
-              .filter((response: any) => response);
+              .filter((response: any) => response); // filter out null values
             //console.log('responses', responses);
             response[questionIndex] = {
               responses,
@@ -135,13 +140,37 @@ export class SurveyComponent implements OnInit, OnChanges {
     console.log('changes', changes);
   }
   initViewModel() {
-    this.responses = {};
+    this.responses = undefined;
     this.vm = signal<ViewModel>({
       survey: {
         ...this.survey(),
         forms: this.getSurveyWithFormGroups(this.survey()),
       } as Survey,
     });
+    //this.responses = this.getInitResponses(this.survey());
+  }
+  getInitResponses(survey: Survey) {
+    const responses: any = {};
+    survey.questions.forEach((question, questionIndex) => {
+      const defaultOptionIndex = question.defaultOptionIndex ?? -1;
+      if (
+        [-1, undefined].includes(defaultOptionIndex) || // no default option
+        responses[questionIndex]?.responses?.length > 0 // already has responses
+      ) {
+        return;
+      }
+      responses[questionIndex] = {
+        responses: [
+          {
+            controlId: `f${questionIndex}_c0`,
+            text: question.options[defaultOptionIndex]?.text ?? undefined,
+            questionOptionIndex: defaultOptionIndex,
+          },
+        ],
+        question,
+      };
+    });
+    return responses;
   }
   toggleLinear(survey: Survey) {
     survey.isLinear = !survey.isLinear;
@@ -157,6 +186,8 @@ export class SurveyComponent implements OnInit, OnChanges {
   submit(event: any) {
     event.preventDefault();
     //console.log('submit');
+    const defaultResponses = this.getInitResponses(this.survey());
+    this.responses = { ...defaultResponses, ...this.responses };
     console.log('survey responses', this.responses);
   }
   reset(event: any) {
@@ -192,6 +223,7 @@ export interface Question {
   options: Option[];
   type?: 'checkbox' | 'select' | 'radio' | 'text';
   field?: QuestionField;
+  defaultOptionIndex?: number | undefined;
 }
 
 export interface QuestionField {

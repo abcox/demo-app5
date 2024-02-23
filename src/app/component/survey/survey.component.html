@@ -102,6 +102,9 @@
   <div>
     <!-- <pre>{{ question.fields[0].label }}</pre>
     <pre>{{ responses?.[index]?.responses | json }}</pre> -->
+    <!-- <pre>responses?.count: {{ responses?.count - 1 ?? 0 }}</pre>
+    <pre>survey.questions.length: {{ survey.questions.length }}</pre>
+    <pre>bool: {{ responses?.count - 1 ?? 0 !== survey.questions.length }}</pre> -->
     <button
       [disabled]="responses === undefined"
       mat-button
@@ -131,7 +134,7 @@
       Next
       <mat-icon iconPositionEnd>skip_next</mat-icon>
     </button>
-    <button mat-button (click)="submit($event)">
+    <button [disabled]="!formValid" mat-button (click)="submit($event)">
       <!--
       [disabled]="!(index === survey.questions.length - 1)" -->
       Submit

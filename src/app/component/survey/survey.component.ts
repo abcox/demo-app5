@@ -65,6 +65,7 @@ export class SurveyComponent implements OnInit, OnChanges {
   vm!: WritableSignal<ViewModel>;
   selectedQuestion = 0;
   responses: any;
+  formValid = false;
   getSurveyWithFormGroups(survey: Survey): QuestionForm[] {
     const results = survey.questions.map((question, questionIndex) => {
       const formId = `f${questionIndex}`;
@@ -138,13 +139,16 @@ export class SurveyComponent implements OnInit, OnChanges {
               response[questionIndex] = null; // if no responses, disable the 'Next >' button with a null response
             }
             this.responses = { ...this.responses, ...response };
-            //console.log('survey responses', this.responses);
+            this.initResponsesCount();
+            console.log('survey responses', this.responses);
             if (
               question.type === 'radio' &&
               this.selectedQuestion !== survey.questions.length - 1
             ) {
               this.next();
             }
+            this.formValid =
+              (this.responses?.count ?? 0) - 1 === survey.questions.length;
           })
         )
         .subscribe();
@@ -175,7 +179,11 @@ export class SurveyComponent implements OnInit, OnChanges {
         forms: this.getSurveyWithFormGroups(this.survey()),
       } as Survey,
     });
-    //this.responses = this.getInitResponses(this.survey());
+    this.responses = {
+      ...this.getInitResponses(this.survey()),
+      count: (this.responses ? Object.keys(this.responses)?.length : 0) ?? 0,
+    };
+    this.initResponsesCount();
   }
   getInitResponses(survey: Survey) {
     const responses: any = {};
@@ -200,6 +208,11 @@ export class SurveyComponent implements OnInit, OnChanges {
     });
     return responses;
   }
+  initResponsesCount() {
+    const count = Object.keys(this.responses)?.length ?? 0; // count of questions with responses to enable the 'Submit' button
+    console.log('survey responses', this.responses);
+    this.responses.count = count;
+  }
   toggleLinear(survey: Survey) {
     survey.isLinear = !survey.isLinear;
   }
@@ -214,8 +227,8 @@ export class SurveyComponent implements OnInit, OnChanges {
   submit(event: any) {
     event.preventDefault();
     //console.log('submit');
-    const defaultResponses = this.getInitResponses(this.survey());
-    this.responses = { ...defaultResponses, ...this.responses };
+    //const defaultResponses = this.getInitResponses(this.survey());
+    //this.responses = { ...defaultResponses, ...this.responses };
     console.log('survey responses', this.responses);
   }
   reset(event: any) {

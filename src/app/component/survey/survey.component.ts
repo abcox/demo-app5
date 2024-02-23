@@ -117,6 +117,9 @@ export class SurveyComponent implements OnInit, OnChanges {
             //console.log('response', response);
             this.responses = { ...this.responses, ...response };
             //console.log('survey responses', this.responses);
+            if (question.type === 'radio') {
+              this.next();
+            }
           })
         )
         .subscribe();
@@ -175,8 +178,8 @@ export class SurveyComponent implements OnInit, OnChanges {
   toggleLinear(survey: Survey) {
     survey.isLinear = !survey.isLinear;
   }
-  next(event: any) {
-    event.preventDefault();
+  next(event?: any) {
+    event?.preventDefault();
     this.selectedQuestion++;
   }
   previous(event: any) {

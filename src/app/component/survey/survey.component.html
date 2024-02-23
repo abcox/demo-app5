@@ -2,6 +2,7 @@
   {{ vm.survey.description }}
   <ng-container *ngIf="vm.survey as survey">
     <p>{{ survey.title }}</p>
+    <hr class="h-px my-2 bg-gray-200 border-0 dark:bg-gray-700" />
     <!-- <button mat-raised-button (click)="toggleLinear(survey)" id="toggle-linear">
     Enable linear mode
   </button> -->
@@ -25,7 +26,9 @@
         actionsTemplate;
         context: { question, survey, index }
       " />
+    <!-- <hr class="h-px mb-3 mt-2 bg-gray-200 border-0 dark:bg-gray-700" /> -->
     <mat-label class="flex my-2">{{ question.text }}</mat-label>
+    <hr class="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700" />
     <ng-container [ngSwitch]="question.type">
       <ng-container *ngSwitchCase="'checkbox'">
         <ul>
@@ -80,6 +83,7 @@
         >Undefined type
       </ng-template></ng-container
     >
+    <hr class="h-px my-3 bg-gray-200 border-0 dark:bg-gray-700" />
     <ng-container
       *ngTemplateOutlet="
         actionsTemplate;

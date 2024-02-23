@@ -128,7 +128,10 @@ export class SurveyComponent implements OnInit, OnChanges {
             //console.log('response', response);
             this.responses = { ...this.responses, ...response };
             //console.log('survey responses', this.responses);
-            if (question.type === 'radio') {
+            if (
+              question.type === 'radio' &&
+              this.selectedQuestion !== survey.questions.length - 1
+            ) {
               this.next();
             }
           })

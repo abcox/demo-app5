@@ -39,6 +39,51 @@ ng add @angular-eslint/schematics --skip-confirmation
 npm install prettier prettier-eslint eslint-config-prettier eslint-plugin-prettier --save-dev
 ```
 
+## Backend (demo-app5-api)
+
+The backend is built with .NET 8 in C# and available in github as [demo-app5-api](https://github.com/abcox/demo-app5-backend). We are also providing API via the Open API Standard and publishing the swagger.json.
+
+In order to expedite the process of consuming the backend API, we will use the Open API Standard with Swagger Codegen utilities to help us scaffold the client module using the pre-built Typescript template.
+
+Procedure:
+
+1. Install [@openapitools/openapi-generator-cli](https://github.com/OpenAPITools/openapi-generator-cli)
+   ```
+   npm install @openapitools/openapi-generator-cli -g
+   ```
+2. Of many ways to generate the client from the swagger.json file, the following is one:
+   - refer to online docs and the README.md files in the generate api client project
+   - add a script to the package.json, like:
+     ```
+     "openapi-gen-v1": "openapi-generator-cli generate -g typescript-angular -i http://localhost:5071/swagger/v1/swagger.json -o ..\\demo-app5-backend-clients\\v1 -p npmName=demo-app5-api-v1"
+     ```
+   - run the script like `npm run openapi-gen-v1`
+   - cd to the output folder, and run `npm install`, then `npm run build`
+   - it is possible to reference this work like:
+      ```
+      import {
+         WeatherForecast,
+         WeatherForecastService,
+      } from '../../../../../demo-app5-backend-clients/v1';
+      ```
+   - configure the module in `app.config.ts` like
+      ```
+      export function apiConfigFactory(): Configuration {
+         const params: ConfigurationParameters = {
+            basePath: 'https://demo-app5-api.azurewebsites.net',
+         };
+         return new Configuration(params);
+      }
+      export const appConfig: ApplicationConfig = {
+         providers: [
+            // ..
+            // ..
+            importProvidersFrom(ApiModule.forRoot(apiConfigFactory)),
+         ]
+      }
+      ```
+   - make sure to add CORS policy to the API service so that the client has access
+
 ## TailwindCSS
 
 ```

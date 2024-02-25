@@ -1,28 +1,45 @@
 <h1>Clients</h1>
 <form [formGroup]="form">
-  <mat-form-field class="flex w-full" appearance="outline">
+  <mat-form-field class="flex" appearance="outline">
     <input matInput placeholder="Search" formControlName="search" />
     <mat-icon matIconPrefix>search</mat-icon>
+    <button
+      mat-icon-button
+      matSuffix
+      *ngIf="search()"
+      (click)="form.controls?.search?.reset()">
+      <mat-icon>close</mat-icon>
+    </button>
   </mat-form-field>
 </form>
 <ul>
-  @for (client of filteredClientList(); track $index) {
+  @if (filteredClientList()?.length === 0) {
     <li>
       <mat-card class="mb-3 py-3">
-        <mat-card-header>
-          <mat-card-title>{{ client.name }}</mat-card-title>
-          <mat-card-subtitle>{{ client.email }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content class="mt-3">
-          <p>{{ client.address }}</p>
-          <p>{{ client.phone }}</p>
+        <mat-card-content>
+          <p>No clients found</p>
         </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>Edit</button>
-          <button mat-button>Delete</button>
-        </mat-card-actions>
       </mat-card>
     </li>
+  } @else {
+    @for (client of filteredClientList(); track $index) {
+      <li>
+        <mat-card class="mb-3 py-3">
+          <mat-card-header>
+            <mat-card-title>{{ client.name }}</mat-card-title>
+            <mat-card-subtitle>{{ client.email }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content class="mt-3">
+            <p>{{ client.address }}</p>
+            <p>{{ client.phone }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>Edit</button>
+            <button mat-button>Delete</button>
+          </mat-card-actions>
+        </mat-card>
+      </li>
+    }
   }
 </ul>
 <button mat-button>Add</button>

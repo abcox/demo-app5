@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, computed, effect, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -13,6 +14,7 @@ import { debounce, tap } from 'rxjs/operators';
   selector: 'app-client-page',
   standalone: true,
   imports: [
+    CommonModule,
     MatButtonModule,
     MatCardModule,
     MatFormFieldModule,
@@ -78,4 +80,7 @@ export class ClientPageComponent {
   filteredClientList = computed(() =>
     this.clients.filter(client => client.name.includes(this.search() ?? ''))
   );
+  resetSearch() {
+    this.form.controls.search.setValue('');
+  }
 }

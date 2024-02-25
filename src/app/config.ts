@@ -7,6 +7,7 @@ import { MeetingPageComponent } from './page/meeting-page/meeting-page.component
 import { ProfilePageComponent } from './page/profile-page/profile-page.component';
 import { SurveyPageComponent } from './page/survey-page/survey-page.component';
 import { WeatherPageComponent } from './page/weather-page/weather-page.component';
+import { ClientPageComponent } from './page/client-page/client-page.component';
 
 export const menuItems = [
   {
@@ -85,6 +86,14 @@ export const menuItems = [
     opened: false,
     routePath: 'weather',
     title: 'Weather',
+    visible: true,
+  },
+  {
+    component: ClientPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'client',
+    title: 'Clients',
     visible: true,
   },
 ];

@@ -41,7 +41,8 @@ export class AppComponent {
     this.userState.set('name', 'Jessie'); // for testing
     this.userState.set('email', 'jdoe@gmail.com'); // for testing
     //this.router.navigate(['meeting/invite']); // for testing
-    this.router.navigate(['survey']); // for testing
+    //this.router.navigate(['survey']); // for testing
+    this.router.navigate(['client']); // for testing
 
     this.registerSvgIcons();
   }

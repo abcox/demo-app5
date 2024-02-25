@@ -25,13 +25,6 @@ import { debounce, tap } from 'rxjs/operators';
 })
 export class ClientPageComponent {
   form = new FormGroup({
-    /* name: new FormControl(''),
-    address: new FormControl(''),
-    city: new FormControl(''),
-    state: new FormControl(''),
-    zip: new FormControl(''),
-    phone: new FormControl(''),
-    email: new FormControl(''), */
     search: new FormControl(''),
   });
   clients = [
@@ -77,12 +70,7 @@ export class ClientPageComponent {
     },
   ];
   search = toSignal(
-    this.form.controls.search.valueChanges.pipe(
-      debounce(() => interval(1000))
-      /* tap(value => {
-        console.log('value', value);
-      }) */
-    )
+    this.form.controls.search.valueChanges.pipe(debounce(() => interval(1000)))
   );
   constructor() {
     effect(() => console.log(`search`, this.search()));

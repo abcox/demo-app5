@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { interval } from 'rxjs/internal/observable/interval';
 import { debounce, tap } from 'rxjs/operators';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @Component({
   selector: 'app-client-page',
@@ -21,6 +22,7 @@ import { debounce, tap } from 'rxjs/operators';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
+    ScrollingModule,
   ],
   templateUrl: './client-page.component.html',
   styleUrl: './client-page.component.scss',

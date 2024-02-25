@@ -1,0 +1,19 @@
+.virtual-scroll-container {
+  height: 200px;
+  width: 100%;
+  /* border: 1px dotted gray; */
+  padding: 10px 2px;
+
+  .virtual-scroll-viewport {
+    height: 100%;
+    width: 100%;
+    /* border: 1px dotted gray; */
+    padding: 10px;
+  }
+}
+
+.virtual-scroll-item {
+  height: 100%;
+  /* padding: 10px; */
+  margin: 5px 10px;
+}

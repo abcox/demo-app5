@@ -8,6 +8,8 @@ import { ProfilePageComponent } from './page/profile-page/profile-page.component
 import { SurveyPageComponent } from './page/survey-page/survey-page.component';
 import { WeatherPageComponent } from './page/weather-page/weather-page.component';
 import { ClientPageComponent } from './page/client-page/client-page.component';
+import { PokemonPageComponent } from './page/pokemon-page/pokemon-page.component';
+import { PokemonDetailPageComponent } from './page/pokemon-detail-page/pokemon-detail-page.component';
 
 export const menuItems = [
   {
@@ -61,8 +63,8 @@ export const menuItems = [
     href: '#',
     opened: false,
     routePath: 'meeting/invite',
-    title: 'Meeting Invite',
-    visible: false,
+    title: 'Meeting Request',
+    visible: true,
   },
   {
     component: ThankyouComponent,
@@ -95,5 +97,21 @@ export const menuItems = [
     routePath: 'client',
     title: 'Clients',
     visible: true,
+  },
+  {
+    component: PokemonPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'demo',
+    title: 'Demo',
+    visible: true,
+  },
+  {
+    component: PokemonDetailPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'demo/detail/:id',
+    title: 'Demo Detail',
+    visible: false,
   },
 ];

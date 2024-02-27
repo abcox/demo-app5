@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {
   WeatherForecast,
   WeatherForecastService,
-} from '../../../../../demo-app5-backend-clients/v1';
+} from '../../../backend-api/v1';
 
 @Component({
   selector: 'app-weather-page',

@@ -31,6 +31,8 @@ import {
   PagedListRequest,
 } from '../../service/client-service.service';
 import { RouterModule } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { EMPTY } from 'rxjs';
 
 @Component({
   selector: 'app-client-page',
@@ -42,6 +44,7 @@ import { RouterModule } from '@angular/router';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     RouterModule,
     ScrollingModule,
@@ -79,10 +82,14 @@ export class ClientPageComponent implements AfterViewInit {
   clientListResponse = toSignal(
     toObservable(this.request).pipe(
       tap(request => console.log(`request`, request)),
-      switchMap(request => this.clientService.get(request))
+      switchMap(request =>
+        this.clientService.get(request).pipe(tap(() => this.loading.set(false)))
+      )
     )
   );
-  filteredClientList = computed(() => {
+  loading = signal(true);
+  clientList = computed(() => {
+    /* toSignal(of([])); */
     return this.clientListResponse()?.list;
   });
   resetSearch() {

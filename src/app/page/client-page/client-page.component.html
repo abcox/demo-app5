@@ -14,7 +14,10 @@
 </form>
 <ul
   class="outline outline-1 outline-slate-400 rounded virtual-scroll-container">
-  @if (filteredClientList()?.length === 0) {
+  <div *ngIf="loading()" class="flex justify-center virtual-scroll-viewport">
+    <mat-spinner class="self-center" title="progress-spinner"></mat-spinner>
+  </div>
+  @if (clientList()?.length === 0) {
     <li class="ml-2">
       <p>No clients found</p>
     </li>
@@ -22,7 +25,7 @@
     <!-- @for (item of filteredClientList(); track $index) { -->
     <cdk-virtual-scroll-viewport itemSize="50" class="virtual-scroll-viewport">
       <div
-        *cdkVirtualFor="let item of filteredClientList()"
+        *cdkVirtualFor="let item of clientList()"
         class="virtual-scroll-item">
         <!-- <pre>{{ item | json }}</pre> -->
         <li>
@@ -48,8 +51,8 @@
   }
 </ul>
 <div class="w-full m-2">
-  @if (filteredClientList()?.length ?? 0 > 0) {
-    <p>{{ filteredClientList()?.length }} clients found</p>
+  @if (clientList()?.length ?? 0 > 0) {
+    <p>{{ clientList()?.length }} clients found</p>
   }
 </div>
 <div class="flex justify-between h-10 m-2">

@@ -6,6 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 [Live Demo](https://demo-app5b.azurewebsites.net/)
 
+## Development Environment
+
+node v18.13.0
+
+nmv-windows has been installed.  To switch, run command `nvm use 18.13.0`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
@@ -60,28 +66,28 @@ Procedure:
    - run the script like `npm run openapi-gen-v1`
    - cd to the output folder, and run `npm install`, then `npm run build`
    - it is possible to reference this work like:
-      ```
-      import {
-         WeatherForecast,
-         WeatherForecastService,
-      } from '../../../../../demo-app5-backend-clients/v1';
-      ```
+     ```
+     import {
+        WeatherForecast,
+        WeatherForecastService,
+     } from '../../../../../demo-app5-backend-clients/v1';
+     ```
    - configure the module in `app.config.ts` like
-      ```
-      export function apiConfigFactory(): Configuration {
-         const params: ConfigurationParameters = {
-            basePath: 'https://demo-app5-api.azurewebsites.net',
-         };
-         return new Configuration(params);
-      }
-      export const appConfig: ApplicationConfig = {
-         providers: [
-            // ..
-            // ..
-            importProvidersFrom(ApiModule.forRoot(apiConfigFactory)),
-         ]
-      }
-      ```
+     ```
+     export function apiConfigFactory(): Configuration {
+        const params: ConfigurationParameters = {
+           basePath: 'https://demo-app5-api.azurewebsites.net',
+        };
+        return new Configuration(params);
+     }
+     export const appConfig: ApplicationConfig = {
+        providers: [
+           // ..
+           // ..
+           importProvidersFrom(ApiModule.forRoot(apiConfigFactory)),
+        ]
+     }
+     ```
    - make sure to add CORS policy to the API service so that the client has access
 
 ## TailwindCSS

@@ -10,6 +10,8 @@ import { WeatherPageComponent } from './page/weather-page/weather-page.component
 import { ClientPageComponent } from './page/client-page/client-page.component';
 import { PokemonPageComponent } from './page/pokemon-page/pokemon-page.component';
 import { PokemonDetailPageComponent } from './page/pokemon-detail-page/pokemon-detail-page.component';
+import { ClientPageAddComponent } from './page/client-page-add/client-page-add.component';
+import { ClientPageEditComponent } from './page/client-page-edit/client-page-edit.component';
 
 export const menuItems = [
   {
@@ -97,6 +99,22 @@ export const menuItems = [
     routePath: 'client',
     title: 'Clients',
     visible: true,
+  },
+  {
+    component: ClientPageAddComponent,
+    href: '#',
+    opened: false,
+    routePath: 'client/add',
+    title: 'Clients',
+    visible: false,
+  },
+  {
+    component: ClientPageEditComponent,
+    href: '#',
+    opened: false,
+    routePath: 'client/edit/:id',
+    title: 'Clients',
+    visible: false,
   },
   {
     component: PokemonPageComponent,

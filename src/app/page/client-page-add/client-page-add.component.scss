@@ -1,0 +1,22 @@
+@use '@angular/material' as mat;
+//@import '~@angular/material/theming';
+//@import '../../../theme.scss';
+
+@include mat.core();
+
+/* mat-expansion-panel {
+  @include mat.elevation(0);
+} */
+
+.mat-expansion-panel-header-title {
+  color: var(--mdc-outlined-text-field-label-text-color);
+  font-family: var(--mdc-outlined-text-field-label-text-font);
+  font-size: var(--mdc-outlined-text-field-label-text-size);
+  font-weight: var(--mdc-outlined-text-field-label-text-weight);
+}
+.mat-expansion-panel-header {
+  padding-left: 16px;
+}
+::ng-deep .mat-expansion-indicator:after {
+  border-color: unset; /* why? */
+}

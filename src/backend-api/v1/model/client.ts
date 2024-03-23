@@ -13,8 +13,10 @@ import { Address } from './address';
 
 
 export interface Client { 
-    id?: number;
+    id?: string | null;
     name?: string | null;
+    email?: string | null;
+    phone?: string | null;
     description?: string | null;
     address?: Address;
 }

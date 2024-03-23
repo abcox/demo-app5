@@ -13,7 +13,8 @@ import {
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     // todo: move to environment & test building prod vs. local dev mode
-    basePath: 'https://demo-app5-api.azurewebsites.net', // 'http://localhost:5071', // https://demo-app5-api.azurewebsites.net/
+    //basePath: 'https://demo-app5-api.azurewebsites.net', // todo: refactor to use environment.production.ts ??
+    basePath: 'http://localhost:5071',
   };
   return new Configuration(params);
 }

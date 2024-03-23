@@ -26,13 +26,13 @@ import {
 } from '@angular/cdk/scrolling';
 import { of } from 'rxjs/internal/observable/of';
 import {
-  Client,
   ClientServiceService,
   PagedListRequest,
-} from '../../service/client-service.service';
+} from '../../service/client/client-service.service';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EMPTY } from 'rxjs';
+import { Client } from '../../../backend-api/v1';
 
 @Component({
   selector: 'app-client-page',
@@ -82,15 +82,16 @@ export class ClientPageComponent implements AfterViewInit {
   clientListResponse = toSignal(
     toObservable(this.request).pipe(
       tap(request => console.log(`request`, request)),
+      tap(() => this.loading.set(true)),
       switchMap(request =>
         this.clientService.get(request).pipe(tap(() => this.loading.set(false)))
       )
     )
   );
-  loading = signal(true);
+  loading = signal(false);
   clientList = computed(() => {
     /* toSignal(of([])); */
-    return this.clientListResponse()?.list;
+    return this.clientListResponse()?.data as Client[];
   });
   resetSearch() {
     this.form.controls.search.setValue('');
@@ -138,5 +139,22 @@ export class ClientPageComponent implements AfterViewInit {
       this.searchResults = this.searchResults?.concat(pagedResults);
       console.log(this.searchResults);
     });
+  }
+  deleteItem(item: any) {
+    console.log('delete', item);
+    this.loading.set(true); // todo: move this to an global state ?
+    this.clientService
+      .delete(item.id)
+      .pipe(
+        tap(response =>
+          console.log(`deleteItem clientService.delete response`, response)
+        ),
+        /* tap(
+          response =>
+            (this.searchResults = this.searchResults.filter(i => i !== item))
+        ), */
+        tap(() => this.resetSearch())
+      )
+      .subscribe();
   }
 }

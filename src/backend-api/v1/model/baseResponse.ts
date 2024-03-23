@@ -9,14 +9,16 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Client } from './client';
+import { Status } from './status';
 
 
-export interface ClientPagedResponse { 
-    count?: number;
-    list?: Array<Client> | null;
-    next?: string | null;
-    previous?: string | null;
+export interface BaseResponse { 
     message?: string | null;
+    status?: Status;
+    data?: any | null;
+    count?: number;
 }
+export namespace BaseResponse {
+}
+
 

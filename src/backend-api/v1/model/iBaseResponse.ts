@@ -10,18 +10,13 @@
  * Do not edit the class manually.
  */
 import { Status } from './status';
-import { Client } from './client';
 
 
-export interface ClientPagedResponse { 
-    count?: number;
-    list?: Array<Client> | null;
-    next?: string | null;
-    previous?: string | null;
-    message?: string | null;
+export interface IBaseResponse { 
+    readonly message?: string | null;
     status?: Status;
 }
-export namespace ClientPagedResponse {
+export namespace IBaseResponse {
 }
 
 

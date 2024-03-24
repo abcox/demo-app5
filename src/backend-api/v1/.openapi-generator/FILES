@@ -11,10 +11,12 @@ encoder.ts
 git_push.sh
 index.ts
 model/address.ts
-model/baseResponse.ts
 model/character.ts
 model/client.ts
+model/clientBaseResponse.ts
+model/clientFilter.ts
 model/clientPagedResponse.ts
+model/iBaseResponse.ts
 model/models.ts
 model/status.ts
 model/weatherForecast.ts

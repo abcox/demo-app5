@@ -13,15 +13,12 @@ import { Status } from './status';
 import { Client } from './client';
 
 
-export interface ClientPagedResponse { 
-    count?: number;
-    list?: Array<Client> | null;
-    next?: string | null;
-    previous?: string | null;
+export interface ClientBaseResponse { 
     message?: string | null;
     status?: Status;
+    data?: Client;
 }
-export namespace ClientPagedResponse {
+export namespace ClientBaseResponse {
 }
 
 

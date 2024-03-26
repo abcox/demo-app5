@@ -10,7 +10,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 node v18.13.0
 
-nmv-windows has been installed.  To switch, run command `nvm use 18.13.0`
+nmv-windows has been installed. To switch, run command `nvm use 18.13.0`
 
 ## Development server
 
@@ -144,6 +144,7 @@ npx tailwindcss init
 3. [InDepth Guide for Customizing Angular Material Button](https://dev.to/shhdharmen/indepth-guide-for-customizing-angular-material-button-58do)
 4. [How to Build a Scheduling App like Calendly](https://www.devteam.space/blog/how-to-build-a-scheduling-app-like-calendly/)
 5. [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
+6. [How to Leverage Signals in Angular Services for Better Data Communication](https://dev.to/railsstudent/service-with-a-signal-in-angular-l9e)
 
 # Deploy
 

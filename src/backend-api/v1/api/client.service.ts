@@ -23,8 +23,6 @@ import { Client } from '../model/client';
 // @ts-ignore
 import { ClientBaseResponse } from '../model/clientBaseResponse';
 // @ts-ignore
-import { ClientFilter } from '../model/clientFilter';
-// @ts-ignore
 import { ClientPagedResponse } from '../model/clientPagedResponse';
 // @ts-ignore
 import { IBaseResponse } from '../model/iBaseResponse';
@@ -100,14 +98,35 @@ export class ClientService {
     }
 
     /**
-     * @param clientFilter 
+     * @param name 
+     * @param phone 
+     * @param city 
+     * @param region 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiClientGet(clientFilter?: ClientFilter, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientPagedResponse>;
-    public apiClientGet(clientFilter?: ClientFilter, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientPagedResponse>>;
-    public apiClientGet(clientFilter?: ClientFilter, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientPagedResponse>>;
-    public apiClientGet(clientFilter?: ClientFilter, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiClientGet(name?: string, phone?: string, city?: string, region?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientPagedResponse>;
+    public apiClientGet(name?: string, phone?: string, city?: string, region?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientPagedResponse>>;
+    public apiClientGet(name?: string, phone?: string, city?: string, region?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientPagedResponse>>;
+    public apiClientGet(name?: string, phone?: string, city?: string, region?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (name !== undefined && name !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>name, 'Name');
+        }
+        if (phone !== undefined && phone !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>phone, 'Phone');
+        }
+        if (city !== undefined && city !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>city, 'City');
+        }
+        if (region !== undefined && region !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>region, 'Region');
+        }
 
         let localVarHeaders = this.defaultHeaders;
 
@@ -134,17 +153,6 @@ export class ClientService {
         }
 
 
-        // to determine the Content-Type header
-        const consumes: string[] = [
-            'application/json',
-            'text/json',
-            'application/*+json'
-        ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected !== undefined) {
-            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
-        }
-
         let responseType_: 'text' | 'json' | 'blob' = 'json';
         if (localVarHttpHeaderAcceptSelected) {
             if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
@@ -160,7 +168,7 @@ export class ClientService {
         return this.httpClient.request<ClientPagedResponse>('get', `${this.configuration.basePath}${localVarPath}`,
             {
                 context: localVarHttpContext,
-                body: clientFilter,
+                params: localVarQueryParameters,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -14,7 +14,6 @@ model/address.ts
 model/character.ts
 model/client.ts
 model/clientBaseResponse.ts
-model/clientFilter.ts
 model/clientPagedResponse.ts
 model/iBaseResponse.ts
 model/models.ts

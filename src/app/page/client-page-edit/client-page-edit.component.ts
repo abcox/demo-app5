@@ -20,6 +20,7 @@ import { tap } from 'rxjs/internal/operators/tap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-client-page-edit',
@@ -47,9 +48,9 @@ export class ClientPageEditComponent implements OnDestroy {
   });
   // todo: change to signal
   client$ = toObservable(this.id).pipe(
+    tap(client => console.log(`client id: ${client}`)),
     switchMap(id => this.clientService.getById(id)),
-    tap(client => console.log(client)),
-    tap((client: Client) =>
+    tap(client =>
       this.formGroup.setValue({
         id: client.id,
         name: client.name,

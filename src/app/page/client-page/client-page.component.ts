@@ -79,7 +79,7 @@ export class ClientPageComponent implements AfterViewInit {
       filter: { name: this.search() ?? '' } as unknown as Client,
     } as PagedListRequest<Client>;
   });
-  clientListResponse = toSignal(
+  clientList = toSignal(
     toObservable(this.request).pipe(
       tap(request => console.log(`request`, request)),
       tap(() => this.loading.set(true)),
@@ -89,10 +89,10 @@ export class ClientPageComponent implements AfterViewInit {
     )
   );
   loading = signal(false);
-  clientList = computed(() => {
-    /* toSignal(of([])); */
-    return this.clientListResponse()?.data as Client[];
-  });
+  //clientList = computed(() => {
+  //  /* toSignal(of([])); */
+  //  return this.clientListResponse();
+  //});
   resetSearch() {
     this.form.controls.search.setValue('');
   }

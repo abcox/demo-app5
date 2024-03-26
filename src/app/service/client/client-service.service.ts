@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, filter, map, of, tap } from 'rxjs';
 import {
-  BaseResponse,
   Client,
   Address,
   ClientPagedResponse,
@@ -26,11 +25,21 @@ export class ClientServiceService {
   //    )
   //  );
   //};
-  get = getClientPageFn();
+  //get = getClientPageFn();
+  //get = (request: PagedListRequest<Client>) => {
+  //  return this.clientService
+  //    .apiClientGet(request)
+  //    .pipe(map(response => response.data as Client[]));
+  //};
+  get = (request: any) => {
+    return this.clientService
+      .apiClientGet(request)
+      .pipe(map(response => response.list as Client[]));
+  };
   getById = (id: string) => {
     return this.clientService
       .apiClientIdGet(id)
-      .pipe(map(response => response.data as Client));
+      .pipe(map(response => response?.data as Client));
   };
   update = (id: string, client: Client) => {
     return this.clientService.apiClientIdPut(id, client);
@@ -47,7 +56,7 @@ export class ClientServiceService {
 
 export const getClientPageFn = (): ((
   request: PagedListRequest<Client>
-) => Observable<BaseResponse>) => {
+) => Observable<PagedListResponse<Client>>) => {
   const httpClient = inject(HttpClient);
   return request => {
     const { limit, offset, filter } = request;
@@ -55,7 +64,7 @@ export const getClientPageFn = (): ((
     if (filter?.name) {
       url += `&filter.name=${filter.name}`;
     }
-    return httpClient.get<ClientPagedResponse>(url).pipe(
+    return httpClient.get<PagedListResponse<Client>>(url).pipe(
       tap(resp => console.log(`resp`, resp)),
       map((resp, i) => ({
         ...resp,

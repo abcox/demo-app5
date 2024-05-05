@@ -145,6 +145,7 @@ npx tailwindcss init
 4. [How to Build a Scheduling App like Calendly](https://www.devteam.space/blog/how-to-build-a-scheduling-app-like-calendly/)
 5. [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 6. [How to Leverage Signals in Angular Services for Better Data Communication](https://dev.to/railsstudent/service-with-a-signal-in-angular-l9e)
+7. [Deborah Korata's Angular-Signals github repo](https://github.com/DeborahK/Angular-Signals/blob/main/swVehicles-no-signals/src/app/cart/cart.service.ts)
 
 # Deploy
 

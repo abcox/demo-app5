@@ -26,9 +26,9 @@ import {
 } from '@angular/cdk/scrolling';
 import { of } from 'rxjs/internal/observable/of';
 import {
-  ClientServiceService,
+  ClientService,
   PagedListRequest,
-} from '../../service/client/client-service.service';
+} from '../../service/client/client.service';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EMPTY } from 'rxjs';
@@ -53,7 +53,7 @@ import { Client } from '../../../backend-api/v1';
   styleUrl: './client-page.component.scss',
 })
 export class ClientPageComponent implements AfterViewInit {
-  clientService = inject(ClientServiceService);
+  clientService = inject(ClientService);
   //clients = toSignal(this.clientService.clients);
   @ViewChild(CdkVirtualScrollViewport) virtualScroll!: CdkVirtualScrollViewport;
   form = new FormGroup({

@@ -12,7 +12,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { RouterModule } from '@angular/router';
-import { ClientServiceService } from '../../service/client/client-service.service';
+import { ClientService } from '../../service/client/client.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Client } from '../../../backend-api/v1';
 import { switchMap } from 'rxjs/internal/operators/switchMap';
@@ -38,7 +38,7 @@ import { map } from 'rxjs';
   styleUrl: './client-page-edit.component.scss',
 })
 export class ClientPageEditComponent implements OnDestroy {
-  clientService = inject(ClientServiceService);
+  clientService = inject(ClientService);
   id = input.required<string>();
   formGroup = new FormGroup({
     id: new FormControl(),

@@ -1,12 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, filter, map, of, tap } from 'rxjs';
-import {
-  Client,
-  Address,
-  ClientPagedResponse,
-  ClientService,
-} from '../../../backend-api/v1';
+import * as backend from '../../../backend-api/v1';
+import { Client } from '../../../backend-api/v1';
 
 // todo: move to environment & test building prod vs. local dev mode
 // todo: also, refactor to use the backend-api/v1 module
@@ -16,7 +12,8 @@ const baseUrl = `${host}/api/`; // 'http://localhost:5071/api/'; // 'https://dem
 @Injectable({
   providedIn: 'root',
 })
-export class ClientServiceService {
+export class ClientService {
+  service = inject(backend.ClientService);
   clients = of<Client[]>(data);
   //fetch = (request: PagedListRequest<Client>) => {
   //  return this.clients.pipe(
@@ -32,25 +29,24 @@ export class ClientServiceService {
   //    .pipe(map(response => response.data as Client[]));
   //};
   get = (request: any) => {
-    return this.clientService
+    return this.service
       .apiClientGet(request)
       .pipe(map(response => response.list as Client[]));
   };
   getById = (id: string) => {
-    return this.clientService
+    return this.service
       .apiClientIdGet(id)
       .pipe(map(response => response?.data as Client));
   };
   update = (id: string, client: Client) => {
-    return this.clientService.apiClientIdPut(id, client);
+    return this.service.apiClientIdPut(id, client);
   };
   create = (client: Client) => {
-    return this.clientService.apiClientPost(client);
+    return this.service.apiClientPost(client);
   };
   delete = (id: string) => {
-    return this.clientService.apiClientIdDelete(id);
+    return this.service.apiClientIdDelete(id);
   };
-  clientService = inject(ClientService);
   constructor() {}
 }
 

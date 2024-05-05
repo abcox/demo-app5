@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterModule } from '@angular/router';
-import { ClientServiceService } from '../../service/client/client-service.service';
+import { ClientService } from '../../service/client/client.service';
 import { tap } from 'rxjs/internal/operators/tap';
 import { Client } from '../../../backend-api/v1';
 
@@ -25,7 +25,7 @@ import { Client } from '../../../backend-api/v1';
 })
 export class ClientPageAddComponent {
   router = inject(Router);
-  clientService = inject(ClientServiceService);
+  clientService = inject(ClientService);
   formGroup = new FormGroup({
     name: new FormControl(''),
     email: new FormControl(''),

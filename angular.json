@@ -81,7 +81,8 @@
               "buildTarget": "demo-app5:build:production"
             },
             "development": {
-              "buildTarget": "demo-app5:build:development"
+              "buildTarget": "demo-app5:build:development",
+              "port": 5400
             }
           },
           "defaultConfiguration": "development"

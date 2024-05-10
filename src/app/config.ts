@@ -12,6 +12,7 @@ import { PokemonPageComponent } from './page/pokemon-page/pokemon-page.component
 import { PokemonDetailPageComponent } from './page/pokemon-detail-page/pokemon-detail-page.component';
 import { ClientPageAddComponent } from './page/client-page-add/client-page-add.component';
 import { ClientPageEditComponent } from './page/client-page-edit/client-page-edit.component';
+import { DemoPageComponent } from './page/demo-page/demo-page.component';
 
 export const menuItems = [
   {
@@ -131,5 +132,13 @@ export const menuItems = [
     routePath: 'demo/detail/:id',
     title: 'Demo Detail',
     visible: false,
+  },
+  {
+    component: DemoPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'demo2',
+    title: 'Demo2',
+    visible: true,
   },
 ];

@@ -43,9 +43,10 @@ export class AppComponent {
     //this.router.navigate(['meeting/invite']); // for testing
     //this.router.navigate(['survey']); // for testing
     //this.router.navigate(['demo']); // for testing
-    this.router.navigate(['client']); // for testing
+    //this.router.navigate(['client']); // for testing
     //this.router.navigate(['client/add']); // for testing
     //this.router.navigate(['client/edit/1b9b2583-434b-483f-a241-42910482e2a6']); // for testing
+    this.router.navigate(['demo2']); // for testing
 
     this.registerSvgIcons();
   }

@@ -4,7 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 [Project Document](https://docs.google.com/document/d/1fwAtLKBLx6W1JoTdzPLjsB1wo1t0tuqfREb73-mKaXU/edit?usp=sharing)
 
-[Live Demo](https://demo-app5b.azurewebsites.net/)
+[Web app (ng client)](https://demo-app5b.azurewebsites.net/)
+
+[Web API (.NET 6 Swagger UI)](https://demo-app5-api.azurewebsites.net/swagger/index.html)
 
 ## Development Environment
 
@@ -48,6 +50,8 @@ npm install prettier prettier-eslint eslint-config-prettier eslint-plugin-pretti
 ## Backend (demo-app5-api)
 
 The backend is built with .NET 8 in C# and available in github as [demo-app5-api](https://github.com/abcox/demo-app5-backend). We are also providing API via the Open API Standard and publishing the swagger.json.
+
+Swagger UI hosted at https://demo-app5-api.azurewebsites.net/swagger/index.html
 
 In order to expedite the process of consuming the backend API, we will use the Open API Standard with Swagger Codegen utilities to help us scaffold the client module using the pre-built Typescript template.
 

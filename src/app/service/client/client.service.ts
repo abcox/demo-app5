@@ -47,6 +47,13 @@ export class ClientService {
   delete = (id: string) => {
     return this.service.apiClientIdDelete(id);
   };
+  deleteBatch = (items: string[]) => {
+    return this.service.deleteBatch(items);
+  };
+  upload = (file: File) => {
+    return this.service.clientImport([file]);
+  };
+
   constructor() {}
 }
 

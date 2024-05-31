@@ -11,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { ClientService } from '../../service/client/client.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Client } from '../../../backend-api/v1';
@@ -21,12 +21,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-client-page-edit',
   standalone: true,
   imports: [
     CommonModule,
+    MatExpansionModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
@@ -38,6 +40,7 @@ import { map } from 'rxjs';
   styleUrl: './client-page-edit.component.scss',
 })
 export class ClientPageEditComponent implements OnDestroy {
+  router = inject(Router);
   clientService = inject(ClientService);
   id = input.required<string>();
   formGroup = new FormGroup({
@@ -74,6 +77,16 @@ export class ClientPageEditComponent implements OnDestroy {
     this.clientService
       .update(this.id(), this.formGroup.value)
       .pipe(tap(response => console.log('client updated; response:', response)))
+      .subscribe();
+  }
+  delete() {
+    console.log(`delete client with id ${this.id()}`);
+    this.clientService
+      .delete(this.id())
+      .pipe(
+        tap(response => console.log('client deleted; response:', response)),
+        tap(() => this.router.navigate(['/client']))
+      )
       .subscribe();
   }
 }

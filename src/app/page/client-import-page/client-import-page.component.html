@@ -1,0 +1,66 @@
+<h1 class="mr-2">Client Import</h1>
+<div style="padding: 15px">
+  <div>
+    <div
+      class="dropzone"
+      appFileDragDrop
+      (filesChangeEmitter)="onFileChange($event)">
+      <div class="text-wrapper">
+        <div class="centered">
+          <input
+            #fileInput
+            type="file"
+            name="file"
+            id="file"
+            (change)="
+              onFileChange($any($event.target).files); fileInput.value = ''
+            "
+            multiple />
+          <label for="file">
+            <div class="mb-3">Drop files here, or</div>
+            <div class="textLink">Select from drive...</div>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
+	<div>
+		<mat-list>
+			<h3 mat-subheader>Files</h3>
+			<mat-list-item *ngFor="let file of files">
+				<mat-icon mat-list-icon>folder</mat-icon>
+				<h4 mat-line>{{file.name}}</h4>
+				<button mat-raised-button color="warn" (click)="deleteFile(file)">Delete</button>
+				<mat-divider></mat-divider>
+			</mat-list-item>
+		</mat-list>
+	</div>
+  -->
+</div>
+<div *ngIf="files.length > 0">
+  <h3 mat-subheader>Selected files</h3>
+  <div class="flex flex-col flex-auto">
+    <div
+      class="flex flex-col flex-auto fileItem m-2 p-2 rounded cursor-pointer items-center"
+      *ngFor="let f of files; let ind = index">
+      <div class="fileItemIconDiv" (click)="openConfirmDialog(ind)">
+        <i class="fa-2x fileItemIcon"></i>
+      </div>
+      <!-- https://codepen.io/tippingpointdev/pen/RwKOpoz -->
+      <div class="fileItemText">
+        <p class="line-clamp-1 break-all">{{ f.name }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="flex justify-between mt-3">
+  <button mat-button routerLink="/clients">Back to Clients</button>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="uploadFiles()"
+    [disabled]="files.length === 0">
+    Upload
+  </button>
+</div>

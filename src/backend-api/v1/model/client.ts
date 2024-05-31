@@ -13,6 +13,7 @@ import { Address } from './address';
 
 
 export interface Client { 
+    pk?: string | null;
     id?: string | null;
     name?: string | null;
     email?: string | null;

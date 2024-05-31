@@ -60,6 +60,19 @@ export class ClientService {
         this.encoder = this.configuration.encoder || new CustomHttpParameterCodec();
     }
 
+    /**
+     * @param consumes string[] mime-types
+     * @return true: consumes contains 'multipart/form-data', false: otherwise
+     */
+    private canConsumeForm(consumes: string[]): boolean {
+        const form = 'multipart/form-data';
+        for (const consume of consumes) {
+            if (form === consume) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     // @ts-ignore
     private addToHttpParams(httpParams: HttpParams, value: any, key?: string): HttpParams {
@@ -382,6 +395,7 @@ export class ClientService {
     }
 
     /**
+     * @param filterPk 
      * @param filterId 
      * @param filterName 
      * @param filterEmail 
@@ -394,15 +408,20 @@ export class ClientService {
      * @param filterAddressPostalCode 
      * @param offset 
      * @param limit 
+     * @param continuationToken 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public apiClientMockGet(filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: number, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientPagedResponse>;
-    public apiClientMockGet(filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: number, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientPagedResponse>>;
-    public apiClientMockGet(filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: number, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientPagedResponse>>;
-    public apiClientMockGet(filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: number, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+    public apiClientMockGet(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientPagedResponse>;
+    public apiClientMockGet(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientPagedResponse>>;
+    public apiClientMockGet(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientPagedResponse>>;
+    public apiClientMockGet(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
 
         let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (filterPk !== undefined && filterPk !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterPk, 'Filter.Pk');
+        }
         if (filterId !== undefined && filterId !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>filterId, 'Filter.Id');
@@ -450,6 +469,10 @@ export class ClientService {
         if (limit !== undefined && limit !== null) {
           localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
             <any>limit, 'Limit');
+        }
+        if (continuationToken !== undefined && continuationToken !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>continuationToken, 'ContinuationToken');
         }
 
         let localVarHeaders = this.defaultHeaders;
@@ -565,6 +588,295 @@ export class ClientService {
             {
                 context: localVarHttpContext,
                 body: client,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param filterPk 
+     * @param filterId 
+     * @param filterName 
+     * @param filterEmail 
+     * @param filterPhone 
+     * @param filterDescription 
+     * @param filterAddressId 
+     * @param filterAddressStreet 
+     * @param filterAddressCity 
+     * @param filterAddressCountry 
+     * @param filterAddressPostalCode 
+     * @param offset 
+     * @param limit 
+     * @param continuationToken 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public client(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientPagedResponse>;
+    public client(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientPagedResponse>>;
+    public client(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientPagedResponse>>;
+    public client(filterPk?: string, filterId?: string, filterName?: string, filterEmail?: string, filterPhone?: string, filterDescription?: string, filterAddressId?: string, filterAddressStreet?: string, filterAddressCity?: string, filterAddressCountry?: string, filterAddressPostalCode?: string, offset?: number, limit?: number, continuationToken?: string, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarQueryParameters = new HttpParams({encoder: this.encoder});
+        if (filterPk !== undefined && filterPk !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterPk, 'Filter.Pk');
+        }
+        if (filterId !== undefined && filterId !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterId, 'Filter.Id');
+        }
+        if (filterName !== undefined && filterName !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterName, 'Filter.Name');
+        }
+        if (filterEmail !== undefined && filterEmail !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterEmail, 'Filter.Email');
+        }
+        if (filterPhone !== undefined && filterPhone !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterPhone, 'Filter.Phone');
+        }
+        if (filterDescription !== undefined && filterDescription !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterDescription, 'Filter.Description');
+        }
+        if (filterAddressId !== undefined && filterAddressId !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterAddressId, 'Filter.Address.Id');
+        }
+        if (filterAddressStreet !== undefined && filterAddressStreet !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterAddressStreet, 'Filter.Address.Street');
+        }
+        if (filterAddressCity !== undefined && filterAddressCity !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterAddressCity, 'Filter.Address.City');
+        }
+        if (filterAddressCountry !== undefined && filterAddressCountry !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterAddressCountry, 'Filter.Address.Country');
+        }
+        if (filterAddressPostalCode !== undefined && filterAddressPostalCode !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>filterAddressPostalCode, 'Filter.Address.PostalCode');
+        }
+        if (offset !== undefined && offset !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>offset, 'Offset');
+        }
+        if (limit !== undefined && limit !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>limit, 'Limit');
+        }
+        if (continuationToken !== undefined && continuationToken !== null) {
+          localVarQueryParameters = this.addToHttpParams(localVarQueryParameters,
+            <any>continuationToken, 'ContinuationToken');
+        }
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+        let localVarTransferCache: boolean | undefined = options && options.transferCache;
+        if (localVarTransferCache === undefined) {
+            localVarTransferCache = true;
+        }
+
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/client/paged`;
+        return this.httpClient.request<ClientPagedResponse>('get', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                params: localVarQueryParameters,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param files 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public clientImport(files?: Array<Blob>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<ClientBaseResponse>;
+    public clientImport(files?: Array<Blob>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<ClientBaseResponse>>;
+    public clientImport(files?: Array<Blob>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<ClientBaseResponse>>;
+    public clientImport(files?: Array<Blob>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+        let localVarTransferCache: boolean | undefined = options && options.transferCache;
+        if (localVarTransferCache === undefined) {
+            localVarTransferCache = true;
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'multipart/form-data'
+        ];
+
+        const canConsumeForm = this.canConsumeForm(consumes);
+
+        let localVarFormParams: { append(param: string, value: any): any; };
+        let localVarUseForm = false;
+        let localVarConvertFormParamsToString = false;
+        // use FormData to transmit files using content-type "multipart/form-data"
+        // see https://stackoverflow.com/questions/4007969/application-x-www-form-urlencoded-or-multipart-form-data
+        localVarUseForm = canConsumeForm;
+        if (localVarUseForm) {
+            localVarFormParams = new FormData();
+        } else {
+            localVarFormParams = new HttpParams({encoder: this.encoder});
+        }
+
+        if (files) {
+            files.forEach((element) => {
+                localVarFormParams = localVarFormParams.append('files', <any>element) as any || localVarFormParams;
+            })
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Client/import`;
+        return this.httpClient.request<ClientBaseResponse>('post', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: localVarConvertFormParamsToString ? localVarFormParams.toString() : localVarFormParams,
+                responseType: <any>responseType_,
+                withCredentials: this.configuration.withCredentials,
+                headers: localVarHeaders,
+                observe: observe,
+                transferCache: localVarTransferCache,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * @param requestBody 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteBatch(requestBody?: Array<string>, observe?: 'body', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<IBaseResponse>;
+    public deleteBatch(requestBody?: Array<string>, observe?: 'response', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpResponse<IBaseResponse>>;
+    public deleteBatch(requestBody?: Array<string>, observe?: 'events', reportProgress?: boolean, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<HttpEvent<IBaseResponse>>;
+    public deleteBatch(requestBody?: Array<string>, observe: any = 'body', reportProgress: boolean = false, options?: {httpHeaderAccept?: 'application/json', context?: HttpContext, transferCache?: boolean}): Observable<any> {
+
+        let localVarHeaders = this.defaultHeaders;
+
+        let localVarHttpHeaderAcceptSelected: string | undefined = options && options.httpHeaderAccept;
+        if (localVarHttpHeaderAcceptSelected === undefined) {
+            // to determine the Accept header
+            const httpHeaderAccepts: string[] = [
+                'application/json'
+            ];
+            localVarHttpHeaderAcceptSelected = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        }
+        if (localVarHttpHeaderAcceptSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Accept', localVarHttpHeaderAcceptSelected);
+        }
+
+        let localVarHttpContext: HttpContext | undefined = options && options.context;
+        if (localVarHttpContext === undefined) {
+            localVarHttpContext = new HttpContext();
+        }
+
+        let localVarTransferCache: boolean | undefined = options && options.transferCache;
+        if (localVarTransferCache === undefined) {
+            localVarTransferCache = true;
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json',
+            'text/json',
+            'application/*+json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            localVarHeaders = localVarHeaders.set('Content-Type', httpContentTypeSelected);
+        }
+
+        let responseType_: 'text' | 'json' | 'blob' = 'json';
+        if (localVarHttpHeaderAcceptSelected) {
+            if (localVarHttpHeaderAcceptSelected.startsWith('text')) {
+                responseType_ = 'text';
+            } else if (this.configuration.isJsonMime(localVarHttpHeaderAcceptSelected)) {
+                responseType_ = 'json';
+            } else {
+                responseType_ = 'blob';
+            }
+        }
+
+        let localVarPath = `/api/Client/batch`;
+        return this.httpClient.request<IBaseResponse>('delete', `${this.configuration.basePath}${localVarPath}`,
+            {
+                context: localVarHttpContext,
+                body: requestBody,
                 responseType: <any>responseType_,
                 withCredentials: this.configuration.withCredentials,
                 headers: localVarHeaders,

@@ -5,6 +5,7 @@ api/api.ts
 api/character.service.ts
 api/client.service.ts
 api/deprecated.service.ts
+api/test.service.ts
 api/weatherForecast.service.ts
 configuration.ts
 encoder.ts

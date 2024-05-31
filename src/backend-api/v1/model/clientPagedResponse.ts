@@ -14,12 +14,13 @@ import { Client } from './client';
 
 
 export interface ClientPagedResponse { 
-    count?: number;
+    count?: number | null;
     list?: Array<Client> | null;
     next?: string | null;
     previous?: string | null;
     message?: string | null;
     status?: Status;
+    continuationToken?: string | null;
 }
 export namespace ClientPagedResponse {
 }

@@ -150,6 +150,8 @@ npx tailwindcss init
 5. [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/)
 6. [How to Leverage Signals in Angular Services for Better Data Communication](https://dev.to/railsstudent/service-with-a-signal-in-angular-l9e)
 7. [Deborah Korata's Angular-Signals github repo](https://github.com/DeborahK/Angular-Signals/blob/main/swVehicles-no-signals/src/app/cart/cart.service.ts)
+8. [ng-select-with-footer (Stackblitz)](https://stackblitz.com/edit/ng-select-with-footer)
+9. [ng-select-with-footer-reactive (Stackblitz)](https://stackblitz.com/edit/ng-select-with-footer-reactive)
 
 # Deploy
 

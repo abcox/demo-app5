@@ -13,6 +13,8 @@ import { PokemonDetailPageComponent } from './page/pokemon-detail-page/pokemon-d
 import { ClientPageAddComponent } from './page/client-page-add/client-page-add.component';
 import { ClientPageEditComponent } from './page/client-page-edit/client-page-edit.component';
 import { DemoPageComponent } from './page/demo-page/demo-page.component';
+import { ClientImportPageComponent } from './page/client-import-page/client-import-page.component';
+import { AdminPageComponent } from './page/admin-page/admin-page.component';
 
 export const menuItems = [
   {
@@ -139,6 +141,22 @@ export const menuItems = [
     opened: false,
     routePath: 'demo2',
     title: 'Demo2',
+    visible: true,
+  },
+  {
+    component: ClientImportPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'client/import',
+    title: 'Client Import',
+    visible: false,
+  },
+  {
+    component: AdminPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'admin',
+    title: 'Admin',
     visible: true,
   },
 ];

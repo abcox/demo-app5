@@ -12,7 +12,7 @@
 
 
 export interface Address { 
-    id?: number;
+    id?: string | null;
     street?: string | null;
     city?: string | null;
     country?: string | null;

@@ -43,6 +43,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { exportClientListToExcel } from '../../common/helper/excel-helper';
+import {
+  BnMatbutTypeDirective,
+  MatButtonType,
+} from '../../common/directives/mat-button-type';
 
 interface ActionViewModel {
   action: (item: any) => void;
@@ -63,6 +67,7 @@ interface ClientViewModel extends Client {
   imports: [
     CommonModule,
     MatButtonModule,
+    BnMatbutTypeDirective,
     MatCardModule,
     MatCheckboxModule,
     MatFormFieldModule,
@@ -94,6 +99,8 @@ export class ClientPageComponent implements AfterViewInit {
     //{ initialValue: '' }
   );
   clientList: WritableSignal<ClientViewModel[]> = signal([]);
+
+  butType = MatButtonType.flat;
 
   constructor(
     private scrollDispatcher: ScrollDispatcher,
@@ -214,6 +221,7 @@ export class ClientPageComponent implements AfterViewInit {
   }
   clearSelection() {
     console.log('clearSelection');
+    this.butType = MatButtonType.flat;
     const list = this.clientList();
     list.forEach(item => (item.selected = false));
     this.clientList.update(() => list);
@@ -222,6 +230,7 @@ export class ClientPageComponent implements AfterViewInit {
   }
   selectAll() {
     console.log('selectAll');
+    this.butType = MatButtonType.raised;
     const list = this.clientList();
     list.forEach(item => (item.selected = true));
     this.clientList.update(() => list);

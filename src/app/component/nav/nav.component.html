@@ -39,7 +39,8 @@
           <button
             (click)="isOpen = !isOpen"
             cdkOverlayOrigin
-            #trigger="cdkOverlayOrigin">
+            #trigger="cdkOverlayOrigin"
+            class="profile">
             <!-- (mouseover)="isOpen = true"
           (mouseout)="isOpen = false" -->
             <!-- <img src="" alt="" class="avatar mat-elevation" /> -->
@@ -57,7 +58,7 @@
                 <mat-card-content>
                   <p>
                     <a (click)="isOpen = !isOpen" routerLink="/profile/edit"
-                      >Edit Profile</a
+                      >Profile</a
                     >
                   </p>
                 </mat-card-content>

@@ -21,3 +21,8 @@
 .w-10 {
   width: 2.5rem !important;
 }
+
+// fix issue with border on button where profile class applied
+button.profile:focus {
+  outline: none;
+}

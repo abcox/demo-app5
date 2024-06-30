@@ -17,3 +17,13 @@
   /* padding: 10px; */
   margin: 5px 10px;
 }
+
+.floating-button-container {
+  z-index: 5;
+  position: fixed;
+  /* display: flex;
+  align-self: flex-end; */
+  bottom: 6%;
+  left: 66%;
+  //margin-bottom: 68px;
+}

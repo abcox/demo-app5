@@ -32,9 +32,10 @@ input[type='file'] {
   color: #fff;
   padding: 10px;
   border-radius: 5px;
-  box-shadow:
+  /* box-shadow:
     0 4px 8px 0 rgba(0, 0, 0, 0.2),
-    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    0 6px 20px 0 rgba(0, 0, 0, 0.19); */
+  margin: 0 24px;
 }
 .textLink::before {
   content: '\f093';
@@ -43,6 +44,9 @@ input[type='file'] {
   color: #fff;
   font-size: large;
   margin-right: 10px;
+}
+.textLink:hover {
+  cursor: pointer;
 }
 
 .text-wrapper {

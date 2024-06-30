@@ -152,6 +152,7 @@ npx tailwindcss init
 7. [Deborah Korata's Angular-Signals github repo](https://github.com/DeborahK/Angular-Signals/blob/main/swVehicles-no-signals/src/app/cart/cart.service.ts)
 8. [ng-select-with-footer (Stackblitz)](https://stackblitz.com/edit/ng-select-with-footer)
 9. [ng-select-with-footer-reactive (Stackblitz)](https://stackblitz.com/edit/ng-select-with-footer-reactive)
+10. [FileHelpers](https://www.filehelpers.net/)
 
 # Deploy
 

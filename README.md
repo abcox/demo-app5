@@ -10,9 +10,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development Environment
 
-node v18.13.0
+Target node version: 18.13.0
 
-nmv-windows has been installed. To switch, run command `nvm use 18.13.0`
+Use nmv-windows to install, and use target node version.
+- install `nvm install 18`
+- use/switch: `nvm use 18.13.0`
 
 ## Development server
 

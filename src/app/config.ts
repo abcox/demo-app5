@@ -15,6 +15,9 @@ import { ClientPageEditComponent } from './page/client-page-edit/client-page-edi
 import { DemoPageComponent } from './page/demo-page/demo-page.component';
 import { ClientImportPageComponent } from './page/client-import-page/client-import-page.component';
 import { AdminPageComponent } from './page/admin-page/admin-page.component';
+import { LoginPageComponent } from './page/login-page/login-page.component';
+import { SignupPageComponent } from './page/signup-page/signup-page.component';
+import { PasswordResetPageComponent } from './page/password-reset-page/password-reset-page.component';
 
 export const menuItems = [
   {
@@ -159,4 +162,28 @@ export const menuItems = [
     title: 'Admin',
     visible: true,
   },
+  /* {
+    component: LoginPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'login',
+    title: 'Login',
+    visible: true,
+  }, */
+  /* {
+    component: SignupPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'signup',
+    title: 'Signup',
+    visible: false,
+  },
+  {
+    component: PasswordResetPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'password-reset',
+    title: 'Password Reset',
+    visible: false,
+  }, */
 ];

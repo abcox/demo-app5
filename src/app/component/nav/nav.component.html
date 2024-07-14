@@ -19,12 +19,14 @@
             >
           }
         }
-        <a (click)="signOut()" mat-list-item>Sign Out</a>
+        <a *ngIf="auth.isAuthenticated()" (click)="signOut()" mat-list-item
+          >Sign Out</a
+        >
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
       <mat-toolbar color="primary">
-        @if (isHandset$ | async) {
+        @if ((isHandset$ | async) && auth.isAuthenticated()) {
           <button
             type="button"
             aria-label="Toggle sidenav"
@@ -45,6 +47,7 @@
           (mouseout)="isOpen = false" -->
             <!-- <img src="" alt="" class="avatar mat-elevation" /> -->
             <img
+              *ngIf="auth.isAuthenticated()"
               alt="Adam Cox"
               class="h-10 rounded-full w-10"
               src="../assets/AdamCox.jpeg" /><!--
@@ -65,9 +68,20 @@
               </mat-card>
             </ng-template>
           </button>
+          <ng-container *ngIf="!auth.isAuthenticated()">
+            <!-- <span class="text-white">{{ auth.userProfile.name }}</span> -->
+            <button mat-link-button [routerLink]="['login']">
+              <!-- <span class="text-white">
+                {{ auth.isAuthenticated() ? auth.userProfile.name : 'Sign In' }}
+              </span> -->
+              Login</button
+            >&nbsp; |&nbsp;&nbsp;<button mat-link-button routerLink="signup">
+              Sign up!
+            </button>
+          </ng-container>
         </div>
       </mat-toolbar>
-      <div class="m-3">
+      <div class="m-4">
         <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>

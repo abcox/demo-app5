@@ -2,6 +2,7 @@
 README.md
 api.module.ts
 api/api.ts
+api/auth.service.ts
 api/character.service.ts
 api/client.service.ts
 api/deprecated.service.ts
@@ -12,12 +13,16 @@ encoder.ts
 git_push.sh
 index.ts
 model/address.ts
+model/authResponse.ts
+model/authResult.ts
 model/character.ts
 model/client.ts
 model/clientBaseResponse.ts
 model/clientPagedResponse.ts
 model/iBaseResponse.ts
+model/loginRequest.ts
 model/models.ts
+model/registerRequest.ts
 model/status.ts
 model/weatherForecast.ts
 ng-package.json

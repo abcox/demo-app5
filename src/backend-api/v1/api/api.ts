@@ -1,3 +1,5 @@
+export * from './auth.service';
+import { AuthService } from './auth.service';
 export * from './character.service';
 import { CharacterService } from './character.service';
 export * from './client.service';
@@ -8,4 +10,4 @@ export * from './test.service';
 import { TestService } from './test.service';
 export * from './weatherForecast.service';
 import { WeatherForecastService } from './weatherForecast.service';
-export const APIS = [CharacterService, ClientService, DeprecatedService, TestService, WeatherForecastService];
+export const APIS = [AuthService, CharacterService, ClientService, DeprecatedService, TestService, WeatherForecastService];

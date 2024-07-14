@@ -15,10 +15,10 @@ interface ViewModel {
 }
 
 @Component({
-  imports: [RouterOutlet, NavComponent, CommonModule, RouterModule, MatButton],
+  //imports: [RouterOutlet, NavComponent, CommonModule, RouterModule, MatButton],
   providers: [UserStateService],
   selector: 'app-root',
-  standalone: true,
+  //standalone: true,
   styleUrl: './app.component.scss',
   templateUrl: './app.component.html',
 })
@@ -46,7 +46,8 @@ export class AppComponent {
     //this.router.navigate(['client']); // for testing
     //this.router.navigate(['client/add']); // for testing
     //this.router.navigate(['client/edit/1b9b2583-434b-483f-a241-42910482e2a6']); // for testing
-    this.router.navigate(['demo2']); // for testing
+    //this.router.navigate(['demo2']); // for testing
+    //this.router.navigate(['login']); // for testing
 
     this.registerSvgIcons();
   }

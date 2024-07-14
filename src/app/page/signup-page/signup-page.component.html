@@ -2,12 +2,21 @@
   <mat-card class="w-full max-w-md p-8">
     <mat-card-header>
       <mat-card-title class="text-2xl font-bold text-center pb-2"
-        >Login</mat-card-title
+        >Welcome!</mat-card-title
       >
     </mat-card-header>
     <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" class="w-full">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <mat-form-field appearance="fill" class="w-full mb-4">
+          <mat-label>Name</mat-label>
+          <input matInput formControlName="name" type="text" class="w-full" />
+          <mat-error *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+            <ng-container *ngIf="name?.hasError('required')"
+              >Name is required.</ng-container
+            >
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="w-full mb-4">
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" type="email" class="w-full" />
           <mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
@@ -19,7 +28,7 @@
             >
           </mat-error>
         </mat-form-field>
-        <mat-form-field appearance="fill" class="w-full pt-2">
+        <mat-form-field appearance="fill" class="w-full mb-6">
           <mat-label>Password</mat-label>
           <input
             matInput
@@ -33,40 +42,32 @@
             >
           </mat-error>
         </mat-form-field>
-        <mat-form-field
-          *ngIf="(routeInfo$ | async)?.history?.state.verify"
-          appearance="fill"
-          class="w-full pt-2">
-          <mat-label>Verify code</mat-label>
+        <mat-form-field appearance="fill" class="w-full mb-6">
+          <mat-label>Retype password</mat-label>
           <input
             matInput
-            formControlName="verifyCode"
-            type="text"
+            formControlName="password2"
+            type="password"
             class="w-full" />
           <mat-error
-            *ngIf="
-              verifyCode?.invalid && (verifyCode?.dirty || verifyCode?.touched)
-            ">
-            <ng-container *ngIf="verifyCode?.hasError('required')"
-              >Verify code is required.</ng-container
+            *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+            <ng-container *ngIf="password2?.hasError('invalid')"
+              >Password is required.</ng-container
             >
           </mat-error>
         </mat-form-field>
-        <a routerLink="/password-reset">Reset password</a>
-        <div class="flex justify-between">
-          <a class="self-end" routerLink="/signup"
-            ><h3 class="!mb-0">Sign up!</h3></a
+        <div class="flex justify-between pt-2">
+          <a class="self-end" routerLink="/login"
+            ><h3 class="!mb-0">Login</h3></a
           >
-          <div class="flex justify-end pt-2">
-            <button
-              mat-flat-button
-              color="primary"
-              type="submit"
-              [disabled]="loginForm.invalid"
-              class="px-4 py-2">
-              Login
-            </button>
-          </div>
+          <button
+            mat-flat-button
+            color="primary"
+            type="submit"
+            [disabled]="signupForm.invalid"
+            class="px-4 py-2">
+            Sign up!
+          </button>
         </div>
       </form>
     </mat-card-content>

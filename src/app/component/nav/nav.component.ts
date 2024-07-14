@@ -13,6 +13,7 @@ import { UserStateService } from '../../service/user-state/user-state.service';
 import { menuItems } from '../../config';
 import { MatCardModule } from '@angular/material/card';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { AuthService } from '../../service/auth/auth.service';
 
 export interface MenuItem {
   href: string;
@@ -47,13 +48,17 @@ interface ViewModel {
   standalone: true,
 })
 export class NavComponent {
+  auth = inject(AuthService);
+
   @ViewChild('drawer') public drawer!: MatSidenav;
+
   protected isOpen = false;
   private breakpointObserver = inject(BreakpointObserver);
   private router = inject(Router);
   private user = inject(UserStateService);
 
   vm = signal<ViewModel>({
+    //menuItems: this.auth.isAuthenticated() ? menuItems : [],
     menuItems,
   });
 
@@ -78,6 +83,8 @@ export class NavComponent {
     console.log('vm', this.vm().menuItems);
   }
   signOut() {
-    this.user.set('token', undefined);
+    //this.user.set('token', undefined);
+    this.auth.logout();
+    this.drawer.toggle();
   }
 }

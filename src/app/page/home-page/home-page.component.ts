@@ -4,18 +4,25 @@ import { menuItems } from '../../config';
 import { RouterModule } from '@angular/router';
 import { UserStateService } from '../../service/user-state/user-state.service';
 import { MatButtonModule } from '@angular/material/button';
+import { AuthService } from '../../service/auth/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [MatButtonModule, MatListModule, RouterModule],
+  imports: [CommonModule, MatButtonModule, MatListModule, RouterModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.scss',
 })
 export class HomePageComponent {
   private user = inject(UserStateService);
-  menuItems = menuItems;
+  private auth = inject(AuthService);
+  isAuthenticated = this.auth.isAuthenticated;
+  filteredMenuItems = menuItems.filter(
+    item => item.title /*  !== 'Login' && this.isAuthenticated() */
+  );
   signOut() {
-    this.user.set('token', undefined);
+    //this.user.set('token', undefined);
+    this.auth.logout();
   }
 }

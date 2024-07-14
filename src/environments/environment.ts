@@ -1,3 +1,4 @@
 export const environment = {
-  mainApiUrl: 'https://demo-app5-api.azurewebsites.net',
+  production: false,
+  mainApiUrl: 'http://localhost:5071',
 };

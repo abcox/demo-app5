@@ -1,20 +1,27 @@
-<mat-nav-list>
-  @for (item of filteredMenuItems; track $index) {
-    @if (item.visible === undefined || item.visible === true) {
+<mat-card class="p-5">
+  <div class="flex">
+    <mat-nav-list>
+      @for (item of filteredMenuItems; track $index) {
+        @if (item.visible === undefined || item.visible === true) {
+          <mat-list-item>
+            <button
+              mat-button
+              color="primary"
+              routerLink="/{{ item.routePath }}">
+              {{ item.title }}
+            </button>
+          </mat-list-item>
+        }
+      }
       <mat-list-item>
-        <button mat-button color="primary" routerLink="/{{ item.routePath }}">
-          {{ item.title }}
+        <button
+          *ngIf="isAuthenticated()"
+          mat-button
+          color="primary"
+          (click)="signOut()">
+          Sign Out
         </button>
       </mat-list-item>
-    }
-  }
-  <mat-list-item>
-    <button
-      *ngIf="isAuthenticated()"
-      mat-button
-      color="primary"
-      (click)="signOut()">
-      Sign Out
-    </button>
-  </mat-list-item>
-</mat-nav-list>
+    </mat-nav-list>
+  </div>
+</mat-card>

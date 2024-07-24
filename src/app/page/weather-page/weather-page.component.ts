@@ -3,11 +3,12 @@ import {
   WeatherForecast,
   WeatherForecastService,
 } from '../../../backend-api/v1';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-weather-page',
   standalone: true,
-  imports: [],
+  imports: [MatCardModule],
   templateUrl: './weather-page.component.html',
   styleUrl: './weather-page.component.scss',
 })

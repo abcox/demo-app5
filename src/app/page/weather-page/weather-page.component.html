@@ -1,9 +1,12 @@
-<h1>Weather Forecasts</h1>
-<ul>
-  @for (item of weatherForecasts; track item; let i = $index) {
-    <li>
-      <strong>{{ item.date }}</strong
-      >: {{ item.temperatureC }}C, {{ item.temperatureF }}F, {{ item.summary }}
-    </li>
-  }
-</ul>
+<mat-card class="p-5">
+  <h1>Weather Forecasts (Demo)</h1>
+  <ul>
+    @for (item of weatherForecasts; track item; let i = $index) {
+      <li class="mb-2">
+        <strong>{{ item.date }}</strong
+        >: {{ item.temperatureC }}C, {{ item.temperatureF }}F,
+        {{ item.summary }}
+      </li>
+    }
+  </ul>
+</mat-card>

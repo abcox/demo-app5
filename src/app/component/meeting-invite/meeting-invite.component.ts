@@ -15,6 +15,7 @@ import {
   signal,
 } from '@angular/core';
 import {
+  FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
@@ -31,7 +32,15 @@ import { Router } from '@angular/router';
 import { CalendarModule } from 'primeng/calendar';
 import { SvgIconComponent } from '../shared/icon/icon.component';
 import { MatInputModule } from '@angular/material/input';
-import { distinct, distinctUntilChanged, pairwise, startWith, tap } from 'rxjs';
+import {
+  debounce,
+  debounceTime,
+  distinct,
+  distinctUntilChanged,
+  pairwise,
+  startWith,
+  tap,
+} from 'rxjs';
 
 @Component({
   selector: 'app-meeting-invite',
@@ -98,6 +107,7 @@ import { distinct, distinctUntilChanged, pairwise, startWith, tap } from 'rxjs';
 export class MeetingInviteComponent implements OnInit {
   router = inject(Router);
   @ViewChild('tabGroup') public tabGroup!: MatTabGroup;
+  fb = inject(FormBuilder);
   vm = signal<ViewModel>({
     title: 'Virtual Coffee',
     meeting: {
@@ -108,6 +118,7 @@ export class MeetingInviteComponent implements OnInit {
       //earliestDate: Date.now(),
       latestDate: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7 * 2), // 2 weeks
       earliestDate: new Date(),
+      subject: 'Virtual Coffee',
     },
     //availableTimesOfSelectedDay: [
     //  { selected: false, value: '9:00 AM' },
@@ -150,16 +161,10 @@ export class MeetingInviteComponent implements OnInit {
   ];
 
   ngOnInit() {
-    this.formGroup = new FormGroup({
-      date: new FormControl<Date | null>(null),
-      time: new FormControl<string | null>(null),
-      zone: new FormControl<string | null>(this.timezoneOptions[0]),
-      name: new FormControl<string | null>(''),
-      email: new FormControl<string | null>(''),
-      phone: new FormControl<string | null>(''),
-    });
+    this.formGroup = this.getInitForm(this.vmr());
     this.formGroup.valueChanges
       .pipe(
+        debounceTime(500),
         startWith(this.formGroup.value),
         pairwise(),
         tap(([prev, curr]) => {
@@ -167,6 +172,10 @@ export class MeetingInviteComponent implements OnInit {
           if (prev.date !== curr.date) {
             this.tabGroup.selectedIndex = 1;
           }
+          this.vm.update(vm => ({
+            ...vm,
+            title: curr?.subject.trim() === '' ? 'Meeting' : curr?.subject,
+          }));
           // TODO: bring luxon in to handle timezones, date calcs, etc.
           // TODO: bring in date-fns to handle date formatting?
           // TODO: this needs to be a signal (and data from backend that is related to available times - not already scheduled or blocked times)
@@ -186,6 +195,18 @@ export class MeetingInviteComponent implements OnInit {
         })
       )
       .subscribe();
+  }
+  getInitForm(vm: ViewModel) {
+    return this.fb.group({
+      date: new FormControl<Date | null>(null),
+      time: new FormControl<string | null>(null),
+      zone: new FormControl<string | null>(this.timezoneOptions[0]),
+      name: new FormControl<string | null>(''),
+      email: new FormControl<string | null>(''),
+      phone: new FormControl<string | null>(''),
+      subject: [vm.meeting?.subject],
+      comments: [vm.meeting?.comments],
+    });
   }
   availableTimesOfSelectedDay: TimeSelectionModel[] = [
     { selected: false, value: '9:00 AM' },
@@ -273,6 +294,8 @@ interface MeetingModel {
   timezone: string;
   latestDate: Date | undefined;
   earliestDate: Date | undefined;
+  subject: string;
+  comments?: string;
 }
 
 interface MeetingDurationModel {

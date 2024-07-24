@@ -25,64 +25,73 @@
       </mat-nav-list>
     </mat-sidenav>
     <mat-sidenav-content>
-      <mat-toolbar color="primary">
-        @if ((isHandset$ | async) && auth.isAuthenticated()) {
-          <button
-            type="button"
-            aria-label="Toggle sidenav"
-            mat-icon-button
-            (click)="drawer.toggle()">
-            <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-          </button>
-        }
-        <span>App Machine</span>
-        <div class="grow"></div>
-        <div class="flex">
-          <button
-            (click)="isOpen = !isOpen"
-            cdkOverlayOrigin
-            #trigger="cdkOverlayOrigin"
-            class="profile">
-            <!-- (mouseover)="isOpen = true"
+      <div class="background">
+        <div class="content">
+          <mat-toolbar color="primary">
+            @if ((isHandset$ | async) && auth.isAuthenticated()) {
+              <button
+                type="button"
+                aria-label="Toggle sidenav"
+                mat-icon-button
+                (click)="drawer.toggle()">
+                <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+              </button>
+            }
+            <span>App Machine</span>
+            <div class="grow"></div>
+            <div class="flex">
+              <button
+                (click)="isOpen = !isOpen"
+                cdkOverlayOrigin
+                #trigger="cdkOverlayOrigin"
+                class="profile">
+                <!-- (mouseover)="isOpen = true"
           (mouseout)="isOpen = false" -->
-            <!-- <img src="" alt="" class="avatar mat-elevation" /> -->
-            <img
-              *ngIf="auth.isAuthenticated()"
-              alt="Adam Cox"
-              class="h-10 rounded-full w-10"
-              src="../assets/AdamCox.jpeg" /><!--
+                <!-- <img src="" alt="" class="avatar mat-elevation" /> -->
+                <img
+                  *ngIf="auth.isAuthenticated()"
+                  alt="Adam Cox"
+                  class="h-10 rounded-full w-10"
+                  src="../assets/AdamCox.jpeg" /><!--
             routerLink="/profile" --><!--
               src="https://media.licdn.com/dms/image/C5603AQGTleQRTom6eA/profile-displayphoto-shrink_800_800/0/1516253410442?e=1713398400&v=beta&t=XxcOf8bI0L2feMdyD_-KNRAyDFAnPAjhRLWyciogik0" -->
-            <ng-template
-              cdkConnectedOverlay
-              [cdkConnectedOverlayOrigin]="trigger"
-              [cdkConnectedOverlayOpen]="isOpen">
-              <mat-card>
-                <mat-card-content>
-                  <p>
-                    <a (click)="isOpen = !isOpen" routerLink="/profile/edit"
-                      >Profile</a
-                    >
-                  </p>
-                </mat-card-content>
-              </mat-card>
-            </ng-template>
-          </button>
-          <ng-container *ngIf="!auth.isAuthenticated()">
-            <!-- <span class="text-white">{{ auth.userProfile.name }}</span> -->
-            <button mat-link-button [routerLink]="['login']">
-              <!-- <span class="text-white">
+                <ng-template
+                  cdkConnectedOverlay
+                  [cdkConnectedOverlayOrigin]="trigger"
+                  [cdkConnectedOverlayOpen]="isOpen">
+                  <mat-card>
+                    <mat-card-content>
+                      <p>
+                        <a (click)="isOpen = !isOpen" routerLink="/profile/edit"
+                          >Profile</a
+                        >
+                      </p>
+                    </mat-card-content>
+                  </mat-card>
+                </ng-template>
+              </button>
+              <ng-container *ngIf="!auth.isAuthenticated()">
+                <!-- <span class="text-white">{{ auth.userProfile.name }}</span> -->
+                <button mat-link-button [routerLink]="['login']">
+                  <!-- <span class="text-white">
                 {{ auth.isAuthenticated() ? auth.userProfile.name : 'Sign In' }}
               </span> -->
-              Login</button
-            >&nbsp; |&nbsp;&nbsp;<button mat-link-button routerLink="signup">
-              Sign up!
-            </button>
-          </ng-container>
+                  Login</button
+                >&nbsp; |&nbsp;&nbsp;<button
+                  mat-link-button
+                  routerLink="signup">
+                  Register
+                </button>
+              </ng-container>
+            </div>
+          </mat-toolbar>
+          <!-- <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+          <!-- <mat-progress-spinner mode="indeterminate"></mat-progress-spinner> -->
+          <!-- todo: review why we are needing to use min-h-[80vh] to get the dialog to center vertically (see scss) -->
+          <div class="m-8">
+            <router-outlet></router-outlet>
+          </div>
         </div>
-      </mat-toolbar>
-      <div class="m-4">
-        <router-outlet></router-outlet>
       </div>
     </mat-sidenav-content>
   </mat-sidenav-container>

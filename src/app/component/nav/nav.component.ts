@@ -14,6 +14,8 @@ import { menuItems } from '../../config';
 import { MatCardModule } from '@angular/material/card';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthService } from '../../service/auth/auth.service';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 export interface MenuItem {
   href: string;
@@ -37,6 +39,8 @@ interface ViewModel {
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,

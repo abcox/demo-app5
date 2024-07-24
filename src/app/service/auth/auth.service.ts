@@ -1,8 +1,14 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, tap } from 'rxjs/operators';
-import { AuthService as backendAuthService } from '../../../backend-api/v1';
+import {
+  AuthResponse,
+  AuthResult,
+  PasswordResetRequest,
+  AuthService as backendAuthService,
+} from '../../../backend-api/v1';
 import { TOKEN_KEY } from '../../app.config';
+import { of } from 'rxjs/internal/observable/of';
 
 @Injectable({
   providedIn: 'root',
@@ -15,11 +21,14 @@ export class AuthService {
   constructor() {}
 
   login(request: { email: string; password: string; twoFactorCode: string }) {
-    return this.authService.apiAuthLoginPost(request).pipe(
+    return this.authService.login(request).pipe(
       map(response => {
         const { token } = response;
         const isAuthenticated = !!token;
-        const result = { success: isAuthenticated };
+        const result = {
+          success: isAuthenticated,
+          authResult: <AuthResult>response,
+        };
         if (result.success) {
           if (response.token) {
             localStorage.setItem(TOKEN_KEY, response.token);
@@ -34,14 +43,14 @@ export class AuthService {
       catchError(err => {
         // todo: create shared error handling service - where we can log errors and show error messages
         this.isAuthenticated.set(false);
-        return [{ success: false }];
+        return of(<AuthResponse>{ success: false }); // todo: review why the square-brackets notation passes lint check: [{ success: false }]
       })
     );
   }
 
   register(request: { name: string; email: string; password: string }) {
-    return this.authService.apiAuthRegisterPost(request).pipe(
-      tap(response => {
+    return this.authService.register(request).pipe(
+      tap((response: AuthResponse) => {
         const result = response; // todo: map response to a more meaningful result object
         //const { token } = response;
         //const isAuthenticated = !!token;
@@ -53,17 +62,45 @@ export class AuthService {
         //this.isAuthenticated.set(isAuthenticated);
         //return result;
         //this.router.navigate(['/login']);
+        return result;
       }),
       catchError(err => {
         // todo: create shared error handling service - where we can log errors and show error messages
+        console.error('Error registering', err);
         this.isAuthenticated.set(false);
-        return [{ success: false }];
+        return of(<AuthResponse>{ success: false });
+      })
+    );
+  }
+
+  resetPassword(request: PasswordResetRequest) {
+    return this.authService.passwordReset(request).pipe(
+      tap((response: AuthResponse) => {
+        console.log('Password reset response', response);
+        const result = response; // todo: map response to a more meaningful result object
+        //const { token } = response;
+        //const isAuthenticated = !!token;
+        //const result = { success: isAuthenticated };
+        //if (result.success) {
+        //  localStorage.setItem(TOKEN_KEY, response.token);
+        //  //this.router.navigate(['/dashboard']);
+        //}
+        //this.isAuthenticated.set(isAuthenticated);
+        //return result;
+        //this.router.navigate(['/login']);
+        return result;
+      }),
+      catchError(err => {
+        // todo: create shared error handling service - where we can log errors and show error messages
+        console.error('Error registering', err);
+        this.isAuthenticated.set(false);
+        return of(<AuthResponse>{ success: false });
       })
     );
   }
 
   logout() {
-    this.authService.apiAuthLogoutPost().subscribe({
+    this.authService.logout().subscribe({
       next: () => {
         localStorage.removeItem('token');
         this.isAuthenticated.set(false);

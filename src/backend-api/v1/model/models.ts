@@ -7,6 +7,8 @@ export * from './clientBaseResponse';
 export * from './clientPagedResponse';
 export * from './iBaseResponse';
 export * from './loginRequest';
+export * from './passwordResetRequest';
 export * from './registerRequest';
 export * from './status';
+export * from './user';
 export * from './weatherForecast';

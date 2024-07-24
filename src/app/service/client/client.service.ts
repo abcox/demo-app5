@@ -30,28 +30,28 @@ export class ClientService {
   //};
   get = (request: any) => {
     return this.service
-      .apiClientGet(request)
+      .getClient(request)
       .pipe(map(response => response.list as Client[]));
   };
   getById = (id: string) => {
     return this.service
-      .apiClientIdGet(id)
+      .getClientById(id)
       .pipe(map(response => response?.data as Client));
   };
   update = (id: string, client: Client) => {
-    return this.service.apiClientIdPut(id, client);
+    return this.service.updateClientById(id, client);
   };
   create = (client: Client) => {
-    return this.service.apiClientPost(client);
+    return this.service.createClient(client);
   };
   delete = (id: string) => {
-    return this.service.apiClientIdDelete(id);
+    return this.service.deleteClientById(id);
   };
   deleteBatch = (items: string[]) => {
-    return this.service.deleteBatch(items);
+    return this.service.deleteClientsByListOfIds(items);
   };
   upload = (file: File) => {
-    return this.service.clientImport([file]);
+    return this.service.importClientsByListOfFiles([file]);
   };
 
   constructor() {}

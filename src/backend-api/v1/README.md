@@ -1,4 +1,4 @@
-## demo-app5-api-v1@1.0
+## demo-app5-api-v1@10.5.0
 
 ### Building
 
@@ -19,7 +19,7 @@ Navigate to the folder of your consuming project and run one of next commands.
 _published:_
 
 ```
-npm install demo-app5-api-v1@1.0 --save
+npm install demo-app5-api-v1@10.5.0 --save
 ```
 
 _without publishing (not recommended):_

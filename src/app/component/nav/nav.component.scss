@@ -2,6 +2,32 @@
   height: 100%;
 }
 
+.background {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  //background-image: url('https://picsum.photos/800/600?grayscale');
+  background-image: url('https://picsum.photos/800/600');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.3; /* Adjust the opacity value here */
+  z-index: -1; /* Ensure the background is behind the content */
+  //filter: grayscale(100%);
+}
+.content {
+  position: relative;
+  z-index: 1;
+}
+
 .sidenav {
   width: 200px;
 }
@@ -25,4 +51,11 @@
 // fix issue with border on button where profile class applied
 button.profile:focus {
   outline: none;
+}
+
+// attempt to adjust the height of the main content to position dialog in the vertical center
+// todo: review why we are needing to use min-h-[80vh] to get the dialog to center vertically (see html)
+.main-content {
+  /* Adjust 64px to the actual height of your toolbar */
+  min-height: calc(100vh - 64px);
 }

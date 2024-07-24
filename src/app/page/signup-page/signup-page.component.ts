@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AuthResponse } from '../../../backend-api/v1';
 
 @Component({
   selector: 'app-login-page',
@@ -11,6 +13,8 @@ import { Router } from '@angular/router';
   styleUrl: './signup-page.component.scss',
 })
 export class SignupPageComponent {
+  private snackbar = inject(MatSnackBar);
+
   signupForm: FormGroup;
 
   constructor(
@@ -19,10 +23,10 @@ export class SignupPageComponent {
     private router: Router
   ) {
     this.signupForm = this.fb.group({
-      email: ['user@example.com', [Validators.required, Validators.email]],
-      name: ['Test User', [Validators.required]],
-      password: ['password', [Validators.required]],
-      password2: ['password', [Validators.required]], // todo: add password confirmation validation
+      email: ['adam@adamcox.net', [Validators.required, Validators.email]],
+      name: ['Adam Cox', [Validators.required]],
+      password: ['tesT1234$$', [Validators.required]],
+      password2: ['tesT1234$$', [Validators.required]], // todo: add password confirmation validation
     });
   }
 
@@ -47,10 +51,13 @@ export class SignupPageComponent {
       const { email, name, password } = this.signupForm.value;
       this.authService.register({ name, email, password }).subscribe({
         next: result => {
+          const { message } = result;
           if ((<any>result)?.success) {
             this.router.navigate(['/login'], { state: { verify: true } }); // go to login page (and show validation message)
           } else {
-            // Handle login failure (e.g., show error message)
+            this.snackbar.open(message ?? 'Registration failed', 'Dismiss', {
+              duration: 5000,
+            });
           }
         },
         error: err => {

@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth/auth.service';
+import { AuthResult } from '../../../backend-api/v1';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, take, takeUntil, tap } from 'rxjs/operators';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login-page',
@@ -13,36 +15,51 @@ import { ReplaySubject } from 'rxjs';
   styleUrl: './login-page.component.scss',
 })
 export class LoginPageComponent {
+  private snackbar = inject(MatSnackBar);
   private _destroyed$ = new ReplaySubject<void>(undefined);
 
   loginForm: FormGroup;
-  verify = false;
-  routeInfo$ = this.router.events.pipe(
-    takeUntil(this._destroyed$),
-    //filter(event => event instanceof NavigationEnd),
-    map(() => ({
-      queryParams: this.route.snapshot.queryParams,
-      params: this.route.snapshot.params,
-      history,
-    })),
-    tap(routeInfo => console.log(`Route info`, routeInfo)),
-    tap(routeInfo => {
-      this.verify = routeInfo.history.state.verify ?? false;
-    })
-  );
+  verifyCode$$ = new BehaviorSubject<string | undefined>(undefined);
+  routeInfo$ = this.router.events
+    .pipe(
+      takeUntil(this._destroyed$),
+      //filter(event => event instanceof NavigationEnd),
+      map(() => ({
+        queryParams: this.route.snapshot.queryParams,
+        params: this.route.snapshot.params,
+        history,
+      })),
+      tap(routeInfo => console.log(`Route info`, routeInfo)),
+      tap(routeInfo => {
+        const code = (<any>routeInfo.queryParams)?.code;
+        console.log('code', code);
+        if (code) {
+          this.verifyCode$$.next(code);
+          this.loginForm.patchValue({
+            verifyCode: code,
+          });
+          this.loginForm
+            .get('verifyCode')
+            ?.setValidators([Validators.required]);
+        }
+      })
+    )
+    .subscribe();
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
+    // todo: remove hard-coded password once testing is complete!
     this.loginForm = this.fb.group({
-      email: ['user@example.com', [Validators.required, Validators.email]],
-      password: ['password', [Validators.required]],
+      email: ['adam@adamcox.net', [Validators.required, Validators.email]],
+      password: ['tesT1234$$', [Validators.required]],
       verifyCode: [''],
     });
-    if (this.verify) {
+    if (this.verifyCode$$.value) {
       this.loginForm.get('verifyCode')?.setValidators([Validators.required]);
     }
   }
@@ -65,12 +82,25 @@ export class LoginPageComponent {
       this.authService
         .login({ email, password, twoFactorCode: verifyCode })
         .subscribe({
-          next: result => {
-            if (result.success) {
+          next: (result: any) => {
+            console.log('Login result', result);
+            const { isAuthenticated, authResult } = result;
+            const { message, success } = <AuthResult>authResult;
+            if (success) {
               // todo: send verification email
               this.router.navigate(['/home']); // Navigate to the dashboard or any other route
             } else {
               // Handle login failure (e.g., show error message)
+              this.snackbar.open(message ?? 'Login failed', 'Dismiss', {
+                duration: 5000,
+              });
+              //if (message?.includes('verification')) {
+              //  this.verifyCode$$.next(true);
+              //  this.loginForm
+              //    .get('verifyCode')
+              //    ?.setValidators([Validators.required]);
+              //  this.cdr.detectChanges();
+              //}
             }
           },
           error: err => {

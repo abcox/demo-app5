@@ -22,8 +22,10 @@ model/clientPagedResponse.ts
 model/iBaseResponse.ts
 model/loginRequest.ts
 model/models.ts
+model/passwordResetRequest.ts
 model/registerRequest.ts
 model/status.ts
+model/user.ts
 model/weatherForecast.ts
 ng-package.json
 package.json

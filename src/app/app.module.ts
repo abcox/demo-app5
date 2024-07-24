@@ -12,9 +12,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.component';
 import { SignupPageComponent } from './page/signup-page/signup-page.component';
 import { APP_CONFIG, appConfig } from './app.config';
+import { PasswordResetPageComponent } from './page/password-reset-page/password-reset-page.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginPageComponent, SignupPageComponent],
+  declarations: [
+    AppComponent,
+    LoginPageComponent,
+    SignupPageComponent,
+    PasswordResetPageComponent,
+  ],
   imports: [
     AppRoutingModule,
     NavComponent, // todo: rename to AppNavComponent

@@ -9,13 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
 
 
-export interface AuthResult { 
-    message?: string | null;
-    token?: string | null;
-    success?: boolean;
-    user?: User;
+export interface PasswordResetRequest { 
+    email?: string | null;
+    password?: string | null;
+    verifyCode?: string | null;
 }
 

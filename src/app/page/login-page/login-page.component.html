@@ -1,74 +1,89 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <mat-card class="w-full max-w-md p-8">
-    <mat-card-header>
-      <mat-card-title class="text-2xl font-bold text-center pb-2"
-        >Login</mat-card-title
-      >
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" class="w-full">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" class="w-full" />
-          <mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-            <ng-container *ngIf="email?.hasError('required')"
-              >Email is required.</ng-container
-            >
-            <ng-container *ngIf="email?.hasError('email')"
-              >Invalid email address.</ng-container
-            >
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="w-full pt-2">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            type="password"
-            class="w-full" />
-          <mat-error
-            *ngIf="password?.invalid && (password?.dirty || password?.touched)">
-            <ng-container *ngIf="password?.hasError('required')"
-              >Password is required.</ng-container
-            >
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field
-          *ngIf="(routeInfo$ | async)?.history?.state.verify"
-          appearance="fill"
-          class="w-full pt-2">
-          <mat-label>Verify code</mat-label>
-          <input
-            matInput
-            formControlName="verifyCode"
-            type="text"
-            class="w-full" />
-          <mat-error
-            *ngIf="
-              verifyCode?.invalid && (verifyCode?.dirty || verifyCode?.touched)
-            ">
-            <ng-container *ngIf="verifyCode?.hasError('required')"
-              >Verify code is required.</ng-container
-            >
-          </mat-error>
-        </mat-form-field>
-        <a routerLink="/password-reset">Reset password</a>
-        <div class="flex justify-between">
-          <a class="self-end" routerLink="/signup"
-            ><h3 class="!mb-0">Sign up!</h3></a
+<div class="flex items-center justify-center min-h-[80vh] m-8">
+  <div class="w-full max-w-md">
+    <mat-card class="p-8">
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-bold text-center pb-2"
+          >Login</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="fill" class="w-full">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              class="w-full" />
+            <mat-error
+              *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+              <ng-container *ngIf="email?.hasError('required')"
+                >Email is required.</ng-container
+              >
+              <ng-container *ngIf="email?.hasError('email')"
+                >Invalid email address.</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-full pt-2">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              class="w-full" />
+            <mat-error
+              *ngIf="
+                password?.invalid && (password?.dirty || password?.touched)
+              ">
+              <ng-container *ngIf="password?.hasError('required')"
+                >Password is required.</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+          <ng-container *ngIf="verifyCode$$.value">
+            <mat-form-field appearance="fill" class="w-full pt-2">
+              <mat-label>Verify code</mat-label>
+              <input
+                matInput
+                formControlName="verifyCode"
+                type="text"
+                class="w-full" />
+              <mat-hint>Check your email for the code.</mat-hint>
+              <mat-error
+                *ngIf="
+                  verifyCode?.invalid &&
+                  (verifyCode?.dirty || verifyCode?.touched)
+                ">
+                <ng-container *ngIf="verifyCode?.hasError('required')"
+                  >Verify code is required.</ng-container
+                >
+              </mat-error>
+            </mat-form-field>
+          </ng-container>
+          <a *ngIf="!verifyCode$$.value" routerLink="/password-reset"
+            >Reset password</a
           >
-          <div class="flex justify-end pt-2">
-            <button
-              mat-flat-button
-              color="primary"
-              type="submit"
-              [disabled]="loginForm.invalid"
-              class="px-4 py-2">
-              Login
-            </button>
+          <div class="flex justify-between">
+            <ng-container *ngIf="!verifyCode$$.value; else null">
+              <a class="self-end" routerLink="/signup">
+                <h3 class="!mb-0">Register</h3>
+              </a>
+            </ng-container>
+            <div></div>
+            <div class="flex justify-end pt-2">
+              <button
+                mat-flat-button
+                color="primary"
+                type="submit"
+                [disabled]="loginForm.invalid"
+                class="px-4 py-2">
+                Login
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

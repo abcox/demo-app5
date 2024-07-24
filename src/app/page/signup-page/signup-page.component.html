@@ -1,75 +1,86 @@
-<div class="flex items-center justify-center min-h-screen bg-gray-100">
-  <mat-card class="w-full max-w-md p-8">
-    <mat-card-header>
-      <mat-card-title class="text-2xl font-bold text-center pb-2"
-        >Welcome!</mat-card-title
-      >
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="fill" class="w-full mb-4">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" type="text" class="w-full" />
-          <mat-error *ngIf="name?.invalid && (name?.dirty || name?.touched)">
-            <ng-container *ngIf="name?.hasError('required')"
-              >Name is required.</ng-container
+<div class="flex items-center justify-center min-h-[80vh] m-8">
+  <div class="w-full max-w-md">
+    <mat-card class="p-8">
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-bold text-center pb-2"
+          >Welcome!</mat-card-title
+        >
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="name" type="text" class="w-full" />
+            <mat-error *ngIf="name?.invalid && (name?.dirty || name?.touched)">
+              <ng-container *ngIf="name?.hasError('required')"
+                >Name is required.</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-full mb-4">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              formControlName="email"
+              type="email"
+              class="w-full" />
+            <mat-error
+              *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+              <ng-container *ngIf="email?.hasError('required')"
+                >Email is required.</ng-container
+              >
+              <ng-container *ngIf="email?.hasError('email')"
+                >Invalid email address.</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-full mb-6">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              type="password"
+              class="w-full" />
+            <mat-error
+              *ngIf="
+                password?.invalid && (password?.dirty || password?.touched)
+              ">
+              <ng-container *ngIf="password?.hasError('required')"
+                >Password required.</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="w-full mb-6">
+            <mat-label>Retype password</mat-label>
+            <input
+              matInput
+              formControlName="password2"
+              type="password"
+              class="w-full" />
+            <mat-error
+              *ngIf="
+                password?.invalid && (password?.dirty || password?.touched)
+              ">
+              <ng-container *ngIf="password2?.hasError('invalid')"
+                >Retype password required.</ng-container
+              >
+            </mat-error>
+          </mat-form-field>
+          <div class="flex justify-between pt-2">
+            <a class="self-end" routerLink="/login"
+              ><h3 class="!mb-0">Login</h3></a
             >
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="w-full mb-4">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" type="email" class="w-full" />
-          <mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
-            <ng-container *ngIf="email?.hasError('required')"
-              >Email is required.</ng-container
-            >
-            <ng-container *ngIf="email?.hasError('email')"
-              >Invalid email address.</ng-container
-            >
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="w-full mb-6">
-          <mat-label>Password</mat-label>
-          <input
-            matInput
-            formControlName="password"
-            type="password"
-            class="w-full" />
-          <mat-error
-            *ngIf="password?.invalid && (password?.dirty || password?.touched)">
-            <ng-container *ngIf="password?.hasError('required')"
-              >Password is required.</ng-container
-            >
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="fill" class="w-full mb-6">
-          <mat-label>Retype password</mat-label>
-          <input
-            matInput
-            formControlName="password2"
-            type="password"
-            class="w-full" />
-          <mat-error
-            *ngIf="password?.invalid && (password?.dirty || password?.touched)">
-            <ng-container *ngIf="password2?.hasError('invalid')"
-              >Password is required.</ng-container
-            >
-          </mat-error>
-        </mat-form-field>
-        <div class="flex justify-between pt-2">
-          <a class="self-end" routerLink="/login"
-            ><h3 class="!mb-0">Login</h3></a
-          >
-          <button
-            mat-flat-button
-            color="primary"
-            type="submit"
-            [disabled]="signupForm.invalid"
-            class="px-4 py-2">
-            Sign up!
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+            <button
+              mat-flat-button
+              color="primary"
+              type="submit"
+              [disabled]="signupForm.invalid"
+              class="px-4 py-2">
+              Register
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>

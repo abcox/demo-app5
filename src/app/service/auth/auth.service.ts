@@ -9,7 +9,7 @@ import {
 } from '../../../backend-api/v1';
 import { TOKEN_KEY } from '../../app.config';
 import { of } from 'rxjs/internal/observable/of';
-import { BehaviorSubject, EMPTY } from 'rxjs';
+import { EMPTY } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

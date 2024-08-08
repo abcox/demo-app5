@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RouterOutlet } from '@angular/router';
@@ -13,6 +13,7 @@ import { MaterialModule } from './material.component';
 import { SignupPageComponent } from './page/signup-page/signup-page.component';
 import { APP_CONFIG, appConfig } from './app.config';
 import { PasswordResetPageComponent } from './page/password-reset-page/password-reset-page.component';
+import { NetworkInterceptor } from './common/interceptors/network.interceptor';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { PasswordResetPageComponent } from './page/password-reset-page/password-
   //imports: [RouterOutlet, CommonModule, RouterModule, MatButton],
   providers: [
     { provide: APP_CONFIG, useValue: appConfig },
+    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
     ...appConfig.providers,
   ],
   bootstrap: [AppComponent],

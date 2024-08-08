@@ -23,6 +23,7 @@ export class AuthService {
   login(request: { email: string; password: string; twoFactorCode: string }) {
     return this.authService.login(request).pipe(
       map(response => {
+        console.log('Login response', response);
         const { token } = response;
         const isAuthenticated = !!token;
         const result = {
@@ -42,6 +43,7 @@ export class AuthService {
       }),
       catchError(err => {
         // todo: create shared error handling service - where we can log errors and show error messages
+        console.error('Login err', err);
         this.isAuthenticated.set(false);
         return of(<AuthResponse>{ success: false }); // todo: review why the square-brackets notation passes lint check: [{ success: false }]
       })
@@ -51,6 +53,7 @@ export class AuthService {
   register(request: { name: string; email: string; password: string }) {
     return this.authService.register(request).pipe(
       tap((response: AuthResponse) => {
+        console.log('Register response', response);
         const result = response; // todo: map response to a more meaningful result object
         //const { token } = response;
         //const isAuthenticated = !!token;

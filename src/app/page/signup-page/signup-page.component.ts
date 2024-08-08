@@ -51,6 +51,7 @@ export class SignupPageComponent {
       const { email, name, password } = this.signupForm.value;
       this.authService.register({ name, email, password }).subscribe({
         next: result => {
+          console.log('Register result', result);
           const { message } = result;
           if ((<any>result)?.success) {
             this.router.navigate(['/login'], { state: { verify: true } }); // go to login page (and show validation message)

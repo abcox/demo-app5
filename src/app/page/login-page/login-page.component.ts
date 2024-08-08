@@ -84,24 +84,14 @@ export class LoginPageComponent {
         .subscribe({
           next: (result: any) => {
             console.log('Login result', result);
-            const { isAuthenticated, authResult } = result;
-            const { message, success } = <AuthResult>authResult;
-            if (success) {
-              // todo: send verification email
-              this.router.navigate(['/home']); // Navigate to the dashboard or any other route
-            } else {
-              // Handle login failure (e.g., show error message)
-              this.snackbar.open(message ?? 'Login failed', 'Dismiss', {
+            if (result.success === false) {
+              console.error('Login failed', result);
+              this.snackbar.open(result?.message ?? 'Login failed', 'Dismiss', {
                 duration: 5000,
               });
-              //if (message?.includes('verification')) {
-              //  this.verifyCode$$.next(true);
-              //  this.loginForm
-              //    .get('verifyCode')
-              //    ?.setValidators([Validators.required]);
-              //  this.cdr.detectChanges();
-              //}
+              return;
             }
+            this.router.navigate(['/home']); // Navigate to the dashboard or any other route
           },
           error: err => {
             // Handle error (e.g., show error message)

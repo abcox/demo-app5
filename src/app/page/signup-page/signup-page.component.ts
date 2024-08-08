@@ -22,7 +22,14 @@ export class SignupPageComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    this.signupForm = this.fb.group({
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/']); // redirect to home page if already authenticated
+    }
+    this.signupForm = this.getInitForm();
+  }
+
+  getInitForm() {
+    return this.fb.group({
       email: ['adam@adamcox.net', [Validators.required, Validators.email]],
       name: ['Adam Cox', [Validators.required]],
       password: ['tesT1234$$', [Validators.required]],

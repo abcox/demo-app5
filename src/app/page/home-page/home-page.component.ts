@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AuthService } from '../../service/auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
+import { getMenuItemsFilteredByUserRoles } from '../../service/nav/nav.service';
 
 @Component({
   selector: 'app-home-page',
@@ -25,9 +26,10 @@ export class HomePageComponent {
   private user = inject(UserStateService);
   private auth = inject(AuthService);
   isAuthenticated = this.auth.isAuthenticated;
-  filteredMenuItems = menuItems.filter(
-    item => item.title /*  !== 'Login' && this.isAuthenticated() */
-  );
+  //filteredMenuItems = menuItems.auth.filter(
+  //  item => item.title /*  !== 'Login' && this.isAuthenticated() */
+  //);
+  filteredMenuItems = getMenuItemsFilteredByUserRoles();
   signOut() {
     //this.user.set('token', undefined);
     this.auth.logout();

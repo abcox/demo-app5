@@ -22,9 +22,9 @@ export class SignupPageComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/']); // redirect to home page if already authenticated
-    }
+    //if (this.authService.isAuthenticated()) {
+    //  this.router.navigate(['/']); // redirect to home page if already authenticated
+    //}
     this.signupForm = this.getInitForm();
   }
 

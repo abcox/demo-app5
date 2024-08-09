@@ -47,6 +47,7 @@ export class ProfileEditComponent {
       registerDate: '6/15/2023',
       photoUrl:
         'https://media.licdn.com/dms/image/C5603AQGTleQRTom6eA/profile-displayphoto-shrink_800_800/0/1516253410442?e=1713398400&v=beta&t=XxcOf8bI0L2feMdyD_-KNRAyDFAnPAjhRLWyciogik0',
+      roles: [],
     };
   });
   fb = inject(FormBuilder);

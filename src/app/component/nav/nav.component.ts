@@ -16,6 +16,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { AuthService } from '../../service/auth/auth.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { getMenuItemsFilteredByUserRoles } from '../../service/nav/nav.service';
 
 export interface MenuItem {
   href: string;
@@ -63,7 +64,7 @@ export class NavComponent {
 
   vm = signal<ViewModel>({
     //menuItems: this.auth.isAuthenticated() ? menuItems : [],
-    menuItems,
+    menuItems: getMenuItemsFilteredByUserRoles(),
   });
 
   isHandset$: Observable<boolean> = this.breakpointObserver

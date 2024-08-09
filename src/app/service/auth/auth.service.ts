@@ -1,5 +1,5 @@
 import { Injectable, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import {
   AuthResponse,

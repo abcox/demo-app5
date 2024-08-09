@@ -18,8 +18,26 @@ import { AdminPageComponent } from './page/admin-page/admin-page.component';
 import { LoginPageComponent } from './page/login-page/login-page.component';
 import { SignupPageComponent } from './page/signup-page/signup-page.component';
 import { PasswordResetPageComponent } from './page/password-reset-page/password-reset-page.component';
+import {
+  denyWhenAuthenticated,
+  requireAuthentication,
+  requireRoles,
+} from './common/guards/auth.guard';
 
-export const menuItems = [
+export interface MenuItem {
+  component: any;
+  href: string;
+  opened: boolean;
+  routePath: string;
+  param?: string; // todo: what is this for? (remove?)
+  title: string;
+  visible?: boolean; // optional, default is true
+  roles?: string[]; // optional, default is undefined; when specifying roles, the user must have at least one of the roles to see the menu item
+  canActivate?: any[]; // optional, default is undefined; when specifying canActivate, the user must pass all guards to see the menu item
+  allowGuest?: boolean; // optional, default is false; when true, the menu item is visible to unauthenticated users
+}
+
+export const menuItems: MenuItem[] = [
   {
     component: MeetingPageComponent,
     href: '#',
@@ -34,13 +52,15 @@ export const menuItems = [
     routePath: 'home',
     title: 'Home',
     visible: false,
+    roles: ['guest'],
+    canActivate: [() => true],
   },
   {
     component: InvoicePageComponent,
     href: '#',
     opened: false,
     routePath: 'invoices',
-    param: 'id',
+    param: 'id', // todo: what is this for? (remove?)
     title: 'Invoices',
   },
   {
@@ -97,6 +117,8 @@ export const menuItems = [
     routePath: 'weather',
     title: 'Weather',
     visible: true,
+    allowGuest: true,
+    roles: ['guest'],
   },
   {
     component: ClientPageComponent,
@@ -160,23 +182,27 @@ export const menuItems = [
     opened: false,
     routePath: 'admin',
     title: 'Admin',
-    visible: true,
+    //visible: false, // optional, default is true
+    roles: ['admin'], // when specifying roles, the user must have at least one of the roles to see the menu item
+    canActivate: [requireAuthentication, () => requireRoles(['admin'], '/')],
   },
-  /* {
+  {
     component: LoginPageComponent,
     href: '#',
     opened: false,
     routePath: 'login',
     title: 'Login',
-    visible: true,
-  }, */
-  /* {
+    visible: false,
+    canActivate: [denyWhenAuthenticated],
+  },
+  {
     component: SignupPageComponent,
     href: '#',
     opened: false,
     routePath: 'signup',
     title: 'Signup',
     visible: false,
+    canActivate: [denyWhenAuthenticated],
   },
   {
     component: PasswordResetPageComponent,
@@ -185,5 +211,6 @@ export const menuItems = [
     routePath: 'password-reset',
     title: 'Password Reset',
     visible: false,
-  }, */
+    canActivate: [denyWhenAuthenticated],
+  },
 ];

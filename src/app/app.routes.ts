@@ -1,10 +1,10 @@
-import { Routes } from '@angular/router';
-import { ErrorPageComponent } from './page/error-page/error-page.component';
-import { menuItems } from './config';
-import { HomePageComponent } from './page/home-page/home-page.component';
-import { LoginPageComponent } from './page/login-page/login-page.component';
-import { authGuard } from './common/guards/auth.guard';
-import { InvalidPageComponent } from './page/invalid-page/invalid-page.component';
+//import { Routes } from '@angular/router';
+//import { ErrorPageComponent } from './page/error-page/error-page.component';
+//import { menuItems } from './config';
+//import { HomePageComponent } from './page/home-page/home-page.component';
+//import { LoginPageComponent } from './page/login-page/login-page.component';
+//import { authGuard } from './common/guards/auth.guard';
+//import { InvalidPageComponent } from './page/invalid-page/invalid-page.component';
 
 // WARNING!!  this is deprecated --> use app-routing.module.ts instead
 

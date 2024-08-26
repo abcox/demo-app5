@@ -23,6 +23,7 @@ import {
   requireAuthentication,
   requireRoles,
 } from './common/guards/auth.guard';
+import { DragDropDemoPageComponent } from './page/drag-drop-demo-page/drag-drop-demo-page.component';
 
 export interface MenuItem {
   component: any;
@@ -212,5 +213,13 @@ export const menuItems: MenuItem[] = [
     title: 'Password Reset',
     visible: false,
     canActivate: [denyWhenAuthenticated],
+  },
+  {
+    component: DragDropDemoPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'drag-drop-demo',
+    title: 'Drag & Drop Demo',
+    visible: true,
   },
 ];

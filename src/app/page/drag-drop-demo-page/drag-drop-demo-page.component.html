@@ -1,0 +1,29 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <!-- <mat-slide-toggle (change)="orientationChange()"> Vertical </mat-slide-toggle> -->
+  <mat-radio-group [value]="vm.orientation">
+    <mat-label>Orientation:</mat-label>
+    <mat-radio-button value="vertical" (change)="orientationChange()">
+      Vertical
+    </mat-radio-button>
+    <mat-radio-button value="horizontal" (change)="orientationChange()">
+      Horizontal
+    </mat-radio-button>
+  </mat-radio-group>
+  <div
+    cdkDropList
+    class="example-list"
+    ngClass="{{ vm.orientation }}-list"
+    (cdkDropListDropped)="drop($event)"
+    [cdkDropListOrientation]="vm.orientation">
+    @for (movie of vm.movies; track movie) {
+      <app-custom-card
+        cdkDrag
+        [model]="{ movie: movie, orientation: vm.orientation }"
+        class="example-box">
+      </app-custom-card>
+    }
+    <!--
+        [movie]="movie"
+        [orientation]="vm.orientation" -->
+  </div>
+</ng-container>

@@ -1,0 +1,12 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <div
+    class="example-box box-shadow"
+    ngClass="{{ vm.orientation }}-list"
+    cdkDrag>
+    <div
+      class="example-custom-placeholder"
+      *cdkDragPlaceholder
+      ngClass="{{ vm.orientation }}-list"></div>
+    {{ vm.movie }}
+  </div>
+</ng-container>

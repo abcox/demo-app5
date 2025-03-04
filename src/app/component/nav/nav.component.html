@@ -5,18 +5,29 @@
       class="sidenav"
       fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'push'"
-      [opened]="opened">
-      <mat-toolbar>Menu</mat-toolbar>
+      [mode]="(sideNavMode$ | async) ?? 'over'"
+      [opened]="opened && auth.isAuthenticated()">
+      <div class="m-3 flex justify-between">
+        <h2>Menu</h2>
+        <button
+          *ngIf="(sideNavMode$ | async) === 'over'"
+          (click)="drawer.toggle()"
+          mat-icon-button>
+          <mat-icon aria-label="Side nav toggle icon">menu_open</mat-icon>
+        </button>
+      </div>
       <mat-nav-list>
         @for (item of vm.menuItems; track $index) {
           @if (item.visible === undefined || item.visible === true) {
-            <a
-              (click)="drawer.toggle()"
+            <!-- <a
               routerLink="{{ item.routePath }}"
               mat-list-item
+              (click)="drawer.toggle()"
               >{{ item.title }}</a
-            >
+            > -->
+            <a mat-list-item (click)="nav(item)">
+              {{ item.title }}
+            </a>
           }
         }
         <a *ngIf="auth.isAuthenticated()" (click)="signOut()" mat-list-item
@@ -28,7 +39,7 @@
       <div class="background">
         <div class="content">
           <mat-toolbar color="primary">
-            @if ((isHandset$ | async) && auth.isAuthenticated()) {
+            @if (drawer.opened === false && auth.isAuthenticated()) {
               <button
                 type="button"
                 aria-label="Toggle sidenav"
@@ -37,7 +48,7 @@
                 <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
               </button>
             }
-            <span>App Machine</span>
+            <span class="title">App Machine</span>
             <div class="grow"></div>
             <div class="flex">
               <button
@@ -76,7 +87,7 @@
                   <!-- <span class="text-white">
                 {{ auth.isAuthenticated() ? auth.userProfile.name : 'Sign In' }}
               </span> -->
-                  Login</button
+                  Sign In</button
                 >&nbsp; |&nbsp;&nbsp;<button
                   mat-link-button
                   routerLink="signup">

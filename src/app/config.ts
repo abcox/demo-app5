@@ -24,6 +24,11 @@ import {
   requireRoles,
 } from './common/guards/auth.guard';
 import { DragDropDemoPageComponent } from './page/drag-drop-demo-page/drag-drop-demo-page.component';
+import { EditorDemoPageComponent } from './page/editor-demo-page/editor-demo-page.component';
+import { FileUploadDemoPageComponent } from './page/file-upload-demo-page/file-upload-demo-page.component';
+import { FileDetailPageComponent } from './page/file-detail-page/file-detail-page.component';
+import { FileSelectPageComponent } from './page/file-upload-demo-page/_components/file-select-page/file-select-page.component';
+import { TimelinePageComponent } from './page/timeline-page/timeline-page.component';
 
 export interface MenuItem {
   component: any;
@@ -128,6 +133,8 @@ export const menuItems: MenuItem[] = [
     routePath: 'client',
     title: 'Clients',
     visible: true,
+    roles: ['admin'],
+    canActivate: [requireAuthentication, () => requireRoles(['admin'], '/')],
   },
   {
     component: ClientPageAddComponent,
@@ -136,6 +143,8 @@ export const menuItems: MenuItem[] = [
     routePath: 'client/add',
     title: 'Clients',
     visible: false,
+    roles: ['admin'],
+    canActivate: [requireAuthentication, () => requireRoles(['admin'], '/')],
   },
   {
     component: ClientPageEditComponent,
@@ -144,6 +153,8 @@ export const menuItems: MenuItem[] = [
     routePath: 'client/edit/:id',
     title: 'Clients',
     visible: false,
+    roles: ['admin'],
+    canActivate: [requireAuthentication, () => requireRoles(['admin'], '/')],
   },
   {
     component: PokemonPageComponent,
@@ -220,6 +231,46 @@ export const menuItems: MenuItem[] = [
     opened: false,
     routePath: 'drag-drop-demo',
     title: 'Drag & Drop Demo',
+    visible: true,
+  },
+  {
+    component: EditorDemoPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'editor-demo',
+    title: 'Editor Demo',
+    visible: true,
+  },
+  {
+    component: FileUploadDemoPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'upload-demo',
+    title: 'Upload Demo',
+    visible: true,
+  },
+  {
+    component: FileDetailPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'file/detail',
+    title: 'File Detail',
+    visible: false,
+  },
+  {
+    component: FileSelectPageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'file/new',
+    title: 'New File',
+    visible: false,
+  },
+  {
+    component: TimelinePageComponent,
+    href: '#',
+    opened: false,
+    routePath: 'history',
+    title: 'Profile History',
     visible: true,
   },
 ];

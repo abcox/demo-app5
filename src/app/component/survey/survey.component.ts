@@ -4,6 +4,7 @@ import {
   Inject,
   OnChanges,
   OnInit,
+  Renderer2,
   Signal,
   SimpleChanges,
   WritableSignal,
@@ -66,6 +67,9 @@ export class SurveyComponent implements OnInit, OnChanges {
   selectedQuestion = 0;
   responses: any;
   formValid = false;
+
+  constructor(private renderer: Renderer2) {}
+
   getSurveyWithFormGroups(survey: Survey): QuestionForm[] {
     const results = survey.questions.map((question, questionIndex) => {
       const formId = `f${questionIndex}`;
@@ -251,6 +255,29 @@ export class SurveyComponent implements OnInit, OnChanges {
       console.log('The dialog was closed');
       //this.animal = result;
     }); */
+  }
+
+  // EXPERIMENTAL: method to handle click of a radio control where we want to reveal a subquestion based
+  // on input to the parent.  ex: Yes/No, where "Yes" would reveal a sub-question to narrow
+  // the subjective.
+  // Reviewing the Google Forms app, we would be best to not make sub-questions, but rather
+  // we will have questions that are linked to other questions based on specific answers. For example,
+  // we can ask a yes/no multiple choice and then based on either the selection of yes/no, go to a
+  // specific question.  The question would also need to be linked back to its dependent question in
+  // order to provide navigation backwards?
+  onClick(event: any, question: any, refIdPrefix: string, item: any) {
+    const refId = `${refIdPrefix}${question.id}`;
+    console.log(`onClick { question, item }`, question, item);
+    const element = document.getElementById(refId);
+    if (element && item?.question) {
+      //event.preventDefault();
+      console.log(`element`, element);
+      this.renderer.setStyle(element, 'display', 'block'); // Example action
+      //this.renderer.setProperty(element, 'hidden', 'false'); // Example action
+      // Further modifications can be applied to `element` as needed
+    } else {
+      console.log(`failed to bind element with id ${refId}`);
+    }
   }
 }
 

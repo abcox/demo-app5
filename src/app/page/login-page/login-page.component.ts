@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth/auth.service';
 import { AuthResult } from '../../../backend-api/v1';
@@ -17,7 +17,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LoginPageComponent {
   private snackbar = inject(MatSnackBar);
   private _destroyed$ = new ReplaySubject<void>(undefined);
-
+  loading = false;
+  passwordVisible = false;
   loginForm: FormGroup;
   verifyCode$$ = new BehaviorSubject<string | undefined>(undefined);
   routeInfo$ = this.router.events
@@ -29,9 +30,10 @@ export class LoginPageComponent {
         params: this.route.snapshot.params,
         history,
       })),
-      tap(routeInfo => console.log(`Route info`, routeInfo)),
-      tap(routeInfo => {
-        const code = (<any>routeInfo.queryParams)?.code;
+      //tap(routeInfo => console.log(`Route info`, routeInfo)),
+      map(routeInfo => (<any>routeInfo.queryParams)?.code as string),
+      filter(code => code !== undefined),
+      tap((code: string) => {
         console.log('code', code);
         if (code) {
           this.verifyCode$$.next(code);
@@ -50,13 +52,12 @@ export class LoginPageComponent {
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute,
-    private cdr: ChangeDetectorRef
+    private route: ActivatedRoute
   ) {
     // todo: remove hard-coded password once testing is complete!
     this.loginForm = this.fb.group({
-      email: ['adam@adamcox.net', [Validators.required, Validators.email]],
-      password: ['tesT1234$$', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
       verifyCode: [''],
     });
     if (this.verifyCode$$.value) {
@@ -76,11 +77,17 @@ export class LoginPageComponent {
     return this.loginForm.get('verifyCode');
   }
 
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+  }
+
   onSubmit(): void {
     if (this.loginForm.valid) {
+      this.loading = true;
       const { email, password, verifyCode } = this.loginForm.value;
       this.authService
         .login({ email, password, twoFactorCode: verifyCode })
+        .pipe(tap(() => (this.loading = false)))
         .subscribe({
           next: (result: any) => {
             console.log('Login result', result);

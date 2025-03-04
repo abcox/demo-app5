@@ -1,0 +1,114 @@
+<div class="bg-white p-5">
+  <div class="flex justify-between h-10 mr-2">
+    <h1>File Upload Demo</h1>
+    <div class="floating-button-container">
+      <button
+        mat-flat-button
+        color="primary"
+        [matMenuTriggerFor]="actionMenu"
+        [bnMatbutType]="butType"
+        class="mb-2"
+        z-index="10">
+        Action
+        <mat-icon iconPositionEnd fontIcon="arrow_drop_down"></mat-icon>
+      </button>
+      <mat-menu #actionMenu="matMenu">
+        <button mat-menu-item routerLink="/file/new">
+          <span>Add</span>
+          <mat-icon
+            iconPositionEnd
+            fontIcon="add"
+            class="material-symbols-outlined"></mat-icon>
+        </button>
+        <button mat-menu-item routerLink="import">
+          <span>Import</span>
+          <mat-icon
+            iconPositionEnd
+            fontIcon="upload"
+            class="material-symbols-outlined"></mat-icon>
+        </button>
+        <ng-container *ngIf="anySelected() || allSelected()">
+          <button mat-menu-item (click)="exportSelected()">
+            <span>Export</span>
+            <mat-icon
+              iconPositionEnd
+              fontIcon="download"
+              class="material-symbols-outlined"></mat-icon>
+          </button>
+          <button mat-menu-item (click)="deleteSelected()">
+            <span>Delete</span>
+            <mat-icon
+              color="warn"
+              iconPositionEnd
+              fontIcon="delete"
+              class="material-symbols-outlined"></mat-icon>
+          </button>
+        </ng-container>
+        <button mat-menu-item (click)="selectAll()">
+          <span>{{ allSelected() ? 'Deselect' : 'Select' }} All</span>
+          <mat-icon
+            iconPositionEnd
+            fontIcon="select_all"
+            class="material-symbols-outlined"></mat-icon>
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+  <form class="mt-5" [formGroup]="formGroup">
+    <mat-form-field class="flex w-full" appearance="outline">
+      <input matInput placeholder="Search" formControlName="search" />
+      <mat-icon matIconPrefix>search</mat-icon>
+      <button
+        mat-icon-button
+        matSuffix
+        *ngIf="formGroup.controls.search.value?.length ?? 0 > 0"
+        (click)="$event.stopPropagation(); resetSearch()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+    <app-file-list
+      [files]="(files$ | async)!"
+      (selected)="selected$$.next($event)"></app-file-list>
+    <div class="mt-5">
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Filename</mat-label>
+        <input matInput formControlName="filename" type="text" />
+      </mat-form-field>
+      <button
+        mat-flat-button
+        class="ml-3"
+        color="primary"
+        type="button"
+        (click)="fileInput.click()">
+        Choose File
+      </button> -->
+      <!-- <button
+        mat-flat-button
+        class="ml-3"
+        color="primary"
+        type="button"
+        (click)="deleteSelected()"
+        [disabled]="!anySelected()">
+        Delete
+      </button> -->
+    </div>
+  </form>
+  <img style="display: none" [src]="imageSource" />
+  <!-- <div>
+    <button
+      mat-flat-button
+      class="ml-3"
+      color="primary"
+      type="button"
+      (click)="save(fileInput.files)"
+      [disabled]="!fileInput.files?.[0]">
+      Save
+    </button>
+  </div> -->
+  <input
+    hidden
+    #fileInput
+    type="file"
+    id="file"
+    (change)="setFilename(fileInput.files)" />
+</div>

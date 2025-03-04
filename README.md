@@ -117,6 +117,12 @@ npx tailwindcss init
    ng g c page/error-page
    ```
 
+2. Create a component
+
+   ```
+   ng g c components/survey2
+   ```
+
 # Resources
 
 1. [Angular Material Theming System: Complete Guide](https://angular-material.dev/articles/angular-material-theming-system-complete-guide)

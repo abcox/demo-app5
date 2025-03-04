@@ -47,9 +47,17 @@
           <ul>
             @for (item of question.options; track item; let i = $index) {
               <li>
-                <mat-radio-button [value]="i">
+                <mat-radio-button
+                  [value]="i"
+                  (click)="onClick($event, question, 'subquestion', item)">
                   {{ item.text }}
                 </mat-radio-button>
+                <div
+                  id="subquestion{{ question.id }}"
+                  #subquestion{{question.id}}
+                  style="display: none">
+                  {{ item?.question?.text }}
+                </div>
               </li>
             }
           </ul>

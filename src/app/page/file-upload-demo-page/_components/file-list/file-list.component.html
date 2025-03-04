@@ -1,0 +1,33 @@
+<ng-container *ngIf="vm$ | async as vm">
+  <ul class="flex flex-wrap gap-3">
+    @for (item of vm.items; track item.name) {
+      <li class="!relative bg-gray-200 p-2">
+        <button
+          [routerLink]="['/file/detail']"
+          [queryParams]="{ name: item.name, resource: item.resource }">
+          <mat-checkbox
+            [(ngModel)]="item.selected"
+            class="!absolute top-0 right-0 m-2 bg-white rounded-full shadow bg-opacity-40"
+            (change)="select(item)"
+            (click)="$event.stopPropagation()"></mat-checkbox>
+          <img
+            class="w-[100px] h-[120px] object-cover"
+            [src]="item.resource"
+            [alt]="item.name" />
+          <p class="w-[100px] truncate text-sm !mt-1 !mb-0">{{ item.name }}</p>
+        </button>
+      </li>
+    }
+  </ul>
+  <!-- <mat-selection-list [multiple]="true" class="flex flex-wrap gap-3">
+    @for (item of vm.items; track item.name) {
+      <mat-list-option [value]="item">
+        <img
+          src="{{ item.resource }}"
+          class="w-[120px] h-[120px] object-cover"
+          alt="{{ item.name }}" />
+        <p class="w-[120px] truncate text-sm !mt-1 !mb-0">{{ item.name }}</p>
+      </mat-list-option>
+    }
+  </mat-selection-list> -->
+</ng-container>

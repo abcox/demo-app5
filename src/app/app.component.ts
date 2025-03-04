@@ -9,6 +9,7 @@ import {
 } from './service/user-state/user-state.service';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
+import { InactivityService } from './service/inactivity/inactivity.service';
 
 interface ViewModel {
   //user: UserState | undefined;
@@ -36,7 +37,7 @@ export class AppComponent {
     //this.vm.set({ user: { token: '1234' } });
     this.userState.set('token', '1234');
   }
-  constructor() {
+  constructor(private inactivityService: InactivityService) {
     this.userState.set('token', '1234'); // for testing
     this.userState.set('name', 'Jessie'); // for testing
     this.userState.set('email', 'jdoe@gmail.com'); // for testing

@@ -14,6 +14,7 @@ import { SignupPageComponent } from './page/signup-page/signup-page.component';
 import { APP_CONFIG, appConfig } from './app.config';
 import { PasswordResetPageComponent } from './page/password-reset-page/password-reset-page.component';
 import { NetworkInterceptor } from './common/interceptors/network.interceptor';
+import { A11yModule } from '@angular/cdk/a11y';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { NetworkInterceptor } from './common/interceptors/network.interceptor';
     MaterialModule,
     ReactiveFormsModule,
     RouterOutlet,
+    A11yModule, // supports accessibility features (i.e. cdkTrap*)
   ],
   //imports: [RouterOutlet, CommonModule, RouterModule, MatButton],
   providers: [

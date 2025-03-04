@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   ChangeDetectorRef,
   Component,
+  OnDestroy,
   OnInit,
   ViewChild,
   WritableSignal,
@@ -24,7 +25,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { interval } from 'rxjs/internal/observable/interval';
-import { debounce, filter, map, switchMap, tap } from 'rxjs/operators';
+import {
+  debounce,
+  filter,
+  map,
+  switchMap,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import {
   CdkVirtualScrollViewport,
   ScrollDispatcher,
@@ -37,7 +45,7 @@ import {
 } from '../../service/client/client.service';
 import { RouterModule } from '@angular/router';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject, EMPTY } from 'rxjs';
+import { BehaviorSubject, EMPTY, ReplaySubject } from 'rxjs';
 import { Client } from '../../../backend-api/v1';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -84,16 +92,18 @@ interface ClientViewModel extends Client {
   templateUrl: './client-page.component.html',
   styleUrl: './client-page.component.scss',
 })
-export class ClientPageComponent implements AfterViewInit {
+export class ClientPageComponent implements AfterViewInit, OnDestroy {
   clientService = inject(ClientService);
   //clients = toSignal(this.clientService.clients);
   @ViewChild(CdkVirtualScrollViewport) virtualScroll!: CdkVirtualScrollViewport;
   form = new FormGroup({
     search: new FormControl(''),
+    selectAll: new FormControl(false),
   });
   search = toSignal<string>(
     this.form.controls.search.valueChanges.pipe(
       debounce(() => interval(1000)),
+      //tap(valueChanges => console.log(`search valueChanges`, valueChanges)),
       map(value => value ?? '')
     )
     //{ initialValue: '' }
@@ -101,6 +111,7 @@ export class ClientPageComponent implements AfterViewInit {
   clientList: WritableSignal<ClientViewModel[]> = signal([]);
 
   butType = MatButtonType.flat;
+  _destroyed$ = new ReplaySubject<void>();
 
   constructor(
     private scrollDispatcher: ScrollDispatcher,
@@ -125,6 +136,10 @@ export class ClientPageComponent implements AfterViewInit {
         takeUntilDestroyed()
       )
       .subscribe();
+  }
+  ngOnDestroy(): void {
+    this._destroyed$.next();
+    this._destroyed$.complete();
   }
   request = computed(() => {
     return {
@@ -267,6 +282,14 @@ export class ClientPageComponent implements AfterViewInit {
     //     this.nextSearchPage(++this.searchPageNumber);
     //   }
     // });
+    this.form.valueChanges
+      .pipe(
+        //takeUntilDestroyed(),
+        takeUntil(this._destroyed$),
+        debounce(() => interval(1000)),
+        tap(valueChanges => console.log(`valueChanges`, valueChanges))
+      )
+      .subscribe();
   }
   getResults(pageNumber: number) {
     let pagesize = 5;

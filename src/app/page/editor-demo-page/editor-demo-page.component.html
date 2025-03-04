@@ -1,0 +1,118 @@
+<mat-card>
+  <mat-card-title>
+    <p>Editor Demo</p>
+  </mat-card-title>
+  <!-- @for (attachment of attachments; track $index) {
+    <img [src]="attachment.url" alt="Preview Image" />
+  } -->
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Demo 1: {{ '@kolkov/angular-editor' }}
+      </mat-expansion-panel-header>
+      <form [formGroup]="form">
+        <angular-editor
+          id="editor1"
+          formControlName="content"
+          [config]="editorConfig">
+          <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+            <ae-toolbar-set>
+              <!-- <ae-button
+        iconClass="fa fa-html5"
+        title="Angular editor logo"
+        (buttonClick)="executeCommandFn('insertHtml', angularEditorLogo)">
+      </ae-button> -->
+            </ae-toolbar-set>
+          </ng-template>
+        </angular-editor>
+        <div class="flex justify-between mt-4">
+          <button mat-button color="primary" routerLink="/home">
+            Back to Home
+          </button>
+          <button mat-flat-button (click)="submit()" color="primary">
+            Save
+          </button>
+        </div>
+      </form>
+      {{ imageSize }}
+      <mat-slider min="150" max="650" step="100">
+        <input
+          matSliderThumb
+          [(ngModel)]="imageSize"
+          (ngModelChange)="onImageSizeChange($event)" />
+      </mat-slider>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Demo 2: {{ 'Quill' }}
+      </mat-expansion-panel-header>
+      <quill-editor
+        #editor
+        [(ngModel)]="quillContent"
+        [modules]="quillEditorConfig"
+        [placeholder]="'Type your stuff...'"
+        class="w-full"
+        format="html">
+        <div quill-editor-toolbar>
+          <span class="ql-formats">
+            <button type="button" class="ql-bold">
+              <svg viewBox="0 0 18 18">
+                <path
+                  class="ql-stroke"
+                  d="M5,4H9.5A2.5,2.5,0,0,1,12,6.5v0A2.5,2.5,0,0,1,9.5,9H5A0,0,0,0,1,5,9V4A0,0,0,0,1,5,4Z"></path>
+                <path
+                  class="ql-stroke"
+                  d="M5,9h5.5A2.5,2.5,0,0,1,13,11.5v0A2.5,2.5,0,0,1,10.5,14H5a0,0,0,0,1,0,0V9A0,0,0,0,1,5,9Z"></path>
+              </svg>
+            </button>
+          </span>
+          <span class="ql-formats">
+            <select class="ql-font">
+              <option value="aref">Aref Ruqaa</option>
+              <option value="mirza">Mirza</option>
+              <option selected value="roboto">Roboto</option>
+            </select>
+            <select class="ql-align" [title]="'Aligment'">
+              <option selected></option>
+              <option value="center"></option>
+              <option value="right"></option>
+              <option value="justify"></option>
+            </select>
+            <select class="ql-align" [title]="'Aligment2'">
+              <option selected></option>
+              <option value="center"></option>
+              <option value="right"></option>
+              <option value="justify"></option>
+            </select>
+
+            <select class="ql-color" [title]="'Color'"></select>
+
+            <select class="ql-background" [title]="'BackgroundColor'"></select>
+          </span>
+          <span class="ql-formats">
+            <div id="counter"></div>
+          </span>
+          <span class="ql-formats">
+            <div id="html"><button>Html</button></div>
+          </span>
+        </div>
+      </quill-editor>
+      <h2>Html</h2>
+      <pre>{{ editor.content }}</pre>
+      <h2>Content</h2>
+      <pre>{{ quillContent }}</pre>
+      <div
+        [innerHtml]="sanitizer.bypassSecurityTrustHtml(editor.content)"></div>
+      <quill-view-html
+        [content]="'\<p>View HTML Component in child module\</p>'">
+      </quill-view-html>
+    </mat-expansion-panel>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        Demo 3: {{ 'TinyMCE via tinymce-angular)' }}
+      </mat-expansion-panel-header>
+      <button type="button" (click)="openDialog()">Open dialog</button>
+      <editor [init]="init"></editor>
+    </mat-expansion-panel>
+  </mat-accordion>
+</mat-card>

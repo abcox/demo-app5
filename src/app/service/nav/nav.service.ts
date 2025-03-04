@@ -17,7 +17,8 @@ export const getMenuItemsFilteredByUserRoles = () => {
   const values = menuItems.filter(item => {
     /* item.visible !== false && */
     const allowedRoles = item?.roles ?? [];
-    const userRoles = user.profile()?.roles ?? [];
+    //const userRoles = user.profile()?.roles ?? [];
+    const userRoles = auth.getUserRoles();
     const filter =
       (allowedRoles.includes('guest') && !isAuthenticated) ||
       (isAuthenticated &&

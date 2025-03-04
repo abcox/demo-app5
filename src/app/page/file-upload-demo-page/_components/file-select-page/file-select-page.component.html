@@ -1,0 +1,404 @@
+<div class="bg-white p-5">
+  <h1>Upload File</h1>
+  <div
+    class="bg-gray-50 border-2 border-dashed border-gray-300 border flex mb-3 rounded-md">
+    <div
+      *ngIf="!fileSelected()"
+      class="flex items-center justify-center p-3 w-1/2">
+      <p class="text-sm text-gray-500">
+        <span class="font-semibold">Click to upload</span> or drag and drop
+      </p>
+    </div>
+    <div class="flex w-1/2">
+      <image-cropper
+        *ngIf="fileSelected()"
+        [(transform)]="transform"
+        [allowMoveImage]="allowMoveImage"
+        [canvasRotation]="canvasRotation"
+        [containWithinAspectRatio]="containWithinAspectRatio"
+        [imageBase64]="imageBase64"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="aspectRatio"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        (imageLoaded)="imageLoaded($event)"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+        class=""></image-cropper
+      ><!-- can also bind to input change event:
+      [imageChangedEvent]="imageChangeEvent$$.value" -->
+    </div>
+    <div class="flex flex-col items-center justify-center p-3 w-1/2">
+      <p class="text-sm text-gray-500">
+        <span class="font-semibold">Preview</span>
+      </p>
+      <img class="" [src]="imagePreview" />
+    </div>
+  </div>
+  <div class="mb-5">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Transform </mat-panel-title>
+          <mat-panel-description>
+            <div class="flex items-center justify-between items-end w-full">
+              <div class="flex justify-center">
+                {{ croppingControlsStateSummary$ | async }}
+              </div>
+              <button
+                *ngIf="croppingControlsChanged === true"
+                (click)="$event.stopPropagation(); resetCroppingControls()"
+                mat-icon-button>
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <form [formGroup]="croppingControlFormGroup">
+          <div class="flex flex-row">
+            <div class="flex flex-col" id="cropping-controls-row-1-col-1">
+              <div class="flex flex-row mb-4" id="aspect-controls">
+                <div class="flex flex-col items-start" id="aspect-ratio">
+                  <!-- <label>Ratio</label> -->
+                  <div class="mb-1">
+                    <label>Aspect Ratio</label>
+                  </div>
+                  <mat-button-toggle-group
+                    aria-label="Aspect Ratio"
+                    class="flex w-auto"
+                    formControlName="aspectRatio"
+                    name="aspectRatio">
+                    <!-- 
+                    [(ngModel)]="aspectRatio" -->
+                    <mat-button-toggle [value]="4 / 3">
+                      4 : 3
+                    </mat-button-toggle>
+                    <mat-button-toggle [value]="16 / 5">
+                      16 : 5
+                    </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+                <div
+                  class="flex flex-col ml-4 items-start"
+                  id="contain-within-aspect-ratio">
+                  <!-- <label>Contain / Fit</label> -->
+                  <label>&nbsp;</label>
+                  <mat-button-toggle-group
+                    class="flex w-auto"
+                    formControlName="containWithinAspectRatio"
+                    name="containWithinAspectRatio"
+                    aria-label="Contain Within Aspect Ratio">
+                    <!-- 
+                  [(ngModel)]="containWithinAspectRatio" -->
+                    <mat-button-toggle [value]="true">
+                      Contain
+                    </mat-button-toggle>
+                    <mat-button-toggle [value]="false"> Fit </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+                <div
+                  class="flex flex-col ml-4 items-start"
+                  id="allow-move-image">
+                  <div class="mb-1">
+                    <label>Image Panning</label>
+                  </div>
+                  <mat-button-toggle-group
+                    class="flex w-auto"
+                    formControlName="allowMoveImage"
+                    name="allowMoveImage"
+                    aria-label="Allow Image Pan">
+                    <!-- 
+                    [(ngModel)]="containWithinAspectRatio" -->
+                    <mat-button-toggle [value]="false"> Off </mat-button-toggle>
+                    <mat-button-toggle [value]="true"> On </mat-button-toggle>
+                  </mat-button-toggle-group>
+                </div>
+              </div>
+              <!-- 
+          <div class="mb-1">
+            <label>Position</label>
+          </div> -->
+              <div class="flex flex-row mb-4" id="position-controls">
+                <div class="flex flex-col items-start" id="position-flip">
+                  <div class="mb-1">
+                    <label>Flip</label>
+                  </div>
+                  <div class="flex flex-row">
+                    <!-- <button
+                      (click)="flipHorizontal()"
+                      class="outlined-button"
+                      mat-flat-button>
+                      <mat-icon>flip</mat-icon>
+                      Horizontal
+                    </button>
+                    <button
+                      (click)="flipVertical()"
+                      class="ml-2 outlined-button"
+                      mat-flat-button>
+                      <mat-icon style="transform: rotate(90deg)">flip</mat-icon>
+                      Vertical
+                    </button> -->
+                    <mat-button-toggle-group
+                      class="flex w-auto"
+                      id="flipImage"
+                      name="flipImage"
+                      aria-label="Flip Image">
+                      <mat-button-toggle
+                        (click)="flipHorizontal()"
+                        class="non-toggle-button">
+                        <mat-icon>flip</mat-icon>
+                        Horizontal
+                      </mat-button-toggle>
+                      <mat-button-toggle
+                        (click)="flipVertical()"
+                        class="non-toggle-button">
+                        <mat-icon style="transform: rotate(90deg)">
+                          flip
+                        </mat-icon>
+                        Vertical
+                      </mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                </div>
+                <div
+                  class="flex flex-col items-start ml-4"
+                  id="position-rotate">
+                  <div class="mb-1">
+                    <label>Rotate</label>
+                  </div>
+                  <div class="flex flex-row">
+                    <!-- <button
+                      (click)="rotateLeft()"
+                      class="outlined-button"
+                      mat-flat-button>
+                      <mat-icon>rotate_left</mat-icon>
+                      Left
+                    </button>
+                    <button
+                      (click)="rotateRight()"
+                      class="ml-2 outlined-button"
+                      mat-flat-button>
+                      <mat-icon>rotate_right</mat-icon>
+                      Right
+                    </button> -->
+                    <mat-button-toggle-group
+                      class="flex w-auto"
+                      id="rotateImage"
+                      name="rotateImage"
+                      aria-label="Rotate Image">
+                      <mat-button-toggle
+                        (click)="rotateLeft()"
+                        class="non-toggle-button">
+                        <mat-icon>rotate_left</mat-icon>
+                        Left
+                      </mat-button-toggle>
+                      <mat-button-toggle
+                        (click)="rotateRight()"
+                        class="non-toggle-button">
+                        <mat-icon> rotate_right </mat-icon>
+                        Right
+                      </mat-button-toggle>
+                    </mat-button-toggle-group>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <button
+                  (click)="resetCroppingControls()"
+                  [disabled]="croppingControlsChanged === false"
+                  color="primary"
+                  mat-flat-button>
+                  Reset
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div
+    *ngIf="selectedFile"
+    class="flex flex-col items-center justify-center pt-5 pb-6">
+    <!-- <p class="text-sm text-gray-500">Selected File: {{ selectedFile.name }}</p> -->
+    <img
+      *ngIf="selectedFile.type.startsWith('image/')"
+      [src]="filePreview"
+      class="w-32 h-32 mt-2 object-cover rounded-md" />
+  </div>
+  <div class="flex items-center justify-center w-full h-64">
+    <label
+      for="file-upload"
+      class="dropzone flex flex-col items-center justify-center w-full h-64 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 transition-all duration-300 ease-in-out"
+      (dragover)="onDragOverZone($event)"
+      (dragleave)="onDragLeaveZone($event)"
+      (drop)="onDropZone($event)">
+      <div
+        *ngIf="!selectedFile"
+        class="flex flex-col items-center justify-center pt-5 pb-6">
+        <!-- https://thenounproject.com/icon/drag-and-drop-49665/ -->
+        <!-- <svg
+          aria-hidden="true"
+          class="w-10 h-10 mb-3 text-gray-400"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M7 16l-4-4m0 0l4-4m-4 4h18m-7 0v6m0-6V4"></path>
+        </svg> -->
+        <div class="mb-5">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 110 90"
+            width="120"
+            height="100"
+            style="--main-color: rgb(107, 114, 128, 1); --stroke-width: 2">
+            <!-- Define the Masks -->
+            <mask id="mask-top-dashed-box">
+              <!-- Make the entire canvas visible initially -->
+              <rect width="100%" height="100%" fill="white" />
+              <!-- Hide the area where the solid rectangle overlaps the dashed line -->
+              <rect x="25" y="15" width="50" height="40" fill="black" />
+            </mask>
+
+            <mask id="mask-pointer-overlap">
+              <!-- Make the entire canvas visible initially -->
+              <rect width="100%" height="100%" fill="white" />
+              <!-- Hide the area where the solid rectangle overlaps the dashed line -->
+              <rect x="66" y="50" width="10" height="6" fill="black" />
+            </mask>
+
+            <!-- Dashed Box (Drop Zone) -->
+            <rect
+              x="10"
+              y="28"
+              width="90"
+              height="54"
+              stroke="var(--main-color)"
+              stroke-width="2"
+              stroke-dasharray="6, 3"
+              fill="none"
+              rx="5"
+              ry="5"
+              mask="url(#mask-top-dashed-box)" />
+
+            <!-- Solid Rectangle for Image (Overlapping the Dashed Box) -->
+            <rect
+              x="25"
+              y="15"
+              width="50"
+              height="40"
+              stroke="var(--main-color)"
+              stroke-width="2"
+              fill="solid"
+              mask="url(#mask-pointer-overlap)" />
+
+            <!-- Image (Mountains and Sun) -->
+            <g id="image" transform="translate(25, 20)">
+              <!-- Sun -->
+              <circle
+                cx="13"
+                cy="8"
+                r="5"
+                fill="none"
+                stroke="var(--main-color)"
+                stroke-width="2" />
+
+              <!-- Mountains -->
+              <path
+                d="M0 30 L10 20 L18 26 L33 8 L50 24"
+                fill="none"
+                stroke="var(--main-color)"
+                stroke-width="2" />
+
+              <!-- Pointer -->
+              <!-- top edge (x, y)... -->
+              <path
+                d="M35 24 L62 36 L56 40 L66 50 L62 54 L53 44 L51 52 Z"
+                fill="none"
+                stroke="var(--main-color)"
+                stroke-width="2" />
+            </g>
+
+            <!-- Cursor Arrow (Dragging)
+  <path
+    d="M60 55 L55 40 L70 45 L55 45 L60 30 Z"
+    fill="black"
+    stroke="black"
+    stroke-width="1" /> -->
+          </svg>
+        </div>
+        <p class="mb-2 text-sm text-gray-500">
+          <span class="font-semibold">Click to upload</span> or drag and drop
+        </p>
+        <p class="text-xs text-gray-500">
+          SVG, PNG, JPG or GIF (MAX. 800x400px)
+        </p>
+      </div>
+      <input
+        #fileInput
+        id="file-upload"
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)" />
+    </label>
+  </div>
+  <form class="mt-5" [formGroup]="formGroup">
+    <div class="flex flex-col md:flex-row md:space-x-4 w-full">
+      <div class="flex-grow w-full md:w-auto">
+        <mat-form-field
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+          id="filename-field"
+          appearance="outline"
+          class="w-full"
+          (click)="onFieldFocus($event)">
+          <mat-label>Filename</mat-label>
+          <input matInput formControlName="filename" type="text" />
+          <!-- Conditionally show the clear button when there is a value -->
+          <button
+            mat-icon-button
+            matSuffix
+            *ngIf="fileSelected()"
+            (click)="$event.stopPropagation(); clearSelectedFile()">
+            <mat-icon>close</mat-icon>
+          </button>
+          <mat-hint>Drag and drop file here.</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="w-full md:w-auto mt-4 md:mt-0">
+        <button (click)="fileInput.click()" color="primary" mat-flat-button>
+          Choose file...
+        </button>
+      </div>
+    </div>
+  </form>
+  <div class="flex justify-between">
+    <button class="mt-5" mat-flat-button routerLink="/upload-demo">
+      Cancel
+    </button>
+    <button
+      (click)="clearSelectedFile()"
+      class="mt-5"
+      mat-flat-button
+      color="warn"
+      [disabled]="fileSelected() === false">
+      Reset
+    </button>
+    <button
+      (click)="uploadSelectedFile()"
+      class="mt-5"
+      color="primary"
+      mat-flat-button
+      [disabled]="fileSelected() === false">
+      Upload
+    </button>
+  </div>
+</div>

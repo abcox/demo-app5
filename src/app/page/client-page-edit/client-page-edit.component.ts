@@ -11,7 +11,7 @@ import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ClientService } from '../../service/client/client.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { Client } from '../../../backend-api/v1';
@@ -20,7 +20,7 @@ import { tap } from 'rxjs/internal/operators/tap';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CommonModule } from '@angular/common';
-import { map } from 'rxjs';
+import { filter, map } from 'rxjs';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 @Component({
@@ -41,8 +41,13 @@ import { MatExpansionModule } from '@angular/material/expansion';
 })
 export class ClientPageEditComponent implements OnDestroy {
   router = inject(Router);
+  route = inject(ActivatedRoute);
   clientService = inject(ClientService);
-  id = input.required<string>();
+  //id = input.required<string>();
+  id$ = this.route.paramMap.pipe(
+    tap(paramMap => console.log(`paramMap`, paramMap)),
+    map(paramMap => paramMap.get('id'))
+  );
   formGroup = new FormGroup({
     id: new FormControl(),
     name: new FormControl(),
@@ -50,9 +55,10 @@ export class ClientPageEditComponent implements OnDestroy {
     phone: new FormControl(),
   });
   // todo: change to signal
-  client$ = toObservable(this.id).pipe(
-    tap(client => console.log(`client id: ${client}`)),
-    switchMap(id => this.clientService.getById(id)),
+  client$ = this.id$.pipe(
+    tap(id => console.log(`client id: ${id}`)),
+    filter(id => id !== null),
+    switchMap(id => this.clientService.getById(id!)),
     tap(client =>
       this.formGroup.setValue({
         id: client.id,
@@ -70,19 +76,21 @@ export class ClientPageEditComponent implements OnDestroy {
     this.clientSub.unsubscribe();
   }
   submit() {
+    const { id } = this.formGroup.value;
     console.log(
-      `submit (update) client with id ${this.id()}; client (form.value):`,
+      `submit (update) client with id ${id}; client (form.value):`,
       this.formGroup.value
     );
     this.clientService
-      .update(this.id(), this.formGroup.value)
+      .update(id, this.formGroup.value)
       .pipe(tap(response => console.log('client updated; response:', response)))
       .subscribe();
   }
   delete() {
-    console.log(`delete client with id ${this.id()}`);
+    const { id } = this.formGroup.value;
+    console.log(`delete client with id ${id}`);
     this.clientService
-      .delete(this.id())
+      .delete(id)
       .pipe(
         tap(response => console.log('client deleted; response:', response)),
         tap(() => this.router.navigate(['/client']))

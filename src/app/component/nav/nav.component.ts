@@ -1,13 +1,22 @@
 import { Component, ViewChild, inject, signal } from '@angular/core';
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import {
+  BreakpointObserver,
+  Breakpoints,
+  BreakpointState,
+} from '@angular/cdk/layout';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import {
+  MatDrawer,
+  MatDrawerMode,
+  MatSidenav,
+  MatSidenavModule,
+} from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { Router, RouterModule } from '@angular/router';
 import { UserStateService } from '../../service/user-state/user-state.service';
 import { menuItems } from '../../config';
@@ -17,6 +26,7 @@ import { AuthService } from '../../service/auth/auth.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { getMenuItemsFilteredByUserRoles } from '../../service/nav/nav.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 export interface MenuItem {
   href: string;
@@ -73,10 +83,53 @@ export class NavComponent {
       map(result => result.matches),
       shareReplay()
     );
-  opened = false;
+  //opened = window.innerWidth >= 1280; // 600 = Medium, 1280 = Large
+  opened =
+    window.matchMedia(Breakpoints.Large).matches ||
+    window.matchMedia(Breakpoints.XLarge).matches;
+
+  sideNavMode$: Observable<MatDrawerMode> = this.breakpointObserver
+    .observe('(max-width: 1279px)') // Define your breakpoint here
+    .pipe(
+      tap(() => console.log(`window.innerWidth: ${window.innerWidth}`)),
+      tap(() => console.log(`Breakpoints.Small: ${Breakpoints.Small}`)),
+      map(result => {
+        const mode = result.matches ? 'over' : 'side';
+        if (mode === 'over' && this.drawer?.opened) {
+          this.drawer?.close(); // Close the drawer if the mode changes to 'over'
+        } else if (
+          mode === 'side' &&
+          this.drawer?.opened === false &&
+          this.auth.isAuthenticated()
+        ) {
+          this.drawer?.open(); // Open the drawer if the mode changes to 'side'
+        }
+        return mode;
+      }), // Map to MatDrawerMode
+      shareReplay(1) // Ensure a single shared emission
+    );
+
+  constructor() {
+    this.breakpointObserver
+      .observe(Breakpoints.Small)
+      .pipe(
+        takeUntilDestroyed(),
+        tap(() => console.log(`breakpoint small`)),
+        /* tap(() => {
+          if (this.opened !== true) {
+            this.drawer?.toggle();
+          }
+        }), */
+        shareReplay()
+      )
+      .subscribe();
+  }
+
   nav(item: MenuItem) {
     console.log('nav item', item);
-    this.drawer.toggle();
+    if (this.drawer.mode === 'over') {
+      this.drawer.toggle();
+    }
     //this.vm.set({ opened: false });
     //this.opened = false;
     if (!item.routePath) {

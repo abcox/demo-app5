@@ -36,7 +36,8 @@ export const requireRoles = (
   authRoles: string[],
   redirectPath: string
 ): boolean | UrlTree => {
-  const userRoles = inject(UserStateService).profile()?.roles ?? [];
+  //const userRoles = inject(UserStateService).profile()?.roles ?? [];
+  const userRoles = inject(AuthService).getUserRoles() ?? [];
   const isAuthenticated = inject(AuthService).isAuthenticated();
   return isAuthenticated && !authRoles.some(role => userRoles.includes(role))
     ? inject(Router).parseUrl(redirectPath)

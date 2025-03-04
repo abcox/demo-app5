@@ -18,5 +18,5 @@
   padding-left: 16px;
 }
 ::ng-deep .mat-expansion-indicator:after {
-  border-color: unset; /* why? */
+  border-color: unset; /* why? / todo: did we solve this in the styles.scss ? */
 }

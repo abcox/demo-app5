@@ -3,6 +3,7 @@
 @import './tailwind.css';
 @import './theme.scss';
 @import '@angular/cdk/overlay-prebuilt.css';
+//@import './quill/dist/quill.bubble.css'; // not required as is imported via angular.json
 
 // primeNG
 //@import 'primeng/resources/themes/lara-light-blue/theme.css';
@@ -15,4 +16,11 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+.mat-expansion-indicator::after {
+  border-color: unset; /* why? / todo: did we solve this in the styles.scss ? */
+}
+.mat-expansion-panel {
+  box-shadow: none !important;
+  border-width: 3px;
 }

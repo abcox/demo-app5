@@ -2,10 +2,20 @@
   height: 100%;
 }
 
+@media screen and (max-width: 600px) {
+  mat-toolbar {
+    padding: 0 8px;
+  }
+}
+.title {
+  padding: 0 8px;
+}
+
 .background {
-  position: relative;
+  //position: relative;
   height: 100vh;
-  overflow: hidden;
+  overflow: auto;
+  //background-size: cover;
 }
 .background::before {
   content: '';

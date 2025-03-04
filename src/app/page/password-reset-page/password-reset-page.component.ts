@@ -23,6 +23,8 @@ export class PasswordResetPageComponent {
   private _destroyed$ = new ReplaySubject<void>(undefined);
   formGroup: FormGroup;
   loading = false;
+  passwordVisible = false;
+  passwordVisible2 = false;
   verifyCode$$ = new BehaviorSubject<string | undefined>(undefined);
   routeInfo$ = this.router.events
     .pipe(
@@ -36,15 +38,15 @@ export class PasswordResetPageComponent {
       tap(routeInfo => console.log(`Route info`, routeInfo)),
       tap(routeInfo => {
         const code = (<any>routeInfo.queryParams)?.code;
+        const email = (<any>routeInfo.queryParams)?.email;
         console.log('code', code);
         if (code) {
           this.verifyCode$$.next(code);
           this.formGroup.patchValue({
-            password: 'tesT1234$$',
-            password2: 'tesT1234$$',
+            email: email,
           });
           this.formGroup.get('password')?.setValidators([Validators.required]);
-          this.formGroup.get('password2')?.setValidators([Validators.required]);
+          //this.formGroup.get('password2')?.setValidators([Validators.required]);
         }
       })
     )
@@ -56,9 +58,9 @@ export class PasswordResetPageComponent {
     private router: Router
   ) {
     this.formGroup = this.fb.group({
-      email: ['adam@adamcox.net', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: [''],
-      password2: [''], // todo: add password confirmation validation
+      //password2: [''], // todo: add password confirmation validation
       verifyCode: [''],
     });
   }
@@ -70,9 +72,20 @@ export class PasswordResetPageComponent {
     return this.formGroup.get('password');
   }
 
-  get password2() {
+  /* get password2() {
     return this.formGroup.get('password2');
+  } */
+
+  togglePasswordVisibility(): void {
+    this.passwordVisible = !this.passwordVisible;
+    setTimeout(() => {
+      this.passwordVisible = !this.passwordVisible;
+    }, 2000);
   }
+
+  /* togglePassword2Visibility(): void {
+    this.passwordVisible2 = !this.passwordVisible2;
+  } */
 
   onSubmit(): void {
     if (this.formGroup.valid) {

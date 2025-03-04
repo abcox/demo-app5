@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, signal, Signal } from '@angular/core';
 import { Router, UrlTree } from '@angular/router';
 import { catchError, finalize, map, tap } from 'rxjs/operators';
 import {
@@ -10,6 +10,8 @@ import {
 import { TOKEN_KEY } from '../../app.config';
 import { of } from 'rxjs/internal/observable/of';
 import { EMPTY } from 'rxjs';
+import { JwtPayload, jwtDecode } from 'jwt-decode';
+import dayjs from 'dayjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +22,9 @@ export class AuthService {
   private token: string | undefined;
   isAuthenticated = signal(false);
 
-  constructor() {
-    this.initToken();
+  constructor(/* private inactivityService: InactivityService */) {
+    //this.initToken();
+    this.isAuthenticated.set(true);
   }
 
   private clearToken() {
@@ -33,7 +36,7 @@ export class AuthService {
     const token = localStorage.getItem(TOKEN_KEY);
     this.isAuthenticated.set(!!token);
     if (!token) {
-      console.warn('Token not found (or empty) in local storage', token);
+      //console.warn('Token not found (or empty) in local storage', token);
       return;
     }
     return token;
@@ -133,11 +136,14 @@ export class AuthService {
   }
 
   logout() {
+    //this.inactivityService.clearTimers();
     this.authService
       .logout()
       .pipe(
         tap(response => {
           console.log('Logout response', response);
+          var token = this.getToken();
+          console.log(`token`, token);
         }),
         catchError(err => {
           console.error('Error logging out', err);
@@ -156,4 +162,66 @@ export class AuthService {
     const token = localStorage.getItem('token');
     this.isAuthenticated.set(!!token);
   } */
+
+  getUserClaim(claim: string): any {
+    const decoded = this.decodeToken();
+    return decoded?.[claim] ?? null;
+  }
+
+  getUserRoles(): string[] {
+    const decoded = this.decodeToken();
+    return decoded?.role
+      ? Array.isArray(decoded.role)
+        ? decoded.role
+        : [decoded.role]
+      : [];
+  }
+
+  isLoggedIn(): boolean {
+    const token = this.getToken();
+    return token !== null && !this.isTokenExpired();
+  }
+
+  //#region token
+  decodeToken(): any | null {
+    // Function to check if the JWT is expired
+    const jwtExpired = (exp?: number): boolean => {
+      if (!exp) {
+        // If `exp` is undefined, treat it as expired
+        return true;
+      }
+      // `exp` is typically in seconds, so convert it to milliseconds
+      const expirationDate = dayjs(exp * 1000); // Convert seconds to milliseconds
+      return dayjs().isAfter(expirationDate); // Check if the current time is after the expiration time
+    };
+
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    try {
+      const jwt = jwtDecode<JwtPayload>(token);
+      //console.log('Decoded token', jwt);
+      //console.log('jwtExpired:', jwtExpired(jwt.exp));
+      if (jwtExpired(jwt.exp)) {
+        console.warn('Token is expired');
+        this.clearToken();
+        this.router.navigate(['/login']);
+        return null;
+      }
+      return jwt;
+    } catch (error) {
+      console.error('Failed to decoding token. ERROR:', error);
+      return null;
+    }
+  }
+  isTokenExpired(): boolean {
+    const decoded = this.decodeToken();
+    if (!decoded || !decoded.exp) {
+      return true; // Treat as expired if no expiration claim
+    }
+    const currentTime = Math.floor(new Date().getTime() / 1000); // Current time in seconds
+    return decoded.exp < currentTime;
+  }
+  //#endregion // token
 }

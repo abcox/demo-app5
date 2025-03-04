@@ -1,0 +1,79 @@
+<div class="bg-white p-5">
+  <h1>Upload File</h1>
+  <div class="flex items-center justify-center w-full">
+    <div *ngIf="selectedFile">
+      <img
+        *ngIf="selectedFile.type.startsWith('image/')"
+        [src]="filePreview"
+        class="w-32 h-32 mt-2 object-cover rounded-md" />
+    </div>
+    <div *ngIf="selectedFile; else dropZone">
+      <ng-container *ngTemplateOutlet="filePreview"></ng-container>
+    </div>
+  </div>
+  <div class="flex justify-between">
+    <button class="mt-5" mat-flat-button routerLink="/upload-demo">
+      Cancel
+    </button>
+    <button
+      (click)="uploadSelectedFile()"
+      class="mt-5"
+      color="primary"
+      mat-flat-button
+      [disabled]="anyChanges() === false">
+      Upload
+    </button>
+  </div>
+</div>
+<ng-template #dropZone>
+  <label
+    for="file-upload"
+    class="dropzone flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 transition-all duration-300 ease-in-out"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)"
+    (drop)="onDrop($event)">
+    <div
+      *ngIf="!selectedFile"
+      class="flex flex-col items-center justify-center pt-5 pb-6">
+      <svg
+        aria-hidden="true"
+        class="w-10 h-10 mb-3 text-gray-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M7 16l-4-4m0 0l4-4m-4 4h18m-7 0v6m0-6V4"></path>
+      </svg>
+      <p class="mb-2 text-sm text-gray-500">
+        <span class="font-semibold">Click to upload</span> or drag and drop
+      </p>
+      <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+    </div>
+    <input
+      id="file-upload"
+      type="file"
+      class="hidden"
+      (change)="onFileSelected($event)" />
+  </label>
+</ng-template>
+<ng-template #filePreview>
+  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+    <form [formGroup]="formGroup">
+      <p class="text-sm text-gray-500">
+        Selected File: {{ selectedFile?.name }}
+      </p>
+      <img
+        *ngIf="selectedFile?.type?.startsWith('image/')"
+        [src]="filePreview"
+        class="w-32 h-32 mt-2 object-cover rounded-md" />
+      <mat-form-field appearance="outline">
+        <mat-label>Filename</mat-label>
+        <input matInput formControlName="filename" type="text" />
+      </mat-form-field>
+    </form>
+  </div>
+</ng-template>

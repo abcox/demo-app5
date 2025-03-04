@@ -14,8 +14,8 @@
     <h1>Add Client</h1>
     <button mat-raised-button color="primary">Add</button>
   </div> -->
-    <mat-accordion>
-      <mat-expansion-panel>
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel [expanded]="true">
         <mat-expansion-panel-header>
           <mat-panel-title>Contact</mat-panel-title>
         </mat-expansion-panel-header>

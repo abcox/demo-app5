@@ -1,0 +1,46 @@
+<div class="bg-white p-5">
+  <ng-container *ngIf="vm$ | async as vm">
+    <h1>{{ vm.name }}</h1>
+    <div class="flex">
+      <img
+        class="w-[200px] h-[240px] object-cover"
+        [src]="vm.resource"
+        [alt]="vm.name" />
+      <mat-form-field class="ml-5 w-full" appearance="outline">
+        <mat-label>Tags</mat-label>
+        <mat-chip-grid #chipGrid aria-label="Enter tags">
+          @for (tag of fileTags; track tag) {
+            <mat-chip-row
+              (removed)="remove(tag)"
+              [editable]="true"
+              (edited)="edit(tag, $event)"
+              [aria-description]="'press enter to edit ' + tag.name">
+              {{ tag.name }}
+              <button matChipRemove [attr.aria-label]="'remove ' + tag.name">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
+          }
+          <input
+            placeholder="New tag..."
+            [matChipInputFor]="chipGrid"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur"
+            (matChipInputTokenEnd)="add($event)" />
+        </mat-chip-grid>
+      </mat-form-field>
+    </div>
+    <div class="flex justify-between">
+      <button class="mt-5" mat-flat-button [routerLink]="['/upload-demo']">
+        Back to File Uploads
+      </button>
+      <button
+        class="mt-5"
+        color="primary"
+        mat-flat-button
+        [disabled]="anyChanges === false">
+        Save
+      </button>
+    </div>
+  </ng-container>
+</div>

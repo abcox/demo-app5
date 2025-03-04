@@ -1,0 +1,15 @@
+.dropzone-hover {
+  border: 2px dashed #42a5f5; /* Change border to indicate dropzone */
+  background-color: #e3f2fd; /* Optional: Light blue background */
+}
+.outlined-button {
+  border: 1px solid rgba(0, 0, 0, 0.5); /* Subtle outline */
+  box-shadow: none; /* Remove any default shadow */
+  border-radius: 3px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.non-toggle-button {
+  &.mat-button-toggle-checked {
+    background-color: initial !important;
+  }
+}

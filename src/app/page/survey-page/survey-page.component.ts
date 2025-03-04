@@ -4,11 +4,13 @@ import {
   SurveyComponent,
   Survey,
 } from '../../component/survey/survey.component';
+import { MatCardModule } from '@angular/material/card';
+import { Survey2Component } from '../../component/survey2/survey2.component';
 
 @Component({
   selector: 'app-survey-page',
   standalone: true,
-  imports: [SurveyComponent],
+  imports: [Survey2Component, MatCardModule],
   templateUrl: './survey-page.component.html',
   styleUrl: './survey-page.component.scss',
 })
@@ -331,69 +333,69 @@ export class SurveyPageComponent {
             text: 'I am grieving',
           },
           {
-            id: 5,
+            id: 6,
             text: 'I have experienced trauma or a traumatic event',
           },
           {
-            id: 6,
+            id: 7,
             text: 'I need to talk through a specific challenge or problem',
           },
           {
-            id: 7,
+            id: 8,
             text: 'I want to gain self-confidence or self-esteem',
           },
           {
-            id: 8,
+            id: 9,
             text: "I want to improve myself, and I don't know where to start",
           },
           {
-            id: 9,
+            id: 10,
             text: 'Recommended by a friend, close relationship, or doctor',
           },
           {
-            id: 10,
+            id: 11,
             text: 'Just exploring my options',
           },
           {
-            id: 11,
+            id: 12,
             text: 'Other', // specify
           },
 
           // more options...
 
           {
-            id: 3,
+            id: 13,
             text: 'I struggle with maintaining a healthy lifestyle (e.g. eating, sleeping, exercise)',
           },
 
           // more options...
 
           {
-            id: 2,
+            id: 14,
             text: 'I have experienced trauma or a traumatic event',
           },
           {
-            id: 3,
+            id: 15,
             text: 'I have been having relationship issues',
           },
           {
-            id: 4,
+            id: 16,
             text: 'I have been having family issues',
           },
           {
-            id: 5,
+            id: 17,
             text: 'I have been experiencing work stress',
           },
           {
-            id: 6,
+            id: 18,
             text: 'I have been experiencing life changes',
           },
           {
-            id: 7,
+            id: 19,
             text: 'I have been struggling with addiction',
           },
           {
-            id: 8,
+            id: 20,
             text: 'Other', // specify
             provideInput: true,
           },
@@ -401,39 +403,39 @@ export class SurveyPageComponent {
           // more options... (co-pilot suggested)
 
           {
-            id: 1,
+            id: 21,
             text: 'Depression',
           },
           {
-            id: 2,
+            id: 22,
             text: 'Anxiety',
           },
           {
-            id: 3,
+            id: 23,
             text: 'Trauma',
           },
           {
-            id: 4,
+            id: 24,
             text: 'Relationship issues',
           },
           {
-            id: 5,
+            id: 25,
             text: 'Family issues',
           },
           {
-            id: 6,
+            id: 26,
             text: 'Work stress',
           },
           {
-            id: 7,
+            id: 27,
             text: 'Life changes',
           },
           {
-            id: 8,
+            id: 28,
             text: 'Addiction',
           },
           {
-            id: 9,
+            id: 29,
             text: 'Other', // specify
           },
         ],
@@ -483,103 +485,103 @@ export class SurveyPageComponent {
 
           // more options... (ABC)
           {
-            id: 4,
+            id: 9,
             text: 'Provides alternative ideas, perspectives, or solutions',
           },
 
           // more options... (co-pilot suggested)
           {
-            id: 1,
+            id: 10,
             text: 'Explores my thoughts and feelings',
           },
 
           // more options... (co-pilot suggested)
           {
-            id: 1,
+            id: 11,
             text: 'Can help me develop coping skills',
           },
           {
-            id: 2,
+            id: 12,
             text: 'Can help me develop self-awareness',
           },
           {
-            id: 3,
+            id: 13,
             text: 'Can help me develop self-improvement',
           },
           {
-            id: 4,
+            id: 14,
             text: 'Can help me develop self-confidence',
           },
           {
-            id: 5,
+            id: 15,
             text: 'Can help me develop self-esteem',
           },
           {
-            id: 6,
-            text: 'Can help me develop self-compassion',
-          },
-          {
-            id: 7,
-            text: 'Can help me develop self-love',
-          },
-          {
-            id: 8,
-            text: 'Can help me develop self-acceptance',
-          },
-          {
-            id: 9,
-            text: 'Can help me develop self-forgiveness',
-          },
-          {
-            id: 10,
-            text: 'Can help me develop self-trust',
-          },
-          {
-            id: 11,
-            text: 'Can help me develop self-respect',
-          },
-          {
-            id: 12,
-            text: 'Can help me develop self-compassion',
-          },
-          {
-            id: 13,
-            text: 'Can help me develop self-love',
-          },
-          {
-            id: 14,
-            text: 'Can help me develop self-acceptance',
-          },
-          {
-            id: 15,
-            text: 'Can help me develop self-forgiveness',
-          },
-          {
             id: 16,
-            text: 'Can help me develop self-trust',
+            text: 'Can help me develop self-compassion',
           },
           {
             id: 17,
-            text: 'Can help me develop self-respect',
-          },
-          {
-            id: 18,
-            text: 'Can help me develop self-compassion',
-          },
-          {
-            id: 19,
             text: 'Can help me develop self-love',
           },
           {
-            id: 20,
+            id: 18,
             text: 'Can help me develop self-acceptance',
           },
           {
-            id: 21,
+            id: 19,
             text: 'Can help me develop self-forgiveness',
           },
           {
+            id: 20,
+            text: 'Can help me develop self-trust',
+          },
+          {
+            id: 21,
+            text: 'Can help me develop self-respect',
+          },
+          {
             id: 22,
+            text: 'Can help me develop self-compassion',
+          },
+          {
+            id: 23,
+            text: 'Can help me develop self-love',
+          },
+          {
+            id: 24,
+            text: 'Can help me develop self-acceptance',
+          },
+          {
+            id: 25,
+            text: 'Can help me develop self-forgiveness',
+          },
+          {
+            id: 26,
+            text: 'Can help me develop self-trust',
+          },
+          {
+            id: 27,
+            text: 'Can help me develop self-respect',
+          },
+          {
+            id: 28,
+            text: 'Can help me develop self-compassion',
+          },
+          {
+            id: 29,
+            text: 'Can help me develop self-love',
+          },
+          {
+            id: 30,
+            text: 'Can help me develop self-acceptance',
+          },
+          {
+            id: 31,
+            text: 'Can help me develop self-forgiveness',
+          },
+          {
+            id: 32,
             text: 'Can help me develop self-trust',
           },
         ],
@@ -907,31 +909,31 @@ export class SurveyPageComponent {
 
           // more options... (co-pilot suggested)
           {
-            id: 0,
+            id: 13,
             text: 'Friend or family member',
           },
           {
-            id: 1,
+            id: 14,
             text: 'Doctor or healthcare professional',
           },
           {
-            id: 2,
+            id: 15,
             text: 'Online search',
           },
           {
-            id: 3,
+            id: 16,
             text: 'Social media',
           },
           {
-            id: 4,
+            id: 17,
             text: 'Advertisement',
           },
           {
-            id: 5,
-            text: 'Other',
+            id: 18,
+            text: 'Other', // todo: in the case of other, do we want to provide optional free-text input?
           },
           {
-            id: 6,
+            id: 19,
             text: 'Unsure at this time',
           },
         ],
@@ -1033,79 +1035,79 @@ export class SurveyPageComponent {
 
           // more options... (co-pilot suggested)
           {
-            id: 0,
+            id: 7,
             text: 'I am a healthcare professional',
           },
           {
-            id: 1,
+            id: 8,
             text: 'I am a student',
           },
           {
-            id: 2,
+            id: 9,
             text: 'I am a parent',
           },
           {
-            id: 3,
+            id: 10,
             text: 'I am a caregiver',
           },
           {
-            id: 4,
+            id: 11,
             text: 'I am a teacher',
           },
           {
-            id: 5,
+            id: 12,
             text: 'I am a business owner',
           },
           {
-            id: 6,
+            id: 13,
             text: 'I am a manager',
           },
           {
-            id: 7,
+            id: 14,
             text: 'I am a frontline worker',
           },
           {
-            id: 8,
+            id: 15,
             text: 'I am a first responder',
           },
           {
-            id: 9,
+            id: 16,
             text: 'I am a military service member or veteran',
           },
           {
-            id: 10,
+            id: 17,
             text: 'I am a member of the LGBTQ+ community',
           },
           {
-            id: 11,
+            id: 18,
             text: 'I am a person of color',
           },
           {
-            id: 12,
+            id: 19,
             text: 'I am a person with a disability',
           },
           {
-            id: 13,
+            id: 20,
             text: 'I am a person with a chronic illness',
           },
           {
-            id: 14,
+            id: 21,
             text: 'I am a person with a mental health condition',
           },
           {
-            id: 15,
+            id: 22,
             text: 'I am a person with an eating disorder',
           },
           {
-            id: 16,
+            id: 23,
             text: 'I am a person with an exercise disorder',
           },
           {
-            id: 17,
+            id: 24,
             text: 'I am a person with a substance use disorder',
           },
           {
-            id: 18,
+            id: 25,
             text: 'I am a person with a gambling disorder',
           },
         ],
@@ -1257,7 +1259,7 @@ export class SurveyPageComponent {
 
       // more options... (co-pilot suggested)
       {
-        id: 17,
+        id: 25,
         text: 'How would you rate your current eating habits?',
         options: [
           {
@@ -1278,7 +1280,7 @@ export class SurveyPageComponent {
         note: 'Many adults who have generalized anxiety disorder also have eating disorders. Adults with generalized anxiety disorder are more likely to have difficulty eating, may eat frequently during the day, or may eat early and not be able to stop. The combination of GAD and eating disorders can lead to an even greater level of anxiety and dysfunction. If you are experiencing eating problems, it is important to talk to your doctor about your symptoms.',
       },
       {
-        id: 18,
+        id: 26,
         text: 'How would you rate your current exercise habits?',
         options: [
           {
@@ -1339,23 +1341,23 @@ export class SurveyPageComponent {
         text: 'What is your employment status?',
         options: [
           {
-            id: 1,
+            id: 0,
             text: 'Employed',
           },
           {
-            id: 2,
+            id: 1,
             text: 'Unemployed',
           },
           {
-            id: 3,
+            id: 2,
             text: 'Student',
           },
           {
-            id: 4,
+            id: 3,
             text: 'Retired',
           },
           {
-            id: 5,
+            id: 4,
             text: 'Prefer not to say',
           },
         ],

@@ -2,6 +2,7 @@ import {
   ApplicationConfig,
   InjectionToken,
   importProvidersFrom,
+  inject,
 } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 
@@ -14,6 +15,10 @@ import {
   ConfigurationParameters,
 } from '../backend-api/v1';
 import { environment } from '../environments/environment';
+import {
+  InactivityService,
+  //initInactivityService,
+} from './service/inactivity/inactivity.service';
 
 // configure backend api
 export function apiConfigFactory(): Configuration {
@@ -37,5 +42,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(),
     importProvidersFrom(ApiModule.forRoot(apiConfigFactory)),
+    /* {
+      provide: 'INIT_INACTIVITY_SERVICE',
+      useFactory: initInactivityService,
+      deps: [InactivityService], // Inject the service here
+    }, */
   ],
 };
